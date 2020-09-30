@@ -68,7 +68,6 @@ jobs:
         run: .github/kubeval.sh
 
   install-chart:
-    name: install-chart
     runs-on: ubuntu-latest
     needs: 
       - lint-chart
