@@ -69,7 +69,7 @@ jobs:
 
   install-chart:
     runs-on: ubuntu-latest
-    needs: 
+    needs:
       - lint-chart
       - kubeval-chart
     strategy:
