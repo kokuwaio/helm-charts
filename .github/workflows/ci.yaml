@@ -50,7 +50,7 @@ jobs:
   kubeval-chart:
     runs-on: ubuntu-latest
     needs: lint-chart
-    if: step.lint-chart.outputs.changed == 'true'
+    if: steps.lint-chart.outputs.changed == 'true'
     strategy:
       matrix:
         k8s:
