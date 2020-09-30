@@ -1,5 +1,6 @@
 helm-extra-args: --timeout 1200s
 check-version-increment: true
 debug: true
+target-branch: main
 chart-repos:
   - kokuwa=https://kokuwaio.github.io/helm-charts
