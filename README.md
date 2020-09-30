@@ -1,6 +1,6 @@
-# kokuwa.github.io
+# kokuwa.io helm charts
 
-[Helm](https://helm.sh/) repo for [Kokuwa](https://kokuwa.io) charts which can be installed on [Kubernetes](https://kubernetes.io/)
+[Helm](https://helm.sh/) repo for [Kokuwa](https://kokuwa.io) project maintained charts which can be installed on [Kubernetes](https://kubernetes.io/)
 
 Add the repo via:
 ```console
