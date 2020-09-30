@@ -1,7 +1,6 @@
-name: lint-bash
+name: lint-bash-scripts
 
-on:
-  pull_request:
+on: pull_request
 
 jobs:
   lint-bash-scripts:

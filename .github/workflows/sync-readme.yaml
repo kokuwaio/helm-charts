@@ -1,9 +1,12 @@
+name: sync-readme
+
 on:
   push:
     branches:
       - 'main'
     paths:
       - 'README.md'
+
 jobs:
   build:
     runs-on: ubuntu-latest
