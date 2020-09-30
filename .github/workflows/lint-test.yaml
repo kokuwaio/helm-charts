@@ -5,6 +5,13 @@ on: pull_request
 jobs:
   lint-test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        k8s:
+          - v1.16.15
+          - v1.17.11
+          - v1.18.6
+          - v1.19.1
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -17,14 +24,17 @@ jobs:
         uses: helm/chart-testing-action@v1.0.0
         with:
           command: lint
-          config: ct.yaml
+          config: .github/ct.yaml
 
-      - name: Create kind cluster
-        uses: helm/kind-action@v1.0.0
+      - name: Create kind ${{ matrix.k8s }} cluster
+        uses: helm/kind-action@v.1.0.0
+        with:
+          config: .github/kind-config.yaml
+          node_image: kindest/node:${{ matrix.k8s }}
         if: steps.lint.outputs.changed == 'true'
 
       - name: Run chart-testing (install)
         uses: helm/chart-testing-action@v1.0.0
         with:
           command: install
-          config: ct.yaml
+          config: .github/ct.yaml
