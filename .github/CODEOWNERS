@@ -1,6 +1,6 @@
 # https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners#codeowners-syntax
 
-/charts/<name-of-chart> @maintainer
+/charts/fluentd-elasticsearch @monotek
 
 ## changes to CODEOWNERS should be reviewed by repository admins
 /CODEOWNERS @helm-charts-admins

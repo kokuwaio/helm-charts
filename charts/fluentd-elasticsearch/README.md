@@ -5,7 +5,8 @@
 ## TL;DR
 
 ```console
-helm install kiwigrid/fluentd-elasticsearch
+helm repo add kokuwa https://kokuwaio.github.io/helm-charts
+helm install kokuwa/fluentd-elasticsearch
 ```
 
 ## Introduction
@@ -23,7 +24,7 @@ The used Docker image also contains Google's detect exceptions (for Java multili
 To install the chart with the release name `my-release`:
 
 ```console
-helm install --name my-release kiwigrid/fluentd-elasticsearch
+helm install --name my-release kokuwa/fluentd-elasticsearch
 ```
 
 The command deploys fluentd-elasticsearch on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -155,13 +156,13 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```console
-helm install --name my-release kiwigrid/fluentd-elasticsearch
+helm install --name my-release kokuwa/fluentd-elasticsearch
 ```
 
 Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the chart. For example,
 
 ```console
-helm install --name my-release -f values.yaml kiwigrid/fluentd-elasticsearch
+helm install --name my-release -f values.yaml kokuwa/fluentd-elasticsearch
 ```
 
 ## Installation
