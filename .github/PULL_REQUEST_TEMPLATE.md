@@ -24,6 +24,7 @@ These checks run very quickly.
 Please check the results.
 We would like these checks to pass before we even continue reviewing your changes.
 -->
+# Which chart
 
 # What this PR does / why we need it
 
@@ -37,5 +38,6 @@ We would like these checks to pass before we even continue reviewing your change
 
 # Checklist
 <!-- [Place an '[x]' (no spaces) in all applicable fields. Please remove unrelated fields.] -->
-- [ ] [DCO](https://github.com/{{ .GitHubOrg }}/helm-charts/blob/main/CONTRIBUTING.md#sign-off-your-work) signed
+- [ ] [DCO](https://github.com/kokuwaio/helm-charts/blob/main/CONTRIBUTING.md#sign-off-your-work) signed
 - [ ] Chart Version bumped
+- [ ] All variables are documented in the charts README
