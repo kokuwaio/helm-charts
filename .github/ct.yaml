@@ -1,6 +1,6 @@
 helm-extra-args: --timeout 1200s
 check-version-increment: true
 debug: true
+target-branch: main
 chart-repos:
-  - kiwigrid=https://kiwigrid.github.io/
-  - minio=https://helm.min.io
+  - kokuwa=https://kokuwaio.github.io/helm-charts
