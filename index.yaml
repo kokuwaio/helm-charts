@@ -51,4 +51,28 @@ entries:
     urls:
     - https://github.com/kokuwaio/helm-charts/releases/download/fluentd-elasticsearch-10.0.0/fluentd-elasticsearch-10.0.0.tgz
     version: 10.0.0
+  mysqldump:
+  - apiVersion: v1
+    appVersion: 2.4.1
+    created: "2020-10-03T08:32:20.693593079Z"
+    description: A Helm chart to help backup MySQL databases using mysqldump
+    digest: 4006d80fed0b4da70f4574997996be46e74d2240507c4ccb49e7e0dc1e04020e
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - mysqldump
+    - backup
+    maintainers:
+    - email: monotek23@gmail.com
+      name: monotek
+    - email: axel.koehler@kiwigrid.com
+      name: axdotl
+    name: mysqldump
+    sources:
+    - https://github.com/kubernetes/charts
+    - https://dev.mysql.com/doc/refman/5.7/en/mysqldump.html
+    urls:
+    - https://github.com/kokuwaio/helm-charts/releases/download/mysqldump-3.0.0/mysqldump-3.0.0.tgz
+    version: 3.0.0
 generated: "2020-09-30T17:58:08.507193016Z"
