@@ -100,6 +100,7 @@ elasticsearch:
   outputType: "elasticsearch"
   typeName: "_doc"
   logLevel: "info"
+  log400Reason: false
   reconnectOnError: true
   reloadOnFailure: false
   reloadConnections: false

@@ -527,6 +527,7 @@ data:
       ilm_policies "#{ENV['ILM_POLICIES']}"
       ilm_policy_overwrite "#{ENV['ILM_POLICY_OVERWRITE']}"
 {{- end }}
+      log_es_400_reason "#{ENV['OUTPUT_LOG_400_REASON']}"
       reconnect_on_error "#{ENV['OUTPUT_RECONNECT_ON_ERROR']}"
       reload_on_failure "#{ENV['OUTPUT_RELOAD_ON_FAILURE']}"
       reload_connections "#{ENV['OUTPUT_RELOAD_CONNECTIONS']}"

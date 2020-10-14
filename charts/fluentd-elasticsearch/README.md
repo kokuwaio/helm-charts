@@ -85,6 +85,7 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `elasticsearch.outputType`                           | Elasticsearch output type                                                      | `elasticsearch`                                    |
 | `elasticsearch.typeName`                             | Elasticsearch type name                                                        | `_doc`                                             |
 | `elasticsearch.logLevel`                             | Elasticsearch global log level                                                 | `info`                                             |
+| `elasticsearch.log400Reason`                         | Elasticsearch Log 400 reason                                                   | `false`                                            |
 | `elasticsearch.reconnectOnError`                     | Elasticsearch Reconnect on error                                               | `true`                                             |
 | `elasticsearch.reloadOnFailure`                      | Elasticsearch Reload on failure                                                | `false`                                            |
 | `elasticsearch.reloadConnections`                    | Elasticsearch reload connections                                               | `false`                                            |
