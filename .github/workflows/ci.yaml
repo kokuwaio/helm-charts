@@ -26,10 +26,13 @@ jobs:
       - name: Lint Code Base
         uses: github/super-linter@v3
         env:
-          VALIDATE_ALL_CODEBASE: false
-          VALIDATE_YAML: true
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MARKDOWN_CONFIG_FILE: .github/markdown-lint.yaml
+          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_BASH: false
+          VALIDATE_KUBERNETES_KUBEVAL: false
+          VALIDATE_YAML: false
 
   lint-chart:
     runs-on: ubuntu-latest
