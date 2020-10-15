@@ -28,3 +28,6 @@ for CHART_DIR in ${CHART_DIRS};do
   echo "kubeval(idating) ${CHART_DIR##charts/} chart..."
   helm template "${CHART_DIR}" | kubeval --strict --ignore-missing-schemas --kubernetes-version "${KUBERNETES_VERSION#v}" --schema-location "${SCHEMA_LOCATION}"
 done
+
+$test
+
