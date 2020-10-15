@@ -143,6 +143,8 @@ spec:
           value: {{ .Values.elasticsearch.logLevel | quote }}
         - name: OUTPUT_INCLUDE_TAG_KEY
           value: {{ .Values.elasticsearch.includeTagKey | quote }}
+        - name: OUTPUT_LOG_400_REASON
+          value: {{ .Values.elasticsearch.log400Reason | quote }}
         - name: OUTPUT_RECONNECT_ON_ERROR
           value: {{ .Values.elasticsearch.reconnectOnError | quote }}
         - name: OUTPUT_RELOAD_ON_FAILURE
