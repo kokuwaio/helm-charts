@@ -72,11 +72,11 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `elasticsearch.logstash.prefix`                      | Elasticsearch Logstash prefix                                                  | `logstash`                                         |
 | `elasticsearch.logstash.prefixSeparator`             | Elasticsearch Logstash prefix separator                                        | `-`                                                |
 | `elasticsearch.logstash.dateformat`                  | Elasticsearch Logstash strftime format to generate index target index name     | `%Y.%m.%d`                                         |
-| `elasticsearch.ilm.enabled`                      |   | Elasticsearch Index Lifecycle Management enabled                               | `false`
-| `elasticsearch.ilm.policy_id`                    |   | Elasticsearch ILM policy ID                                                    | `logstash-policy`
-| `elasticsearch.ilm.policy`                       |   | Elasticsearch ILM policy to create                                       | `{}`
-| `elasticsearch.ilm.policies`                     |   | Elasticsearch ILM policies to create, map of policy IDs and policies                                        | `{}`
-| `elasticsearch.ilm.policy_overwrite`             |   | Elastichsarch ILM policy overwrite                                             | `false`
+| `elasticsearch.ilm.enabled`                          | Elasticsearch Index Lifecycle Management enabled                               | `false`                                            |
+| `elasticsearch.ilm.policy_id`                        | Elasticsearch ILM policy ID                                                    | `logstash-policy`                                  |
+| `elasticsearch.ilm.policy`                           | Elasticsearch ILM policy to create                                             | `{}`                                               |
+| `elasticsearch.ilm.policies`                         | Elasticsearch ILM policies to create, map of policy IDs and policies           | `{}`                                               |
+| `elasticsearch.ilm.policy_overwrite`                 | Elastichsarch ILM policy overwrite                                             | `false`                                            |
 | `elasticsearch.indexName`                            | Elasticsearch Index Name                                                       | `fluentd`                                          |
 | `elasticsearch.path`                                 | Elasticsearch Path                                                             | `""`                                               |
 | `elasticsearch.scheme`                               | Elasticsearch scheme setting                                                   | `http`                                             |
@@ -90,7 +90,7 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `elasticsearch.reloadOnFailure`                      | Elasticsearch Reload on failure                                                | `false`                                            |
 | `elasticsearch.reloadConnections`                    | Elasticsearch reload connections                                               | `false`                                            |
 | `elasticsearch.requestTimeout`                       | Elasticsearch request timeout                                                  | `5s`                                               |
-| `elasticsearch.suppressTypeName`                     | Elasticsearch type name suppression (for ES >= 7)                              | `false`                                               |
+| `elasticsearch.suppressTypeName`                     | Elasticsearch type name suppression (for ES >= 7)                              | `false`                                            |
 | `elasticsearch.buffer.enabled`                       | Elasticsearch Buffer enabled                                                   | `true`                                             |
 | `elasticsearch.buffer.type`                          | Elasticsearch Buffer type                                                      | `file`                                             |
 | `elasticsearch.buffer.path`                          | Elasticsearch Buffer path                                                      | `/var/log/fluentd-buffers/kubernetes.system.buffer`|
@@ -153,6 +153,7 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `serviceMonitor.type`                                | Optional the type of the metrics service                                       | `ClusterIP`                                        |
 | `tolerations`                                        | Optional daemonset tolerations                                                 | `[]`                                               |
 | `updateStrategy`                                     | Optional daemonset update strategy                                             | `type: RollingUpdate`                              |
+| `additionalPlugins`                                  | Optional additionnal plugins to install when pod starts                        | `{}`                                               |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

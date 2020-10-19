@@ -138,6 +138,10 @@ secret: []
 #   secret_name: elasticsearch
 #   secret_key: password
 
+additionalPlugins: []
+# - name: fluent-plugin-s3
+#   version: 1.1.11
+
 rbac:
   create: true
 
