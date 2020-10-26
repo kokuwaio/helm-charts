@@ -48,12 +48,12 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `affinity`                                           | Optional daemonset affinity                                                    | `{}`                                               |
 | `annotations`                                        | Optional daemonset annotations                                                 | `NULL`                                             |
 | `podAnnotations`                                     | Optional daemonset's pods annotations                                          | `NULL`                                             |
-| `configMaps.useDefaults.systemConf`                  | Use default system.conf                                                        | true                                               |
-| `configMaps.useDefaults.containersInputConf`         | Use default containers.input.conf                                              | true                                               |
-| `configMaps.useDefaults.systemInputConf`             | Use default system.input.conf                                                  | true                                               |
-| `configMaps.useDefaults.forwardInputConf`            | Use default forward.input.conf                                                 | true                                               |
-| `configMaps.useDefaults.monitoringConf`              | Use default monitoring.conf                                                    | true                                               |
-| `configMaps.useDefaults.outputConf`                  | Use default output.conf                                                        | true                                               |
+| `configMaps.useDefaults.systemConf`                  | Use default system.conf                                                        | `true`                                             |
+| `configMaps.useDefaults.containersInputConf`         | Use default containers.input.conf                                              | `true`                                             |
+| `configMaps.useDefaults.systemInputConf`             | Use default system.input.conf                                                  | `true`                                             |
+| `configMaps.useDefaults.forwardInputConf`            | Use default forward.input.conf                                                 | `true`                                             |
+| `configMaps.useDefaults.monitoringConf`              | Use default monitoring.conf                                                    | `true`                                             |
+| `configMaps.useDefaults.outputConf`                  | Use default output.conf                                                        | `true`                                             |
 | `extraConfigMaps`                                    | Add additional Configmap or overwrite disabled default                         | `{}`                                               |
 | `awsSigningSidecar.enabled`                          | Enable AWS request signing sidecar                                             | `false`                                            |
 | `awsSigningSidecar.resources`                        | AWS Sidecar resources                                                          | `{}`                                               |
@@ -72,11 +72,11 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `elasticsearch.logstash.prefix`                      | Elasticsearch Logstash prefix                                                  | `logstash`                                         |
 | `elasticsearch.logstash.prefixSeparator`             | Elasticsearch Logstash prefix separator                                        | `-`                                                |
 | `elasticsearch.logstash.dateformat`                  | Elasticsearch Logstash strftime format to generate index target index name     | `%Y.%m.%d`                                         |
-| `elasticsearch.ilm.enabled`                      |   | Elasticsearch Index Lifecycle Management enabled                               | `false`
-| `elasticsearch.ilm.policy_id`                    |   | Elasticsearch ILM policy ID                                                    | `logstash-policy`
-| `elasticsearch.ilm.policy`                       |   | Elasticsearch ILM policy to create                                       | `{}`
-| `elasticsearch.ilm.policies`                     |   | Elasticsearch ILM policies to create, map of policy IDs and policies                                        | `{}`
-| `elasticsearch.ilm.policy_overwrite`             |   | Elastichsarch ILM policy overwrite                                             | `false`
+| `elasticsearch.ilm.enabled`                          | Elasticsearch Index Lifecycle Management enabled                               | `false`                                            |
+| `elasticsearch.ilm.policy_id`                        | Elasticsearch ILM policy ID                                                    | `logstash-policy`                                  |
+| `elasticsearch.ilm.policy`                           | Elasticsearch ILM policy to create                                             | `{}`                                               |
+| `elasticsearch.ilm.policies`                         | Elasticsearch ILM policies to create, map of policy IDs and policies           | `{}`                                               |
+| `elasticsearch.ilm.policy_overwrite`                 | Elastichsarch ILM policy overwrite                                             | `false`                                            |
 | `elasticsearch.indexName`                            | Elasticsearch Index Name                                                       | `fluentd`                                          |
 | `elasticsearch.path`                                 | Elasticsearch Path                                                             | `""`                                               |
 | `elasticsearch.scheme`                               | Elasticsearch scheme setting                                                   | `http`                                             |
@@ -90,7 +90,7 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `elasticsearch.reloadOnFailure`                      | Elasticsearch Reload on failure                                                | `false`                                            |
 | `elasticsearch.reloadConnections`                    | Elasticsearch reload connections                                               | `false`                                            |
 | `elasticsearch.requestTimeout`                       | Elasticsearch request timeout                                                  | `5s`                                               |
-| `elasticsearch.suppressTypeName`                     | Elasticsearch type name suppression (for ES >= 7)                              | `false`                                               |
+| `elasticsearch.suppressTypeName`                     | Elasticsearch type name suppression (for ES >= 7)                              | `false`                                            |
 | `elasticsearch.buffer.enabled`                       | Elasticsearch Buffer enabled                                                   | `true`                                             |
 | `elasticsearch.buffer.type`                          | Elasticsearch Buffer type                                                      | `file`                                             |
 | `elasticsearch.buffer.path`                          | Elasticsearch Buffer path                                                      | `/var/log/fluentd-buffers/kubernetes.system.buffer`|
@@ -112,7 +112,7 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `hostLogDir.dockerContainers`                        | Specify where fluentd can find logs for docker container                       | `/var/lib/docker/containers`                       |
 | `hostLogDir.libSystemdDir`                           | Specify where fluentd can find logs for lib Systemd                            | `/usr/lib64`                                       |
 | `image.repository`                                   | Image                                                                          | `quay.io/fluentd_elasticsearch/fluentd`            |
-| `image.tag`                                          | Image tag                                                                      | `v3.0.5`                                           |
+| `image.tag`                                          | Image tag                                                                      | `v3.1.0`                                           |
 | `image.pullPolicy`                                   | Image pull policy                                                              | `IfNotPresent`                                     |
 | `image.pullSecrets`                                  | Image pull secrets                                                             | ``                                                 |
 | `livenessProbe.enabled`                              | Whether to enable livenessProbe                                                | `true`                                             |
