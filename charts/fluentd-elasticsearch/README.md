@@ -17,7 +17,7 @@ The used Docker image also contains Google's detect exceptions (for Java multili
 
 ## Prerequisites
 
-- Kubernetes 1.8+ with Beta APIs enabled
+- Kubernetes 1.14+ with Beta APIs enabled
 
 ## Installing the Chart
 
@@ -328,3 +328,7 @@ In this version elasticsearch template in `output.conf` configmap was expanded t
 - `buffer.chunkLimitSize`
 - `buffer.queueLimitLength`
 - `buffer.overflowAction`
+
+### From a version < 10.0.0 to version => 11.0.0
+
+The chart requires now Helm >= 3.0.0 and Kubernetes >= 1.16.0

@@ -1,14 +1,10 @@
 {{- if .Values.prometheusRule.enabled }}
-{{- $striped_version := (split "-" .Capabilities.KubeVersion.GitVersion)._0 -}}
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: {{ template "fluentd-elasticsearch.fullname" . }}
   labels:
-{{ include "fluentd-elasticsearch.labels" . | indent 4 }}
-    {{- if semverCompare "< 1.6" $striped_version }}
-    kubernetes.io/cluster-service: "true"
-    {{- end }}
+    {{- include "fluentd-elasticsearch.labels" . | nindent 4 }}
     addonmanager.kubernetes.io/mode: Reconcile
     {{- if .Values.prometheusRule.labels }}
     {{- toYaml .Values.prometheusRule.labels | nindent 4 }}
