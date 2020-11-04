@@ -19,6 +19,6 @@ sources:
 - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
 maintainers:
 - name: monotek
-  email: andre.bauer@kiwigrid.com
+  email: monotek23@gmail.com
 engine: gotpl
 kubeVersion: ">=1.16.0-0"
