@@ -12,8 +12,10 @@ helm install kokuwa/fluentd-elasticsearch
 ## Introduction
 
 This chart bootstraps a [Fluentd](https://www.fluentd.org/) daemonset on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+
 It's meant to be a drop in replacement for fluentd-gcp on GKE which sends logs to Google's Stackdriver service, but can also be used in other places where logging to ElasticSearch is required.
-The used Docker image also contains Google's detect exceptions (for Java multiline stacktraces), Prometheus exporter, Kubernetes metadata filter & Systemd plugins.
+
+The used [Docker](https://docker.com) image ([Dockerfile](https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image)) also contains [Google's detect exceptions](https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions) (for Java multiline stacktraces), [Prometheus exporter](https://github.com/fluent/fluent-plugin-prometheus), [Kubernetes metadata filter](https://github.com/fabric8io/fluent-plugin-kubernetes_metadata_filter) & [Systemd](https://github.com/fluent-plugin-systemd/fluent-plugin-systemd) plugins.
 
 ## Prerequisites
 
@@ -31,10 +33,10 @@ The command deploys fluentd-elasticsearch on the Kubernetes cluster in the defau
 
 ## Uninstalling the Chart
 
-To uninstall/delete the `my-release` deployment:
+To uninstall the `my-release` deployment:
 
 ```console
-helm delete my-release
+helm uninstall my-release
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
