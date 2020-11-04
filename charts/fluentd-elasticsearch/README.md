@@ -17,7 +17,7 @@ The used Docker image also contains Google's detect exceptions (for Java multili
 
 ## Prerequisites
 
-- Kubernetes 1.14+ with Beta APIs enabled
+- Kubernetes 1.16+ with Beta APIs enabled
 
 ## Installing the Chart
 
