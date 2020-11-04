@@ -15,7 +15,12 @@ This chart bootstraps a [Fluentd](https://www.fluentd.org/) daemonset on a [Kube
 
 It's meant to be a drop in replacement for fluentd-gcp on GKE which sends logs to Google's Stackdriver service, but can also be used in other places where logging to ElasticSearch is required.
 
-The used [Docker](https://docker.com) image ([Dockerfile](https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image)) also contains [Google's detect exceptions](https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions) (for Java multiline stacktraces), [Prometheus exporter](https://github.com/fluent/fluent-plugin-prometheus), [Kubernetes metadata filter](https://github.com/fabric8io/fluent-plugin-kubernetes_metadata_filter) & [Systemd](https://github.com/fluent-plugin-systemd/fluent-plugin-systemd) plugins.
+The used [Docker](https://docker.com) image ([Dockerfile](https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image)) also contains the following plugins:
+
+- [Google's detect exceptions](https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions) (for Java multiline stacktraces)
+- [Prometheus exporter](https://github.com/fluent/fluent-plugin-prometheus)
+- [Kubernetes metadata filter](https://github.com/fabric8io/fluent-plugin-kubernetes_metadata_filter)
+- [Systemd](https://github.com/fluent-plugin-systemd/fluent-plugin-systemd)
 
 ## Prerequisites
 
