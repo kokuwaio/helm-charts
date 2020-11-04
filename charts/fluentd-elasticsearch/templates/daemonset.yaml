@@ -1,18 +1,9 @@
-
-{{- $striped_version := (split "-" .Capabilities.KubeVersion.GitVersion)._0 -}}
-{{- if semverCompare ">= 1.9" $striped_version -}}
 apiVersion: apps/v1
-{{- else -}}
-apiVersion: extensions/v1beta1
-{{- end }}
 kind: DaemonSet
 metadata:
   name: {{ include "fluentd-elasticsearch.fullname" . }}
   labels:
-{{ include "fluentd-elasticsearch.labels" . | indent 4 }}
-    {{- if semverCompare "< 1.6" $striped_version }}
-    kubernetes.io/cluster-service: "true"
-    {{- end }}
+    {{- include "fluentd-elasticsearch.labels" . | nindent 4 }}
     addonmanager.kubernetes.io/mode: Reconcile
 {{- if .Values.annotations }}
   annotations:
@@ -23,24 +14,12 @@ spec:
 {{ toYaml .Values.updateStrategy | indent 4 }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "fluentd-elasticsearch.name" . }}
-      app.kubernetes.io/instance: {{ .Release.Name }}
+      {{- include "fluentd-elasticsearch.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-{{ include "fluentd-elasticsearch.labels" . | indent 8 }}
-        {{- if semverCompare "< 1.6" $striped_version }}
-        kubernetes.io/cluster-service: "true"
-        {{- end }}
+        {{- include "fluentd-elasticsearch.selectorLabels" . | nindent 8 }}
       annotations:
-        {{- if semverCompare "< 1.13" $striped_version }}
-        # This annotation ensures that fluentd does not get evicted if the node
-        # supports critical pod annotation based priority scheme.
-        # Note that this does not guarantee admission on the nodes (#40573).
-        # NB! this annotation is deprecated as of version 1.13 and will be removed in 1.14.
-        # ref: https://kubernetes.io/docs/tasks/administer-cluster/guaranteed-scheduling-critical-addon-pods/
-        scheduler.alpha.kubernetes.io/critical-pod: ''
-        {{- end }}
         checksum/config: {{ include (print $.Template.BasePath "/configmaps.yaml") . | sha256sum }}
 {{- if .Values.podAnnotations }}
 {{ toYaml .Values.podAnnotations | indent 8 }}
@@ -175,9 +154,7 @@ spec:
         - name: K8S_NODE_NAME
           valueFrom:
             fieldRef:
-              {{- if semverCompare ">= 1.9" $striped_version }}
               apiVersion: v1
-              {{- end }}
               fieldPath: spec.nodeName
         resources:
 {{ toYaml .Values.resources | indent 10 }}

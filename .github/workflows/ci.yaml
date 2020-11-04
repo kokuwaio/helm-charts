@@ -31,7 +31,7 @@ jobs:
         run: git fetch --prune --unshallow
 
       - name: Run chart-testing (lint)
-        uses: helm/chart-testing-action@master
+        uses: helm/chart-testing-action@v1.1.0
         with:
           command: lint
           config: .github/ct.yaml

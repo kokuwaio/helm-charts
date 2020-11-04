@@ -1,7 +1,8 @@
-apiVersion: v1
+apiVersion: v2
 name: fluentd-elasticsearch
-version: 10.2.1
+version: 11.0.0
 appVersion: 3.1.0
+type: application
 home: https://www.fluentd.org/
 description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
 icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
@@ -18,5 +19,6 @@ sources:
 - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
 maintainers:
 - name: monotek
-  email: andre.bauer@kiwigrid.com
+  email: monotek23@gmail.com
 engine: gotpl
+kubeVersion: ">=1.16.0-0"
