@@ -17,9 +17,9 @@ It's meant to be a drop in replacement for fluentd-gcp on GKE which sends logs t
 
 The used [Docker](https://docker.com) image ([Dockerfile](https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image)) also contains the following plugins:
 
-- [Google's detect exceptions](https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions) (for Java multiline stacktraces)
-- [Prometheus exporter](https://github.com/fluent/fluent-plugin-prometheus)
+- [Detect exceptions](https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions) (for Java multiline stacktraces)
 - [Kubernetes metadata filter](https://github.com/fabric8io/fluent-plugin-kubernetes_metadata_filter)
+- [Prometheus exporter](https://github.com/fluent/fluent-plugin-prometheus)
 - [Systemd](https://github.com/fluent-plugin-systemd/fluent-plugin-systemd)
 
 ## Prerequisites
