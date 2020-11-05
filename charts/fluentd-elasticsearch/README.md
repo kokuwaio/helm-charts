@@ -13,7 +13,7 @@ helm install kokuwa/fluentd-elasticsearch
 
 This chart bootstraps a [Fluentd](https://www.fluentd.org/) daemonset on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
-It's meant to be a drop in replacement for fluentd-gcp on GKE which sends logs to Google's Stackdriver service, but can also be used in other places where logging to ElasticSearch is required.
+It's meant to be a drop in replacement for [fluentd-gcp](https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-gcp) on [GKE](https://cloud.google.com/kubernetes-engine) which sends logs to Google [Stackdriver](https://cloud.google.com/stackdriver), but can also be used in other places where logging to [ElasticSearch](https://www.elastic.co/elasticsearch/) is required.
 
 The used [Docker](https://docker.com) image ([Dockerfile](https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image)) also contains the following plugins:
 
