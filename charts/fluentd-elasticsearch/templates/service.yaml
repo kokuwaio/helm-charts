@@ -21,6 +21,6 @@ spec:
       protocol: {{ $port.protocol }}
       {{- end }}
   selector:
-    {{- include "fluentd-elasticsearch.selectorLabels" . | nindent 4 }}
+    {{- include "fluentd-elasticsearch.selectorLabels" $ | nindent 4 }}
 {{- end }}
 {{- end }}
