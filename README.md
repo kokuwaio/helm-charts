@@ -4,7 +4,6 @@
 
 # Repo Info
 
-![ci](https://github.com/kokuwaio/helm-charts/workflows/ci/badge.svg)
 [![Releases downloads](https://img.shields.io/github/downloads/kokuwaio/helm-charts/total.svg)]()
 ![Release Charts](https://github.com/kokuwaio/helm-charts/workflows/Release%20Charts/badge.svg)
 
