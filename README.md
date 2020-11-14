@@ -2,7 +2,7 @@
 
 [Helm](https://helm.sh/) repo for [Kokuwa](https://kokuwa.io) project maintained charts which can be installed on [Kubernetes](https://kubernetes.io/)
 
-# Repo Info
+## Repo Info
 
 [![Releases downloads](https://img.shields.io/github/downloads/kokuwaio/helm-charts/total.svg)](https://github.com/kokuwaio/helm-charts/releases)
 [![Release Charts](https://github.com/kokuwaio/helm-charts/workflows/Release%20Charts/badge.svg)](https://github.com/kokuwaio/helm-charts/commits/main)
