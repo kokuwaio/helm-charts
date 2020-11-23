@@ -82,6 +82,12 @@ spec:
         - name: ILM_POLICY_OVERWRITE
           value: {{ .Values.elasticsearch.ilm.policy_overwrite | quote }}
 {{- end }}
+{{- if or .Values.elasticsearch.template.enabled .Values.elasticsearch.ilm.enabled }}
+        - name: TEMPLATE_NAME
+          value: {{ .Values.elasticsearch.template.name | quote }}
+        - name: TEMPLATE_FILE
+          value: "/etc/fluent/config.d/{{ .Values.elasticsearch.template.file }}"
+{{- end }}
         - name: OUTPUT_SCHEME
           {{- if .Values.awsSigningSidecar.enabled }}
           value: 'http'

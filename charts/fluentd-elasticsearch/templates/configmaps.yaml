@@ -522,6 +522,10 @@ data:
       ilm_policies "#{ENV['ILM_POLICIES']}"
       ilm_policy_overwrite "#{ENV['ILM_POLICY_OVERWRITE']}"
 {{- end }}
+{{- if or .Values.elasticsearch.template.enabled .Values.elasticsearch.ilm.enabled }}
+      template_name "#{ENV['TEMPLATE_NAME']}"
+      template_file "#{ENV['TEMPLATE_FILE']}"
+{{- end }}
       log_es_400_reason "#{ENV['OUTPUT_LOG_400_REASON']}"
       reconnect_on_error "#{ENV['OUTPUT_RECONNECT_ON_ERROR']}"
       reload_on_failure "#{ENV['OUTPUT_RELOAD_ON_FAILURE']}"
@@ -547,6 +551,11 @@ data:
 {{- end }}
     </match>
     </label>
+{{- end }}
+
+{{- if or .Values.elasticsearch.template.enabled .Values.elasticsearch.ilm.enabled }}
+  {{ .Values.elasticsearch.template.file }}: |-
+{{ .Values.elasticsearch.template.content | indent 4 }}
 {{- end }}
 
 {{- range $key, $value := .Values.extraConfigMaps }}

@@ -93,6 +93,22 @@ elasticsearch:
       # ilm_policy_id1: {}
       # ilm_policy_id2: {}
     policy_overwrite: false
+  template:
+    enabled: false
+    name: fluentd-template
+    file: fluentd-template.json
+    content: |-
+      {
+        "index_patterns": [
+            "logstash-*"
+        ],
+        "settings": {
+            "index": {
+                "number_of_replicas": "1"
+            }
+        }
+      }
+
   path: ""
   scheme: "http"
   sslVerify: true
