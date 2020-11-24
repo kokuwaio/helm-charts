@@ -17,13 +17,13 @@ mysql:
   host: ""
   username: root
   # overridden by existingDbSecret / existingDbSecretKey if set
-  password:
+  password: ""
   port: 3306
-  # db for single db backup
-  db: dbname
+  # db name for single db backup
+  db: ""
   # Get password from existing secret
-  # existingSecret:
-  # existingSecretKey:
+  existingSecret: ""
+  existingSecretKey: ""
 
 # use --all-databases if enabled
 allDatabases:
