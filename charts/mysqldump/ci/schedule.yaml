@@ -3,12 +3,11 @@ schedule: "now"
 mysql:
   host: "mysqldump-mariadb"
   username: root
-  password: root
+  password: MySqlDumpTest
 
 # mariadb dependency chart config
 mariadb:
   enabled: true
   fullnameOverride: "mysqldump-mariadb"
   auth:
-    username: root
-    password: root
+    rootPassword: MySqlDumpTest

@@ -148,3 +148,7 @@ securityContext:
   enabled: false
   fsGroup: 999
   runAsUser: 999
+
+# dependency chart for ci
+mariadb:
+  enabled: false
