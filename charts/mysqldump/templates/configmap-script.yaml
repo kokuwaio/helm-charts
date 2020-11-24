@@ -18,6 +18,9 @@ data:
     {{ if .Values.debug }}
     set -ex
     {{ end }}
+
+    {{ if .Values.mysql.host }}
+
     BACKUP_DIR="/backup"
     TIMESTAMP="$(date +%Y%m%d%H%M%S)"
 
@@ -116,3 +119,6 @@ data:
     du -h -d 2 ${BACKUP_DIR}
 
     echo "Backup successful! :-)"
+    {{ else }}
+    echo "no mysql.host set in values file... nothing to do... exiting :)"
+    {{ end }}
