@@ -20,7 +20,7 @@ jobs:
           ignore_words_list: "iam,aks,gke,hart,pullRequest"
           check_filenames: true
           check_hidden: true
-          only_warn: false
+          only_warn: true
 
   lint-chart:
     runs-on: ubuntu-20.04
