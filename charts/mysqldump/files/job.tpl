@@ -1,4 +1,8 @@
 spec:
+  {{- with .Values.imagePullSecrets }}
+  imagePullSecrets:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   {{- if .Values.securityContext.enabled }}
   securityContext:
     fsGroup: {{ .Values.securityContext.fsGroup }}

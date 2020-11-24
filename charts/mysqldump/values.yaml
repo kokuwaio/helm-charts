@@ -11,6 +11,11 @@ image:
   ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images#
   pullPolicy: IfNotPresent
 
+imagePullSecrets: []
+
+nameOverride: ""
+fullnameOverride: ""
+
 mysql:
 ## Without a host set, this chart will not do anything as it is expected
 ## to be used only when there's an existing database to backup.
