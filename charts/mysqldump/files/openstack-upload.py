@@ -1,12 +1,11 @@
 #!/usr/bin/python
 
-from optparse import OptionParser
-import os
-import sys
-import subprocess
 import json
-import re
+import os
+import subprocess
+import sys
 import threading
+from optparse import OptionParser
 
 global VERBOSE
 VERBOSE = False
@@ -81,6 +80,7 @@ def upload(source, destination, ttl_days):
             **dict(
                 {
                     k: v.strip()
+                    # pylint: disable=no-member
                     for (k, v) in os.environ.iteritems()
                     if k.startswith("OS_")
                 }

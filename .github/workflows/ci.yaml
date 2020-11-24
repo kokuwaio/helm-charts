@@ -15,9 +15,8 @@ jobs:
       - name: Codespell
         uses: codespell-project/actions-codespell@master
         with:
-          skip: ".git"
-
-          ignore_words_list: "iam,aks,gke,hart,pullRequest"
+          skip: .git
+          ignore_words_list: iam,aks,gke,hart,pullRequest
           check_filenames: true
           check_hidden: true
           only_warn: true
@@ -40,7 +39,6 @@ jobs:
         uses: helm/chart-testing-action@v2.0.1
       - name: Run chart-testing (lint)
         run: ct lint --config .github/ct.yaml
-
 
   super-linter:
     runs-on: ubuntu-20.04
