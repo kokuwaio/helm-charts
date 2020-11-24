@@ -13,11 +13,8 @@ spec:
   jobTemplate:
     metadata:
       labels:
-        app: {{ template "mysqldump.name" . }}
-        chart: {{ template "mysqldump.chart" . }}
+        {{- include "mysqldump.labels" . | nindent 8 }}
         cronjob-name: {{ template "mysqldump.fullname" . }}
-        release: "{{ .Release.Name }}"
-        heritage: "{{ .Release.Service }}"
     spec:
       backoffLimit: 1
       template:

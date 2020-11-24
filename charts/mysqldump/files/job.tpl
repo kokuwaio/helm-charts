@@ -57,19 +57,19 @@ spec:
     - name: gcloud-keyfile
       mountPath: /root/gcloud
 {{- end }}
-    resources:
-{{ toYaml .Values.resources | indent 12 }}
+    resources: 
+{{ toYaml .Values.resources | indent 6 }}
 {{- with .Values.nodeSelector }}
   nodeSelector:
-{{ toYaml . | indent 8 }}
+{{ toYaml . | indent 4 }}
 {{- end }}
 {{- with .Values.affinity }}
   affinity:
-{{ toYaml . | indent 8 }}
+{{ toYaml . | indent 4 }}
 {{- end }}
 {{- with .Values.tolerations }}
   tolerations:
-{{ toYaml . | indent 8 }}
+{{ toYaml . | indent 4 }}
 {{- end }}
   restartPolicy: Never
   volumes:
