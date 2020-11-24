@@ -200,7 +200,7 @@ AWS Elasticsearch requires requests to upload data to be signed using [AWS Signa
 
 ### From a version < 2.0.0
 
-When you upgrade this chart you have to add the "--force" parameter to your helm upgrade command as there have been changes to the lables which makes a normal upgrade impossible.
+When you upgrade this chart you have to add the "--force" parameter to your helm upgrade command as there have been changes to the labels which makes a normal upgrade impossible.
 
 ### From a version &ge; 4.9.3 to version &ge; 5.0.0
 
@@ -312,7 +312,7 @@ In this version elasticsearch template in `output.conf` configmap was expanded t
 - decide if to add a `logstash` - toggle `logstash.enabled`
 - decide if to add a `buffer` - toggle `buffer.enabled`
 
-#### The following fields were removed from the elasticsearch block in vlaues.yaml
+#### The following fields were removed from the elasticsearch block in values.yaml
 
 - `bufferChunkLimit` in favor of `buffer.chunkLimitSize`
 - `bufferQueueLimit` in favor of `buffer.queueLimitLength`

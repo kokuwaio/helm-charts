@@ -87,7 +87,7 @@ The following tables lists the configurable parameters of the mysqldump chart an
 | upload.openstack.enabled                      | upload backups via swift to openstack                                          | false                        |
 | upload.openstack.user                         | user name                                                                      | backup@mydomain              |
 | upload.openstack.userDomain                   | user domain                                                                    | default                      |
-| upload.openstack.password                     | user password, overriden by `existingSecret`/`existingSecretKey` if set        |                              |
+| upload.openstack.password                     | user password, overridden by `existingSecret`/`existingSecretKey` if set       |                              |
 | upload.openstack.authUrl                      | openstack auth url (v3)                                                        | https://mydomain:5000/v3     |
 | upload.openstack.project                      | project name                                                                   | my_project                   |
 | upload.openstack.projectDomain                | project domain                                                                 | default                      |

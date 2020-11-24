@@ -16,7 +16,7 @@ mysql:
 ## to be used only when there's an existing database to backup.
   host: ""
   username: root
-  # overriden by existingDbSecret / existingDbSecretKey if set
+  # overridden by existingDbSecret / existingDbSecretKey if set
   password:
   port: 3306
   # db for single db backup
@@ -111,7 +111,7 @@ upload:
     enabled: false
     user: backup@mydomain
     userDomain: default
-    # overriden by used if secretName/secretKey set
+    # overridden by used if secretName/secretKey set
     password:
     authUrl: https://mydomain:5000/v3
     project: my_project
