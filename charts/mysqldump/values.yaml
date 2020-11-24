@@ -19,7 +19,7 @@ fullnameOverride: ""
 mysql:
 ## Without a host set, this chart will not do anything as it is expected
 ## to be used only when there's an existing database to backup.
-  host: "localhost"
+  host: ""
   username: "root"
   # overridden by existingSecret / existingSecretKey if set
   # no password means random value
@@ -46,9 +46,11 @@ saveToDirectory: false
 # if to dump all databases to stdout when not uploading
 dumpAllToStdout: false
 
-## set to `now` to get a one time job, or a cronjob schedule like `0 0 * * *`
-## to get a cronjob.
+# cron time setting for backup schedule 
 schedule: "0 3 * * *"
+
+# runs the first backup imidiatly after installing the chart
+runDirectlyAfterInstall: true
 
 # enable some debug options
 debug: false
