@@ -1,4 +1,4 @@
-schedule: "now"
+schedule: "*/2 * * * *"
 
 mysql:
   host: "mysqldump-mariadb"
@@ -8,6 +8,6 @@ mysql:
 # mariadb dependency chart config
 mariadb:
   enabled: true
-  fullnameOverride: "mysqldump-mariadb"
   auth:
+    database: MySqlDumpTest
     rootPassword: MySqlDumpTest
