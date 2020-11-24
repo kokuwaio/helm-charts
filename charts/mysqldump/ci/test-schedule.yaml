@@ -1,3 +1,5 @@
+schedule: "*/2 * * * *"
+
 mysql:
   host: "mysqldump-mariadb"
   username: "MySqlDumpTest"
