@@ -2,12 +2,13 @@ schedule: "*/2 * * * *"
 
 mysql:
   host: "mysqldump-mariadb"
-  username: root
-  password: MySqlDumpTest
+  username: "root"
+  password: "MySqlDumpTest"
+  port: 3306
 
 # mariadb dependency chart config
 mariadb:
   enabled: true
   auth:
-    database: MySqlDumpTest
-    rootPassword: MySqlDumpTest
+    rootPassword: MySqlDumpTest"
+  fullnameOverride: "mysqldump-mariadb"
