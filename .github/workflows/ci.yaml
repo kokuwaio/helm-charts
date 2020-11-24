@@ -17,7 +17,7 @@ jobs:
         uses: codespell-project/actions-codespell@master
         with:
           skip: .git
-          ignore_words_list: iam,aks
+          ignore_words_list: iam,aks,pullrequest,hart
           check_filenames: true
           check_hidden: true
 
