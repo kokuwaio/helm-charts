@@ -16,8 +16,8 @@ jobs:
       - name: Codespell
         uses: codespell-project/actions-codespell@master
         with:
-          skip: .git
-          ignore_words_list: iam,aks
+          skip: ".git"
+          ignore_words_list: "iam,aks,gke,[cC]hart.yaml"
           check_filenames: true
           check_hidden: true
 
