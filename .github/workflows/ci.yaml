@@ -8,7 +8,7 @@ on:
 jobs:
   codespell:
     name: codespell
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -21,23 +21,33 @@ jobs:
           check_filenames: true
           check_hidden: true
 
+
   lint-chart:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-      - name: Fetch history
-        run: git fetch --prune --unshallow
+      - name: Set up Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v3.4.1
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.0.1
 
       - name: Run chart-testing (lint)
-        uses: helm/chart-testing-action@v1.1.0
-        with:
-          command: lint
-          config: .github/ct.yaml
+        run: ct lint --config .github/ct.yaml
+
 
   super-linter:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -51,8 +61,9 @@ jobs:
           VALIDATE_KUBERNETES_KUBEVAL: false
           VALIDATE_YAML: false
 
+
   kubeval-chart:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs:
       - codespell
       - lint-chart
@@ -75,33 +86,51 @@ jobs:
           KUBERNETES_VERSION: ${{ matrix.k8s }}
         run: .github/kubeval.sh
 
+
   install-chart:
-    runs-on: ubuntu-latest
-    needs:
-      - lint-chart
+    name: install-chart
+    runs-on: ubuntu-20.04
+    needs: 
       - kubeval-chart
     strategy:
       matrix:
-        k8s: 
+        k8s:
           - v1.16.15
           - v1.17.11
-          - v1.18.6
-          - v1.19.1
+          - v1.18.8
+          - v1.19.4
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-      - name: Fetch history
-        run: git fetch --prune --unshallow
+      - name: Set up Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v3.4.1
 
-      - name: Create kind ${{ matrix.k8s }} cluster
-        uses: helm/kind-action@master
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.0.1
+
+      - name: Run chart-testing (list-changed)
+        id: list-changed
+        run: |
+          changed=$(ct list-changed --config .github/ct.yaml)
+          if [[ -n "$changed" ]]; then
+            echo "::set-output name=changed::true"
+          fi
+
+      - name: Create kind cluster
+        uses: helm/kind-action@v1.1.0
+        if: steps.list-changed.outputs.changed == 'true'
         with:
           config: .github/kind-config.yaml
           node_image: kindest/node:${{ matrix.k8s }}
 
       - name: Run chart-testing (install)
-        uses: helm/chart-testing-action@v1.1.0
-        with:
-          command: install
-          config: .github/ct.yaml
+        run: ct install --config .github/ct.yaml
