@@ -6,19 +6,19 @@ on:
       - 'charts/**/[cC]hart.yaml'
 
 jobs:
-  codespell:
-    name: codespell
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Codespell
-        uses: codespell-project/actions-codespell@master
-        with:
-          skip: ".git"
-          ignore_words_list: "iam,aks,gke,hart,pullRequest"
-          check_filenames: true
-          check_hidden: true
+  # codespell:
+  #   name: codespell
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v2
+  #     - name: Codespell
+  #       uses: codespell-project/actions-codespell@master
+  #       with:
+  #         skip: ".git"
+  #         ignore_words_list: "iam,aks,gke,hart,pullRequest"
+  #         check_filenames: true
+  #         check_hidden: true
 
   lint-chart:
     runs-on: ubuntu-20.04
