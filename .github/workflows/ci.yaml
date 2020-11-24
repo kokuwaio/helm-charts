@@ -15,8 +15,8 @@ jobs:
       - name: Codespell
         uses: codespell-project/actions-codespell@master
         with:
-          skip: .git
-          ignore_words_list: hart,pullRequest
+          skip: ".git"
+          ignore_words_list: "hart,pullRequest"
           check_filenames: true
           check_hidden: true
           only_warn: true
