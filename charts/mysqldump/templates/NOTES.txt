@@ -8,16 +8,6 @@ For job status do:
 $ kubectl get job {{ template "mysqldump.fullname" . }} -o wide
 $ kubectl get pods -l app.kubernetes.io/name=mysqldump  -o wide
 
-The mysqldump contents can be found in:
-{{- if .Values.persistentVolumeClaim }}
-$ kubectl get persistentvolumeclaim {{ .Values.persistentVolumeClaim }}
-{{- if .Values.persistence.enabled }}
-$ kubectl get persistentvolumeclaim {{ template "mysqldump.fullname" . }}
-{{- end -}}
-{{- else -}}
-Empty dir
-{{- end }}
-
 For cronjob status do:
 $ kubectl get cronjob -l app.kubernetes.io/name=mysqldump -o yaml
 $ kubectl get jobs --selector=cronjob-name={{ template "mysqldump.fullname" . }}
@@ -27,3 +17,14 @@ $ kubectl logs -f -l job-name=mysqldump
 
 To run a job immediately do:
 $ kubectl create job run-now --from=cronjob/{{ template "mysqldump.fullname" . }}
+
+The mysqldump contents can be found in:
+{{- if .Values.persistentVolumeClaim }}
+$ kubectl get persistentvolumeclaim {{ .Values.persistentVolumeClaim }}
+{{- if .Values.persistence.enabled }}
+$ kubectl get persistentvolumeclaim {{ template "mysqldump.fullname" . }}
+{{- end -}}
+{{- else -}}
+Or in Empty dir of the container
+{{- end }}
+
