@@ -22,6 +22,7 @@ mysql:
   host: ""
   username: root
   # overridden by existingDbSecret / existingDbSecretKey if set
+  # no password means random value
   password: ""
   port: 3306
   # db name for single db backup
