@@ -46,7 +46,7 @@ saveToDirectory: false
 # if to dump all databases to stdout when not uploading
 dumpAllToStdout: false
 
-# cron time setting for backup schedule 
+# cron time setting for backup schedule
 schedule: "0 3 * * *"
 
 # runs the first backup imidiatly after installing the chart
