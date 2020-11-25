@@ -21,10 +21,8 @@ $ kubectl create job run-now --from=cronjob/{{ template "mysqldump.fullname" . }
 The mysqldump contents can be found in:
 {{- if .Values.persistentVolumeClaim }}
 $ kubectl get persistentvolumeclaim {{ .Values.persistentVolumeClaim }}
-{{- if .Values.persistence.enabled }}
+{{ else if .Values.persistence.enabled }}
 $ kubectl get persistentvolumeclaim {{ template "mysqldump.fullname" . }}
-{{- end -}}
-{{- else -}}
-Or in Empty dir of the container
+{{ else }}
+Empty dir mount of the container...
 {{- end }}
-
