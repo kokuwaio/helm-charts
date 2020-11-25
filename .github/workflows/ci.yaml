@@ -15,8 +15,9 @@ jobs:
       - name: Codespell
         uses: codespell-project/actions-codespell@master
         with:
-          skip: ".git,.github/codespell-ignore.list"
-          ignore_words_file: .github/codespell-ignore.list
+          skip: ".git"
+          exclude_file: ".github/codespell-ignore.list"
+          ignore_words_file: ".github/codespell-ignore.list"
           check_filenames: true
           check_hidden: true
           only_warn: true
