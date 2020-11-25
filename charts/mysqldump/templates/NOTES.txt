@@ -1,58 +1,28 @@
-{{- if eq .Values.schedule "now" }}
-
-Running mysqldump now.
-
-For job status run:
-
-$ kubectl get job {{ template "mysqldump.fullname" . }} -o wide
-
-$ kubectl get pods --selector=job-name={{ template "mysqldump.fullname" . }} --show-all -o wide
-
-To see the logs from the backup job run:
-
-$ kubectl logs `kubectl get pods --selector=job-name=test-mysqldump --output=jsonpath={.items..metadata.name}`
-
-mysqldump contents can be found in:
-{{- if .Values.persistentVolumeClaim }}
-$ kubectl get persistentvolumeclaim {{ .Values.persistentVolumeClaim }}
-{{- else -}}
-{{- if .Values.persistence.enabled }}
-$ kubectl get persistentvolumeclaim {{ template "mysqldump.fullname" . }}
-{{- else }}
-$ kubectl logs `kubectl get pods --selector=job-name=test-mysqldump --output=jsonpath={.items..metadata.name}`
-{{- end -}}
+{{- if .Values.runDirectlyAfterInstall }}
+runDirectlyAfterInstall is true so running a mysqldump job now...
 {{- end }}
-
-{{- else }}
 
 Running mysqldump on crontab schedule "{{ .Values.schedule }}"
 
-For cronjob status run:
+For job status do:
+$ kubectl get job {{ template "mysqldump.fullname" . }} -o wide
+$ kubectl get pods -l app.kubernetes.io/name=mysqldump  -o wide
 
-$ kubectl get cronjob {{ template "mysqldump.fullname" . }} -o wide
-
+For cronjob status do:
+$ kubectl get cronjob -l app.kubernetes.io/name=mysqldump -o yaml
 $ kubectl get jobs --selector=cronjob-name={{ template "mysqldump.fullname" . }}
 
-To see the logs from the most recent backup job run:
+To see the logs from the most recent backup job do:
+$ kubectl logs -f -l job-name=mysqldump
 
-$ kubectl logs $(kubectl get pods --selector \
-  job-name=$(kubectl get jobs --selector=cronjob-name={{ template "mysqldump.fullname" . }} \
-  --output=jsonpath='{.items[-1:].metadata.name}') \
-  --output=jsonpath={.items..metadata.name})
+To run a job immediately do:
+$ kubectl create job run-now --from=cronjob/{{ template "mysqldump.fullname" . }}
 
-To run cronjob now run:
-
-$ kubectl create job {{ template "mysqldump.fullname" . }} --from=cronjob/{{ template "mysqldump.fullname" . }}
-
-mysqldump contents can be found in:
+The mysqldump contents can be found in:
 {{- if .Values.persistentVolumeClaim }}
 $ kubectl get persistentvolumeclaim {{ .Values.persistentVolumeClaim }}
-{{- else -}}
-{{- if .Values.persistence.enabled }}
+{{ else if .Values.persistence.enabled }}
 $ kubectl get persistentvolumeclaim {{ template "mysqldump.fullname" . }}
-{{- else }}
-$ kubectl logs `kubectl get pods --selector=job-name=test-mysqldump --output=jsonpath={.items..metadata.name}`
-{{- end -}}
-{{- end }}
-
+{{ else }}
+Empty dir mount of the container...
 {{- end }}

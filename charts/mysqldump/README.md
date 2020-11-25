@@ -15,7 +15,8 @@ This chart helps set up a cronjob or one time job to backup a MySQL database wit
 
 ## Prerequisites
 
-- Kubernetes 1.8
+- Kubernetes 1.16
+- Helm 3.0
 
 ## Installing the Chart
 
@@ -34,7 +35,7 @@ This command will create a cronjob to run a job once a day to backup the databas
 To uninstall/delete the `my-release` deployment:
 
 ```console
-helm delete my-release
+helm uninstall my-release
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
@@ -87,8 +88,8 @@ The following tables lists the configurable parameters of the mysqldump chart an
 | upload.openstack.enabled                      | upload backups via swift to openstack                                          | false                        |
 | upload.openstack.user                         | user name                                                                      | backup@mydomain              |
 | upload.openstack.userDomain                   | user domain                                                                    | default                      |
-| upload.openstack.password                     | user password, overriden by `existingSecret`/`existingSecretKey` if set        |                              |
-| upload.openstack.authUrl                      | openstack auth url (v3)                                                        | https://mydomain:5000/v3     |
+| upload.openstack.password                     | user password, overridden by `existingSecret`/`existingSecretKey` if set       |                              |
+| upload.openstack.authUrl                      | openstack auth url (v3)                                                        | <https://mydomain:5000/v3>   |
 | upload.openstack.project                      | project name                                                                   | my_project                   |
 | upload.openstack.projectDomain                | project domain                                                                 | default                      |
 | upload.openstack.destination                  | destination path, starting witch container                                     | backup/mysql                 |
@@ -108,8 +109,7 @@ The following tables lists the configurable parameters of the mysqldump chart an
 By enabling the flag `upload.googlestoragebucket.usingGCPController` and having a GCP Service Account Controller deployed in your cluster, it is possible to autogenerate and inject the service account used for the storage bucket access. For more information see <https://github.com/kiwigrid/helm-charts/tree/master/charts/gcp-serviceaccount-controller>
 
 ```console
-helm install kokuwa/mysqldump --name my-release \
-    --set persistentVolumeClaim=name-of-existing-pvc
+helm install kokuwa/mysqldump --name my-release --set persistentVolumeClaim=name-of-existing-pvc
 ```
 
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,

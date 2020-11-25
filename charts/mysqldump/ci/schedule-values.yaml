@@ -1,0 +1,16 @@
+schedule: "*/2 * * * *"
+runDirectlyAfterInstall: false
+
+mysql:
+  host: "mysqldump-mariadb"
+  username: "MySqlDumpTest"
+  password: "MySqlDumpTest"
+
+# mariadb dependency chart config
+mariadb:
+  enabled: true
+  auth:
+    database: "MySqlDumpTest"
+    password: "MySqlDumpTest"
+    username: "MySqlDumpTest"
+  fullnameOverride: "mysqldump-mariadb"

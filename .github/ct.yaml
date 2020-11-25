@@ -1,6 +1,8 @@
-helm-extra-args: --timeout 1200s
+helm-extra-args: --timeout 600s
 check-version-increment: true
 debug: true
+upgrade: true
 target-branch: main
 chart-repos:
+  - bitnami=https://charts.bitnami.com/bitnami
   - kokuwa=https://kokuwaio.github.io/helm-charts

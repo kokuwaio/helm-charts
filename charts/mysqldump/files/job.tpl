@@ -1,4 +1,8 @@
 spec:
+  {{- with .Values.imagePullSecrets }}
+  imagePullSecrets:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   {{- if .Values.securityContext.enabled }}
   securityContext:
     fsGroup: {{ .Values.securityContext.fsGroup }}
@@ -6,7 +10,7 @@ spec:
   {{- end }}
   containers:
   - name: mysql-backup
-    image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+    image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
     imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
     command: ["/bin/bash", "/scripts/backup.sh"]
 {{- if or .Values.mysql.existingSecret .Values.upload.openstack.existingSecret }}
@@ -57,19 +61,19 @@ spec:
     - name: gcloud-keyfile
       mountPath: /root/gcloud
 {{- end }}
-    resources:
-{{ toYaml .Values.resources | indent 12 }}
+    resources: 
+{{ toYaml .Values.resources | indent 6 }}
 {{- with .Values.nodeSelector }}
   nodeSelector:
-{{ toYaml . | indent 8 }}
+{{ toYaml . | indent 4 }}
 {{- end }}
 {{- with .Values.affinity }}
   affinity:
-{{ toYaml . | indent 8 }}
+{{ toYaml . | indent 4 }}
 {{- end }}
 {{- with .Values.tolerations }}
   tolerations:
-{{ toYaml . | indent 8 }}
+{{ toYaml . | indent 4 }}
 {{- end }}
   restartPolicy: Never
   volumes:
