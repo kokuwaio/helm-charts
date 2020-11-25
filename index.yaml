@@ -206,6 +206,33 @@ entries:
     - https://github.com/kokuwaio/helm-charts/releases/download/fluentd-elasticsearch-10.0.0/fluentd-elasticsearch-10.0.0.tgz
     version: 10.0.0
   mysqldump:
+  - apiVersion: v2
+    appVersion: 3.0.0
+    created: "2020-11-25T00:24:22.432320174Z"
+    dependencies:
+    - condition: mariadb.enabled
+      name: mariadb
+      repository: https://charts.bitnami.com/bitnami
+      version: 9.0.1
+    description: A Helm chart to help backup MySQL databases using mysqldump
+    digest: d8fb2364db984c4a4945b9c77402272be1b8a2edac614cb0de708be9cf727444
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - mysqldump
+    - backup
+    maintainers:
+    - email: monotek23@gmail.com
+      name: monotek
+    name: mysqldump
+    sources:
+    - https://github.com/kokuwaio/helm-charts
+    - https://dev.mysql.com/doc/refman/5.7/en/mysqldump.html
+    type: application
+    urls:
+    - https://github.com/kokuwaio/helm-charts/releases/download/mysqldump-4.0.0/mysqldump-4.0.0.tgz
+    version: 4.0.0
   - apiVersion: v1
     appVersion: 2.4.1
     created: "2020-10-03T08:32:20.693593079Z"
