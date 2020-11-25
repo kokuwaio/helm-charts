@@ -3,27 +3,33 @@
 # Declare variables to be passed into your templates.
 
 image:
-  registry: docker.io
+  registry: quay.io
   repository: monotek/gcloud-mysql
-  tag: "14"
+  tag: "master-1"
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images#
   pullPolicy: IfNotPresent
 
+imagePullSecrets: []
+
+nameOverride: ""
+fullnameOverride: ""
+
 mysql:
 ## Without a host set, this chart will not do anything as it is expected
 ## to be used only when there's an existing database to backup.
   host: ""
-  username: root
-  # overriden by existingDbSecret / existingDbSecretKey if set
-  password:
+  username: "root"
+  # overridden by existingSecret / existingSecretKey if set
+  # no password means random value
+  password: ""
   port: 3306
-  # db for single db backup
-  db: dbname
+  # db name for single db backup
+  db: ""
   # Get password from existing secret
-  # existingSecret:
-  # existingSecretKey:
+  existingSecret: ""
+  existingSecretKey: ""
 
 # use --all-databases if enabled
 allDatabases:
@@ -40,9 +46,11 @@ saveToDirectory: false
 # if to dump all databases to stdout when not uploading
 dumpAllToStdout: false
 
-## set to `now` to get a one time job, or a cronjob schedule like `0 0 * * *`
-## to get a cronjob.
+# cron time setting for backup scheduleq
 schedule: "0 3 * * *"
+
+# runs the first backup imidiatly after installing the chart
+runDirectlyAfterInstall: true
 
 # enable some debug options
 debug: false
@@ -111,7 +119,7 @@ upload:
     enabled: false
     user: backup@mydomain
     userDomain: default
-    # overriden by used if secretName/secretKey set
+    # overridden by used if secretName/secretKey set
     password:
     authUrl: https://mydomain:5000/v3
     project: my_project
@@ -131,11 +139,11 @@ resources: {}
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   # limits:
-  #  cpu: 100m
-  #  memory: 128Mi
+  #   cpu: 100m
+  #   memory: 128Mi
   # requests:
-  #  cpu: 100m
-  #  memory: 128Mi
+  #   cpu: 100m
+  #   memory: 128Mi
 
 nodeSelector: {}
 
@@ -148,3 +156,7 @@ securityContext:
   enabled: false
   fsGroup: 999
   runAsUser: 999
+
+# dependency chart for ci
+mariadb:
+  enabled: false
