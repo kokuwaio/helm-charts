@@ -174,7 +174,7 @@ spec:
           mountPath: {{ .Values.hostLogDir.libSystemdDir }}
           readOnly: true
         - name: config-volume
-          mountPath: /etc/fluent/config.d
+          mountPath: {{ .Values.fluentConfDir }}
 {{- if .Values.extraVolumeMounts }}
 {{ toYaml .Values.extraVolumeMounts | indent 8 }}
 {{- end }}

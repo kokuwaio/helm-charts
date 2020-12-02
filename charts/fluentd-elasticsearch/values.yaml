@@ -38,6 +38,8 @@ awsSigningSidecar:
 # Pods to make scheduling of the pending Pod possible.
 priorityClassName: ""
 
+fluentConfDir: "/etc/fluent/config.d"
+
 # Specify where fluentd can find logs
 hostLogDir:
   varLog: /var/log
