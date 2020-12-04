@@ -282,6 +282,9 @@ configMaps:
   useDefaults:
     systemConf: true
     containersInputConf: true
+    ## Set containersKeepTimeKey to true to keep the kubernetes container log timestamp as part of the log message
+    ## Read keep_time_key at https://docs.fluentd.org/configuration/parse-section
+    containersKeepTimeKey: false
     systemInputConf: true
     forwardInputConf: true
     monitoringConf: true

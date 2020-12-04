@@ -57,6 +57,7 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `podAnnotations`                                     | Optional daemonset's pods annotations                                          | `NULL`                                             |
 | `configMaps.useDefaults.systemConf`                  | Use default system.conf                                                        | `true`                                             |
 | `configMaps.useDefaults.containersInputConf`         | Use default containers.input.conf                                              | `true`                                             |
+| `configMaps.useDefaults.containersKeepTimeKey`       | Keep the container log timestamp as part of the log data.                      | `false`                                            |
 | `configMaps.useDefaults.systemInputConf`             | Use default system.input.conf                                                  | `true`                                             |
 | `configMaps.useDefaults.forwardInputConf`            | Use default forward.input.conf                                                 | `true`                                             |
 | `configMaps.useDefaults.monitoringConf`              | Use default monitoring.conf                                                    | `true`                                             |
