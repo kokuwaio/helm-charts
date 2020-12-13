@@ -126,6 +126,8 @@ elasticsearch:
   suppressTypeName: false
   buffer:
     enabled: true
+    # ref: https://docs.fluentd.org/configuration/buffer-section#chunk-keys
+    chunkKeys: ""
     type: "file"
     path: "/var/log/fluentd-buffers/kubernetes.system.buffer"
     flushMode: "interval"
