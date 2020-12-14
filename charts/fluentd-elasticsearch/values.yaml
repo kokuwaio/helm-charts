@@ -97,6 +97,7 @@ elasticsearch:
     policy_overwrite: false
   template:
     enabled: false
+    overwrite: false
     name: fluentd-template
     file: fluentd-template.json
     content: |-

@@ -85,10 +85,11 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `elasticsearch.ilm.policy`                           | Elasticsearch ILM policy to create                                             | `{}`                                               |
 | `elasticsearch.ilm.policies`                         | Elasticsearch ILM policies to create, map of policy IDs and policies           | `{}`                                               |
 | `elasticsearch.ilm.policy_overwrite`                 | Elastichsarch ILM policy overwrite                                             | `false`                                            |
-| `elasticsearch.template.enabled`                     | Elastichsarch Index Template enabled                                           | `false`                                            |
-| `elasticsearch.template.name`                        | Elastichsarch Index Template Name                                              | `fluentd-template`                                 |
-| `elasticsearch.template.file`                        | Elasticsearch Index Template File Name (inside the daemonset)                  | `fluentd-template.json`                            |
-| `elasticsearch.template.content`                     | Elasticsearch Index Template Content                                           | _see `values.yaml`_                                |
+| `elasticsearch.template.enabled`                     | Elastichsarch Template enabled                                                 | `false`                                            |
+| `elasticsearch.template.name`                        | Elastichsarch Template Name                                                    | `fluentd-template`                                 |
+| `elasticsearch.template.file`                        | Elasticsearch Template File Name (inside the daemonset)                        | `fluentd-template.json`                            |
+| `elasticsearch.template.content`                     | Elasticsearch Template Content                                                 | _see `values.yaml`_                                |
+| `elasticsearch.template.overwrite`                   | Elasticsearch Template Overwrite (update even if it already exists)            | `false`                                            |
 | `elasticsearch.indexName`                            | Elasticsearch Index Name                                                       | `fluentd`                                          |
 | `elasticsearch.path`                                 | Elasticsearch Path                                                             | `""`                                               |
 | `elasticsearch.scheme`                               | Elasticsearch scheme setting                                                   | `http`                                             |

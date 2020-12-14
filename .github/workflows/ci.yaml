@@ -3,7 +3,7 @@ name: ci
 on: 
   pull_request:
     paths:
-      - 'charts/**/[cC]hart.yaml'
+      - 'charts/**/**'
 
 jobs:
   codespell:
