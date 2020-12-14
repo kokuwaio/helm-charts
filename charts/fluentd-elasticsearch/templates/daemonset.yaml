@@ -87,6 +87,8 @@ spec:
           value: {{ .Values.elasticsearch.template.name | quote }}
         - name: TEMPLATE_FILE
           value: "/etc/fluent/config.d/{{ .Values.elasticsearch.template.file }}"
+        - name: TEMPLATE_OVERWRITE
+          value: {{ .Values.elasticsearch.template.overwrite | quote }}
 {{- end }}
         - name: OUTPUT_SCHEME
           {{- if .Values.awsSigningSidecar.enabled }}
