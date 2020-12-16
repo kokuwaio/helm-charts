@@ -542,7 +542,11 @@ data:
       suppress_type_name "#{ENV['OUTPUT_SUPPRESS_TYPE_NAME']}"
 {{- end }}
 {{- if .Values.elasticsearch.buffer.enabled }}
+{{- if .Values.elasticsearch.buffer.chunkKeys }}
+      <buffer "#{ENV['OUTPUT_BUFFER_CHUNK_KEYS']}">
+{{- else }}
       <buffer>
+{{- end }}
         @type "#{ENV['OUTPUT_BUFFER_TYPE']}"
         path "#{ENV['OUTPUT_BUFFER_PATH']}"
         flush_mode "#{ENV['OUTPUT_BUFFER_FLUSH_MODE']}"

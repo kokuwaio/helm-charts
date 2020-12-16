@@ -108,6 +108,10 @@ spec:
           value: {{ .Values.elasticsearch.buffer.chunkLimitSize | quote }}
         - name: OUTPUT_BUFFER_QUEUE_LIMIT
           value: {{ .Values.elasticsearch.buffer.queueLimitLength | quote }}
+          {{- if .Values.elasticsearch.buffer.chunkKeys }}
+        - name: OUTPUT_BUFFER_CHUNK_KEYS
+          value: {{ .Values.elasticsearch.buffer.chunkKeys | quote }}
+          {{- end }}
         - name: OUTPUT_BUFFER_TYPE
           value: {{ .Values.elasticsearch.buffer.type | quote }}
         - name: OUTPUT_BUFFER_PATH

@@ -105,6 +105,7 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `elasticsearch.requestTimeout`                       | Elasticsearch request timeout                                                  | `5s`                                               |
 | `elasticsearch.suppressTypeName`                     | Elasticsearch type name suppression (for ES >= 7)                              | `false`                                            |
 | `elasticsearch.buffer.enabled`                       | Elasticsearch Buffer enabled                                                   | `true`                                             |
+| `elasticsearch.buffer.chunkKeys`                     | Elasticsearch Buffer comma-separated chunk keys                                | `""`                                               |
 | `elasticsearch.buffer.type`                          | Elasticsearch Buffer type                                                      | `file`                                             |
 | `elasticsearch.buffer.path`                          | Elasticsearch Buffer path                                                      | `/var/log/fluentd-buffers/kubernetes.system.buffer`|
 | `elasticsearch.buffer.flushMode`                     | Elasticsearch Buffer flush mode                                                | `interval`                                         |
