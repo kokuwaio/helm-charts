@@ -125,6 +125,7 @@ elasticsearch:
   reloadConnections: false
   requestTimeout: "5s"
   suppressTypeName: false
+  includeTimestamp: false
   buffer:
     enabled: true
     # ref: https://docs.fluentd.org/configuration/buffer-section#chunk-keys

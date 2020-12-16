@@ -148,6 +148,8 @@ spec:
         - name: OUTPUT_SUPPRESS_TYPE_NAME
           value: {{ .Values.elasticsearch.suppressTypeName | quote }}
 {{- end }}
+        - name: INCLUDE_TIMESTAMP
+          value: {{ .Values.elasticsearch.includeTimestamp | quote }}
         {{- if .Values.env }}
         {{- range $key, $value := .Values.env }}
         - name: {{ $key }}

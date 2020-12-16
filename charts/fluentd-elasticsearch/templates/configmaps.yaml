@@ -520,6 +520,7 @@ data:
 {{- else }}
       logstash_format "#{ENV['LOGSTASH_FORMAT']}"
       index_name "#{ENV['INDEX_NAME']}"
+      include_timestamp "#{ENV['INCLUDE_TIMESTAMP']}"
 {{- end }}
 {{- if .Values.elasticsearch.ilm.enabled }}
       enable_ilm "#{ENV['ENABLE_ILM']}"

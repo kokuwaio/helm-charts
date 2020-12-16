@@ -104,6 +104,7 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `elasticsearch.reloadConnections`                    | Elasticsearch reload connections                                               | `false`                                            |
 | `elasticsearch.requestTimeout`                       | Elasticsearch request timeout                                                  | `5s`                                               |
 | `elasticsearch.suppressTypeName`                     | Elasticsearch type name suppression (for ES >= 7)                              | `false`                                            |
+| `elasticsearch.includeTimestamp`                     | Elasticsearch Include timestamp (param used only if logstash is disabled)      | `false`                                            |
 | `elasticsearch.buffer.enabled`                       | Elasticsearch Buffer enabled                                                   | `true`                                             |
 | `elasticsearch.buffer.chunkKeys`                     | Elasticsearch Buffer comma-separated chunk keys                                | `""`                                               |
 | `elasticsearch.buffer.type`                          | Elasticsearch Buffer type                                                      | `file`                                             |
