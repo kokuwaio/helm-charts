@@ -71,8 +71,8 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `awsSigningSidecar.image.repository`                 | AWS signing sidecar repository image                                           | `abutaha/aws-es-proxy`                             |
 | `awsSigningSidecar.image.tag`                        | AWS signing sidecar repository tag                                             | `v1.0`                                             |
 | `elasticsearch.auth.enabled`                         | Elasticsearch Auth enabled                                                     | `false`                                            |
-| `elasticsearch.auth.user`                            | Elasticsearch Auth User                                                        | `""`                                               |
-| `elasticsearch.auth.password`                        | Elasticsearch Auth Password                                                    | `""`                                               |
+| `elasticsearch.auth.user`                            | Elasticsearch Auth User                                                        | `null`                                             |
+| `elasticsearch.auth.password`                        | Elasticsearch Auth Password                                                    | `null`                                             |
 | `elasticsearch.setOutputHostEnvVar`                  | Use `elasticsearch.hosts` (Disable this to manually configure hosts)           | `true`                                             |
 | `elasticsearch.hosts`                                | Elasticsearch Hosts List (host and port)                                       | `["elasticsearch-client:9200"]`                    |
 | `elasticsearch.includeTagKey`                        | Elasticsearch Including of Tag key                                             | `true`                                             |

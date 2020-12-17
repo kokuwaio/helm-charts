@@ -60,8 +60,8 @@ resources: {}
 elasticsearch:
   auth:
     enabled: false
-    user: "yourUser"
-    password: "yourPass"
+    user: null
+    password: null
   includeTagKey: true
   setOutputHostEnvVar: true
   # If setOutputHostEnvVar is false this value is ignored
