@@ -53,8 +53,10 @@ spec:
         - name: OUTPUT_PATH
           value: {{ .Values.elasticsearch.path | quote }}
 {{- if .Values.elasticsearch.auth.enabled }}
+{{- if .Values.elasticsearch.auth.user }}
         - name: OUTPUT_USER
           value: {{ .Values.elasticsearch.auth.user | quote }}
+{{- end }}
 {{- if .Values.elasticsearch.auth.password }}
         - name: OUTPUT_PASSWORD
           value: {{ .Values.elasticsearch.auth.password | quote }}
