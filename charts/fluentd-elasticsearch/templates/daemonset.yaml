@@ -206,9 +206,16 @@ spec:
       - name: {{ include "fluentd-elasticsearch.fullname" . }}-aws-es-proxy
         image: {{ .Values.awsSigningSidecar.image.repository }}:{{ .Values.awsSigningSidecar.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
-        args: ["-endpoint", "{{ .Values.elasticsearch.scheme }}://{{ index .Values.elasticsearch.hosts 0 }}",
-               "-listen",   "{{ .Values.awsSigningSidecar.network.address }}:{{ .Values.awsSigningSidecar.network.port }}",
-               "-timeout",  "{{ .Values.awsSigningSidecar.network.remoteReadTimeoutSeconds }}"]
+        args:
+          - "-endpoint"
+          - "{{ .Values.elasticsearch.scheme }}://{{ index .Values.elasticsearch.hosts 0 }}",
+          - "-listen"
+          - "{{ .Values.awsSigningSidecar.network.address }}:{{ .Values.awsSigningSidecar.network.port }}",
+          - "-timeout"
+          - "{{ .Values.awsSigningSidecar.network.remoteReadTimeoutSeconds }}"]
+{{- range $arg := .Values.awsSigningSideCar.args }}
+          - {{ $arg }}
+{{- end }}
         env:
         - name: PORT_NUM
           value: {{ .Values.awsSigningSidecar.network.port | quote }}

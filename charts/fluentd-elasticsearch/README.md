@@ -70,6 +70,7 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `awsSigningSidecar.network.remoteReadTimeoutSeconds` | AWS Sidecar socket read timeout when talking to ElasticSearch                  | `15`                                               |
 | `awsSigningSidecar.image.repository`                 | AWS signing sidecar repository image                                           | `abutaha/aws-es-proxy`                             |
 | `awsSigningSidecar.image.tag`                        | AWS signing sidecar repository tag                                             | `v1.0`                                             |
+| `awsSigningSidecar.args`                             | Additional command-line arguments for the AWS signing sidecar container        | `[]`                                             |
 | `elasticsearch.auth.enabled`                         | Elasticsearch Auth enabled                                                     | `false`                                            |
 | `elasticsearch.auth.user`                            | Elasticsearch Auth User                                                        | `null`                                             |
 | `elasticsearch.auth.password`                        | Elasticsearch Auth Password                                                    | `null`                                             |
@@ -326,7 +327,7 @@ In this version elasticsearch template in `output.conf` configmap was expanded t
 - `bufferChunkLimit` in favor of `buffer.chunkLimitSize`
 - `bufferQueueLimit` in favor of `buffer.queueLimitLength`
 - `logstashPrefix` in favor of `logstash.enabled` and `logstash.prefix`
-  
+
 #### The following fields were added
 
 - `reconnectOnError`
