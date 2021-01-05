@@ -213,7 +213,7 @@ spec:
           - "{{ .Values.awsSigningSidecar.network.address }}:{{ .Values.awsSigningSidecar.network.port }}",
           - "-timeout"
           - "{{ .Values.awsSigningSidecar.network.remoteReadTimeoutSeconds }}"]
-{{- range $arg := .Values.awsSigningSideCar.args }}
+{{- range $arg := .Values.awsSigningSidecar.args }}
           - {{ $arg }}
 {{- end }}
         env:
