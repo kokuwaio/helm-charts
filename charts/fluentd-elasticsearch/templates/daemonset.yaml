@@ -208,13 +208,13 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
         args:
           - "-endpoint"
-          - "{{ .Values.elasticsearch.scheme }}://{{ index .Values.elasticsearch.hosts 0 }}",
+          - "{{ .Values.elasticsearch.scheme }}://{{ index .Values.elasticsearch.hosts 0 }}"
           - "-listen"
-          - "{{ .Values.awsSigningSidecar.network.address }}:{{ .Values.awsSigningSidecar.network.port }}",
+          - "{{ .Values.awsSigningSidecar.network.address }}:{{ .Values.awsSigningSidecar.network.port }}"
           - "-timeout"
-          - "{{ .Values.awsSigningSidecar.network.remoteReadTimeoutSeconds }}"]
+          - "{{ .Values.awsSigningSidecar.network.remoteReadTimeoutSeconds }}"
 {{- range $arg := .Values.awsSigningSidecar.args }}
-          - {{ $arg }}
+          - "{{ $arg }}"
 {{- end }}
         env:
         - name: PORT_NUM
