@@ -532,6 +532,33 @@ entries:
   mysqldump:
   - apiVersion: v2
     appVersion: 3.0.0
+    created: "2021-01-29T10:28:56.418401082Z"
+    dependencies:
+    - condition: mariadb.enabled
+      name: mariadb
+      repository: https://charts.bitnami.com/bitnami
+      version: 9.0.1
+    description: A Helm chart to help backup MySQL databases using mysqldump
+    digest: 9bc6db586cb3ee8db2f38059ede647f548236ab479befc24f235a00e163d1ed8
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - mysqldump
+    - backup
+    maintainers:
+    - email: monotek23@gmail.com
+      name: monotek
+    name: mysqldump
+    sources:
+    - https://github.com/kokuwaio/helm-charts
+    - https://dev.mysql.com/doc/refman/5.7/en/mysqldump.html
+    type: application
+    urls:
+    - https://github.com/kokuwaio/helm-charts/releases/download/mysqldump-4.0.2/mysqldump-4.0.2.tgz
+    version: 4.0.2
+  - apiVersion: v2
+    appVersion: 3.0.0
     created: "2020-12-18T18:21:51.844166519Z"
     dependencies:
     - condition: mariadb.enabled
