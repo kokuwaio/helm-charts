@@ -54,9 +54,14 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "mysqldump.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "mysqldump.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
+{{ include "mysqldump.fullname" . }}
+{{- end }}
+
+{{/*
+Create the name of the gcp secret to use
+*/}}
+{{- define "mysqldump.gcpsecretName" -}}
+{{- if .Values.upload.googlestoragebucket.enabled -}}
+{{ .Release.Name }}-gcloud-keyfile
 {{- end }}
 {{- end }}
