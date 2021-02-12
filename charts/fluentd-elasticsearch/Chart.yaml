@@ -1,7 +1,7 @@
 apiVersion: v2
 name: fluentd-elasticsearch
-version: 11.7.2
-appVersion: 3.1.0
+version: 11.8.0
+appVersion: 3.2.0
 type: application
 home: https://www.fluentd.org/
 description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
