@@ -63,9 +63,9 @@ elasticsearch:
     enabled: false
     user: null
     password: null
-    existingSecret: null
-      # name: mysecret
-      # key: password
+    existingSecret:
+      name: null
+      key: null
   includeTagKey: true
   setOutputHostEnvVar: true
   # If setOutputHostEnvVar is false this value is ignored
