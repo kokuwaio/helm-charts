@@ -63,7 +63,7 @@ elasticsearch:
     enabled: false
     user: null
     password: null
-    passwordSecretKeyRef: null
+    existingSecret: null
       # name: mysecret
       # key: password
   includeTagKey: true
