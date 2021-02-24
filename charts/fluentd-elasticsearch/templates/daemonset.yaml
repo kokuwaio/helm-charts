@@ -57,7 +57,13 @@ spec:
         - name: OUTPUT_USER
           value: {{ .Values.elasticsearch.auth.user | quote }}
 {{- end }}
-{{- if .Values.elasticsearch.auth.password }}
+{{- if .Values.elasticsearch.auth.existingSecret.name }}
+        - name: OUTPUT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.elasticsearch.auth.existingSecret.name }}
+              key: {{ .Values.elasticsearch.auth.existingSecret.key }}
+{{- else if .Values.elasticsearch.auth.password }}
         - name: OUTPUT_PASSWORD
           value: {{ .Values.elasticsearch.auth.password | quote }}
 {{- end }}
