@@ -74,6 +74,8 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `elasticsearch.auth.enabled`                         | Elasticsearch Auth enabled                                                     | `false`                                            |
 | `elasticsearch.auth.user`                            | Elasticsearch Auth User                                                        | `null`                                             |
 | `elasticsearch.auth.password`                        | Elasticsearch Auth Password                                                    | `null`                                             |
+| `elasticsearch.auth.passwordSecretKeyRef.name`       | Name of secret                                                                 | `null`                                             |
+| `elasticsearch.auth.passwordSecretKeyRef.key`        | Key within secret containing password                                          | `null`                                             |
 | `elasticsearch.setOutputHostEnvVar`                  | Use `elasticsearch.hosts` (Disable this to manually configure hosts)           | `true`                                             |
 | `elasticsearch.hosts`                                | Elasticsearch Hosts List (host and port)                                       | `["elasticsearch-client:9200"]`                    |
 | `elasticsearch.includeTagKey`                        | Elasticsearch Including of Tag key                                             | `true`                                             |
