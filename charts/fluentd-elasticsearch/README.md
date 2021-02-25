@@ -146,9 +146,9 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `prometheusRule.prometheusNamespace`                 | Namespace for prometheusRule                                                   | `monitoring`                                       |
 | `prometheusRule.labels`                              | Optional labels for prometheusRule                                             | `{}`                                               |
 | `rbac.create`                                        | RBAC                                                                           | `true`                                             |
-| `resources.limits.cpu`                               | CPU limit                                                                      | `100m`                                             |
+| `resources.limits.cpu`                               | CPU limit                                                                      | `1000m`                                            |
 | `resources.limits.memory`                            | Memory limit                                                                   | `500Mi`                                            |
-| `resources.requests.cpu`                             | CPU request                                                                    | `100m`                                             |
+| `resources.requests.cpu`                             | CPU request                                                                    | ``                                                 |
 | `resources.requests.memory`                          | Memory request                                                                 | `200Mi`                                            |
 | `service`                                            | Service definition                                                             | `{}`                                               |
 | `service.ports`                                      | List of service ports dict [{name:...}...]                                     | Not Set                                            |
