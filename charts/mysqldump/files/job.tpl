@@ -95,12 +95,12 @@ spec:
 {{- if .Values.upload.ssh.enabled }}
   - name: ssh-privatekey
     secret:
-      secretName: {{ template "mysqldump.fullname" . }}-ssh-privatekey
+      secretName: {{ if .Values.upload.ssh.existingSecret }}{{ .Values.upload.ssh.existingSecret }}{{ else }}{{ template "mysqldump.fullname" . }}-ssh-privatekey{{ end }}
       defaultMode: 256
 {{- end }}
 {{- if .Values.upload.googlestoragebucket.enabled }}
   - name: gcloud-keyfile
     secret:
-      secretName: {{ template "mysqldump.gcpsecretName" . }}
+      secretName: {{ if .Values.upload.googlestoragebucket.existingSecret }}{{ .Values.upload.googlestoragebucket.existingSecret }}{{ else }}{{ template "mysqldump.gcpsecretName" . }}{{ end }}
       defaultMode: 256
 {{ end }}

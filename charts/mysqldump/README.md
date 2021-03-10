@@ -82,6 +82,7 @@ The following tables lists the configurable parameters of the mysqldump chart an
 | upload.googlestoragebucket.usingGCPController | enable the use of the GCP Service Account Controller                           | false                        |
 | upload.googlestoragebucket.serviceAccountName | specify a service account name to use                                          | nil                          |
 | upload.ssh.enabled                            | upload backups via ssh                                                         | false                        |
+| upload.ssh.existingSecret                     | specify a secretname to use                                                    | nil                          |
 | upload.ssh.user                               | ssh user                                                                       | backup                       |
 | upload.ssh.host                               | ssh server url                                                                 | yourdomain.com               |
 | upload.ssh.dir                                | directory on server                                                            | /backup                      |
