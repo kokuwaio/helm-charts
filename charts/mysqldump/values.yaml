@@ -72,6 +72,9 @@ additionalSteps: []
 ## if not set and `persistence.enabled` set to true, will create a PVC.
 # persistentVolumeClaim: <existing-PVC>
 
+# pod anotation
+podAnnotations: {}
+
 persistence:
   enabled: true
   size: 8Gi
