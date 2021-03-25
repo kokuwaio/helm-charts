@@ -17,13 +17,12 @@ image:
 ## proxy that takes care of signing all requests being sent to the AWS ES Domain.
 awsSigningSidecar:
   enabled: false
-  resources: {}
-  # limits:
-  #   cpu: 100m
-  #   memory: 500Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 200Mi
+  resources: 
+  limits:
+    cpu: 1000m
+    memory: 500Mi
+  requests:
+    memory: 200Mi
   network:
     port: 8080
     address: localhost
