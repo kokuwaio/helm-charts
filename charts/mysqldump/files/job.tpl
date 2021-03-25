@@ -1,3 +1,8 @@
+{{- if .Values.podAnnotations }}
+metadata:
+  annotations:
+{{ toYaml .Values.podAnnotations | indent 4 }}
+{{- end }}
 spec:
   {{- with .Values.imagePullSecrets }}
   imagePullSecrets:
