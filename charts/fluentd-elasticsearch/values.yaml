@@ -102,6 +102,7 @@ elasticsearch:
   template:
     enabled: false
     overwrite: false
+    useLegacy: true
     name: fluentd-template
     file: fluentd-template.json
     content: |-

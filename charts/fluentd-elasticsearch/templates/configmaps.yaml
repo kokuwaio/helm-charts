@@ -533,6 +533,7 @@ data:
       template_name "#{ENV['TEMPLATE_NAME']}"
       template_file "#{ENV['TEMPLATE_FILE']}"
       template_overwrite "#{ENV['TEMPLATE_OVERWRITE']}"
+      use_legacy_template "#{ENV['USE_LEGACY_TEMPLATE']}"
 {{- end }}
       log_es_400_reason "#{ENV['OUTPUT_LOG_400_REASON']}"
       reconnect_on_error "#{ENV['OUTPUT_RECONNECT_ON_ERROR']}"

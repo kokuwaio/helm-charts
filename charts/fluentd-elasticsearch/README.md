@@ -93,6 +93,7 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `elasticsearch.template.file`                        | Elasticsearch Template File Name (inside the daemonset)                        | `fluentd-template.json`                            |
 | `elasticsearch.template.content`                     | Elasticsearch Template Content                                                 | _see `values.yaml`_                                |
 | `elasticsearch.template.overwrite`                   | Elasticsearch Template Overwrite (update even if it already exists)            | `false`                                            |
+| `elasticsearch.template.useLegacy`                   | Use legacy Elasticsearch template                                              | `true`                                             |
 | `elasticsearch.indexName`                            | Elasticsearch Index Name                                                       | `fluentd`                                          |
 | `elasticsearch.path`                                 | Elasticsearch Path                                                             | `""`                                               |
 | `elasticsearch.scheme`                               | Elasticsearch scheme setting                                                   | `http`                                             |
