@@ -97,6 +97,8 @@ spec:
           value: "/etc/fluent/config.d/{{ .Values.elasticsearch.template.file }}"
         - name: TEMPLATE_OVERWRITE
           value: {{ .Values.elasticsearch.template.overwrite | quote }}
+        - name: USE_LEGACY_TEMPLATE
+          value: {{ .Values.elasticsearch.template.useLegacy | quote }}
 {{- end }}
         - name: OUTPUT_SCHEME
           {{- if .Values.awsSigningSidecar.enabled }}
