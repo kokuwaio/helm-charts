@@ -151,6 +151,11 @@ elasticsearch:
 # by example you can add -vv to launch with trace log
 fluentdArgs: "--no-supervisor -q"
 
+# Specifies the output format of fluentd's own log messages. Set to
+# "json" to enable structured logging.
+# See https://docs.fluentd.org/deployment/logging#log-format
+fluentdLogFormat: "text"
+
 # If you want to add custom environment variables, use the env dict
 # You can then reference these in your config file e.g.:
 #     user "#{ENV['OUTPUT_USER']}"

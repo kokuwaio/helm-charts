@@ -10,6 +10,9 @@ data:
   system.conf: |-
     <system>
       root_dir /tmp/fluentd-buffers/
+      <log>
+        format {{ .Values.fluentdLogFormat }}
+      </log>
     </system>
 {{- end }}
 
