@@ -64,6 +64,7 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `configMaps.useDefaults.outputConf`                  | Use default output.conf                                                        | `true`                                             |
 | `extraConfigMaps`                                    | Add additional Configmap or overwrite disabled default                         | `{}`                                               |
 | `awsSigningSidecar.enabled`                          | Enable AWS request signing sidecar                                             | `false`                                            |
+| `awsSigningSidecar.extraEnvs`                        | List of env vars that are added to the AWS signing sidecar pods                | `[]`                                               |
 | `awsSigningSidecar.resources`                        | AWS Sidecar resources                                                          | `{}`                                               |
 | `awsSigningSidecar.network.port`                     | AWS Sidecar exposure port                                                      | `8080`                                             |
 | `awsSigningSidecar.network.address`                  | AWS Sidecar listen address                                                     | `localhost`                                        |
