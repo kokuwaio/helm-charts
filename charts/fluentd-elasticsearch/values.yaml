@@ -17,6 +17,12 @@ image:
 ## proxy that takes care of signing all requests being sent to the AWS ES Domain.
 awsSigningSidecar:
   enabled: false
+  # You can configure some features of AWS ES Proxy by passing specific environment
+  # variables. E.g. AWS EKS IRSA is supported by providing AWS_ROLE_ARN and
+  # AWS_WEB_IDENTITY_TOKEN_FILE
+  extraEnvs: []
+  # name: FOO
+  # value: BAR
   resources: {}
   # limits:
   #   cpu: 100m

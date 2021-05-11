@@ -227,6 +227,12 @@ spec:
         env:
         - name: PORT_NUM
           value: {{ .Values.awsSigningSidecar.network.port | quote }}
+        {{- if .Values.awsSigningSidecar.extraEnvs }}
+        {{- range $env := .Values.awsSigningSidecar.extraEnvs }}
+        - name: {{ $env.name }}
+          value: {{ $env.value | quote }}
+        {{- end }}
+        {{- end }}
         resources:
 {{ toYaml .Values.awsSigningSidecar.resources | indent 10 }}
         volumeMounts:
