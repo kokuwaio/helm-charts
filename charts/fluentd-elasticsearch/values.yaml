@@ -17,6 +17,12 @@ image:
 ## proxy that takes care of signing all requests being sent to the AWS ES Domain.
 awsSigningSidecar:
   enabled: false
+  # You can configure some features of AWS ES Proxy by passing specific environment
+  # variables. E.g. AWS EKS IRSA is supported by providing AWS_ROLE_ARN and
+  # AWS_WEB_IDENTITY_TOKEN_FILE
+  extraEnvs: []
+  # name: FOO
+  # value: BAR
   resources: {}
   # limits:
   #   cpu: 100m
@@ -63,6 +69,9 @@ elasticsearch:
     enabled: false
     user: null
     password: null
+    existingSecret:
+      name: null
+      key: null
   includeTagKey: true
   setOutputHostEnvVar: true
   # If setOutputHostEnvVar is false this value is ignored
@@ -99,6 +108,7 @@ elasticsearch:
   template:
     enabled: false
     overwrite: false
+    useLegacy: true
     name: fluentd-template
     file: fluentd-template.json
     content: |-
@@ -146,6 +156,11 @@ elasticsearch:
 # If you want to change args of fluentd process
 # by example you can add -vv to launch with trace log
 fluentdArgs: "--no-supervisor -q"
+
+# Specifies the output format of fluentd's own log messages. Set to
+# "json" to enable structured logging.
+# See https://docs.fluentd.org/deployment/logging#log-format
+fluentdLogFormat: "text"
 
 # If you want to add custom environment variables, use the env dict
 # You can then reference these in your config file e.g.:
@@ -208,17 +223,20 @@ livenessProbe:
         STUCK_THRESHOLD_SECONDS=${STUCK_THRESHOLD_SECONDS:-900};
         if [ ! -e /var/log/fluentd-buffers ];
         then
+          echo "Expected directory /var/log/fluentd-buffers does not exist. This is likely a configuration issue.";
           exit 1;
         fi;
         touch -d "${STUCK_THRESHOLD_SECONDS} seconds ago" /tmp/marker-stuck;
-        if [ -z "$(find /var/log/fluentd-buffers -type d -newer /tmp/marker-stuck -print -quit)" ];
+        if [ -n "$(find /var/log/fluentd-buffers -mindepth 1 -type d ! -newer /tmp/marker-stuck -print -quit)" ];
         then
+          echo "Elasticsearch buffers found stuck longer than $STUCK_THRESHOLD_SECONDS seconds. Clearing buffers."
           rm -rf /var/log/fluentd-buffers;
           exit 1;
         fi;
         touch -d "${LIVENESS_THRESHOLD_SECONDS} seconds ago" /tmp/marker-liveness;
-        if [ -z "$(find /var/log/fluentd-buffers -type d -newer /tmp/marker-liveness -print -quit)" ];
+        if [ -n "$(find /var/log/fluentd-buffers -mindepth 1 -type d ! -newer /tmp/marker-liveness -print -quit)" ];
         then
+          echo "Elasticsearch buffers found stuck longer than $LIVENESS_THRESHOLD_SECONDS seconds."
           exit 1;
         fi;
 
@@ -281,7 +299,73 @@ prometheusRule:
   enabled: false
   prometheusNamespace: monitoring
   labels: {}
-  #  role: alert-rules
+  rules:
+  - alert: FluentdNodeDown
+    expr: up{job="{{ include "fluentd-elasticsearch.fullname" . }}"} == 0
+    for: 10m
+    labels:
+      service: fluentd
+      severity: warning
+    annotations:
+      summary: fluentd cannot be scraped
+      description: Prometheus could not scrape {{ "{{ $labels.job }}" }} for more than 10 minutes
+  - alert: FluentdNodeDown
+    expr: up{job="{{ include "fluentd-elasticsearch.fullname" . }}"} == 0
+    for: 30m
+    labels:
+      service: fluentd
+      severity: critical
+    annotations:
+      summary: fluentd cannot be scraped
+      description: Prometheus could not scrape {{ "{{ $labels.job }}" }} for more than 30 minutes
+  - alert: FluentdQueueLength
+    expr: rate(fluentd_status_buffer_queue_length[5m]) > 0.3
+    for: 1m
+    labels:
+      service: fluentd
+      severity: warning
+    annotations:
+      summary: fluentd node are failing
+      description: In the last 5 minutes, fluentd queues increased 30%. Current value is {{ "{{ $value }}" }}
+  - alert: FluentdQueueLength
+    expr: rate(fluentd_status_buffer_queue_length[5m]) > 0.5
+    for: 1m
+    labels:
+      service: fluentd
+      severity: critical
+    annotations:
+      summary: fluentd node are critical
+      description: In the last 5 minutes, fluentd queues increased 50%. Current value is {{ "{{ $value }}" }}
+  - alert: FluentdRecordsCountsHigh
+    expr: >
+      sum(rate(fluentd_output_status_emit_records{job="{{ tpl .Release.Name . }}"}[5m]))
+      BY (instance) >  (3 * sum(rate(fluentd_output_status_emit_records{job="{{ tpl .Release.Name . }}"}[15m]))
+      BY (instance))
+    for: 1m
+    labels:
+      service: fluentd
+      severity: critical
+    annotations:
+      summary: fluentd records count are critical
+      description: In the last 5m, records counts increased 3 times, comparing to the latest 15 min.
+  - alert: FluentdRetry
+    expr: increase(fluentd_status_retry_count[10m]) > 0
+    for: 20m
+    labels:
+      service: fluentd
+      severity: warning
+    annotations:
+      description: Fluentd retry count has been  {{ "{{ $value }}" }} for the last 10 minutes
+      summary: Fluentd retry count has been  {{ "{{ $value }}" }} for the last 10 minutes
+  - alert: FluentdOutputError
+    expr: increase(fluentd_output_status_num_errors[10m]) > 0
+    for: 1s
+    labels:
+      service: fluentd
+      severity: warning
+    annotations:
+      description: Fluentd output error count is {{ "{{ $value }}" }} for the last 10 minutes
+      summary: There have been Fluentd output error(s) for the last 10 minutes
 
 configMaps:
   useDefaults:

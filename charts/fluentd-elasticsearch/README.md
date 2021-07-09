@@ -64,16 +64,19 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `configMaps.useDefaults.outputConf`                  | Use default output.conf                                                        | `true`                                             |
 | `extraConfigMaps`                                    | Add additional Configmap or overwrite disabled default                         | `{}`                                               |
 | `awsSigningSidecar.enabled`                          | Enable AWS request signing sidecar                                             | `false`                                            |
+| `awsSigningSidecar.extraEnvs`                        | List of env vars that are added to the AWS signing sidecar pods                | `[]`                                               |
 | `awsSigningSidecar.resources`                        | AWS Sidecar resources                                                          | `{}`                                               |
 | `awsSigningSidecar.network.port`                     | AWS Sidecar exposure port                                                      | `8080`                                             |
 | `awsSigningSidecar.network.address`                  | AWS Sidecar listen address                                                     | `localhost`                                        |
 | `awsSigningSidecar.network.remoteReadTimeoutSeconds` | AWS Sidecar socket read timeout when talking to ElasticSearch                  | `15`                                               |
 | `awsSigningSidecar.image.repository`                 | AWS signing sidecar repository image                                           | `abutaha/aws-es-proxy`                             |
 | `awsSigningSidecar.image.tag`                        | AWS signing sidecar repository tag                                             | `v1.0`                                             |
-| `awsSigningSidecar.args`                             | Additional command-line arguments for the AWS signing sidecar container        | `[]`                                             |
+| `awsSigningSidecar.args`                             | Additional command-line arguments for the AWS signing sidecar container        | `[]`                                               |
 | `elasticsearch.auth.enabled`                         | Elasticsearch Auth enabled                                                     | `false`                                            |
 | `elasticsearch.auth.user`                            | Elasticsearch Auth User                                                        | `null`                                             |
 | `elasticsearch.auth.password`                        | Elasticsearch Auth Password                                                    | `null`                                             |
+| `elasticsearch.auth.existingSecret.name`             | Name of secret                                                                 | `null`                                             |
+| `elasticsearch.auth.existingSecret.key`              | Key within secret containing password                                          | `null`                                             |
 | `elasticsearch.setOutputHostEnvVar`                  | Use `elasticsearch.hosts` (Disable this to manually configure hosts)           | `true`                                             |
 | `elasticsearch.hosts`                                | Elasticsearch Hosts List (host and port)                                       | `["elasticsearch-client:9200"]`                    |
 | `elasticsearch.includeTagKey`                        | Elasticsearch Including of Tag key                                             | `true`                                             |
@@ -91,6 +94,7 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `elasticsearch.template.file`                        | Elasticsearch Template File Name (inside the daemonset)                        | `fluentd-template.json`                            |
 | `elasticsearch.template.content`                     | Elasticsearch Template Content                                                 | _see `values.yaml`_                                |
 | `elasticsearch.template.overwrite`                   | Elasticsearch Template Overwrite (update even if it already exists)            | `false`                                            |
+| `elasticsearch.template.useLegacy`                   | Use legacy Elasticsearch template                                              | `true`                                             |
 | `elasticsearch.indexName`                            | Elasticsearch Index Name                                                       | `fluentd`                                          |
 | `elasticsearch.path`                                 | Elasticsearch Path                                                             | `""`                                               |
 | `elasticsearch.scheme`                               | Elasticsearch scheme setting                                                   | `http`                                             |
@@ -121,10 +125,11 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `elasticsearch.buffer.overflowAction`                | Elasticsearch Buffer over flow action                                          | `block`                                            |
 | `env`                                                | List of env vars that are added to the fluentd pods                            | `{}`                                               |
 | `fluentdArgs`                                        | Fluentd args                                                                   | `--no-supervisor -q`                               |
+| `fluentdLogFormat`                                   | Fluentd output log format in the default system.conf (either "text" or "json") | `text`                                             |
 | `secret`                                             | List of env vars that are set from secrets and added to the fluentd pods       | `[]`                                               |
 | `extraVolumeMounts`                                  | Mount extra volume, required to mount ssl certificates when ES has tls enabled | `[]`                                               |
 | `extraVolumes`                                       | Extra volume                                                                   | `[]`                                               |
-| `fluentConfDir`                                      | Specify where to mount fluentd location                                        | `/etc/fluent/config.d`                                         |
+| `fluentConfDir`                                      | Specify where to mount fluentd location                                        | `/etc/fluent/config.d`                             |
 | `hostLogDir.varLog`                                  | Specify where fluentd can find var log                                         | `/var/log`                                         |
 | `hostLogDir.dockerContainers`                        | Specify where fluentd can find logs for docker container                       | `/var/lib/docker/containers`                       |
 | `hostLogDir.libSystemdDir`                           | Specify where fluentd can find logs for lib Systemd                            | `/usr/lib64`                                       |

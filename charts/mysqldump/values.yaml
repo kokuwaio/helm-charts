@@ -72,6 +72,9 @@ additionalSteps: []
 ## if not set and `persistence.enabled` set to true, will create a PVC.
 # persistentVolumeClaim: <existing-PVC>
 
+# pod anotation
+podAnnotations: {}
+
 persistence:
   enabled: true
   size: 8Gi
@@ -101,9 +104,9 @@ upload:
     # secretFileName specifies the keyfile name inside the secret
     secretFileName: keyfile.json
     # existingSecret can be enabled to use an existing secret
-    # existingSecret: mysecret
+    existingSecret: ""
     # serviceAccountName to set a specific service account name
-    # serviceAccountName
+    serviceAccountName: ""
     # usingGCPController to enable autogeneration and injection of the service account
     usingGCPController: false
 
@@ -114,6 +117,7 @@ upload:
     dir: /backup
     # id_rsa private key as string
     privatekey: ""
+    existingSecret: ""
 
   openstack:
     enabled: false
@@ -127,9 +131,9 @@ upload:
     # container/folder(/subfolder ...)
     destination: backup/mysql
     # existingSecret can be enabled to use an existing secret
-    # existingSecret:
+    existingSecret: ""
     # existingSecretKey defines the key to use, or 'openstack-backup-password' if not set
-    # existingSecretKey:
+    existingSecretKey: ""
     # set to 0 to disable TTL on uploaded files
     ttlDays: 30
 

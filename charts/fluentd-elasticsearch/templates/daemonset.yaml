@@ -57,7 +57,13 @@ spec:
         - name: OUTPUT_USER
           value: {{ .Values.elasticsearch.auth.user | quote }}
 {{- end }}
-{{- if .Values.elasticsearch.auth.password }}
+{{- if .Values.elasticsearch.auth.existingSecret.name }}
+        - name: OUTPUT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.elasticsearch.auth.existingSecret.name }}
+              key: {{ .Values.elasticsearch.auth.existingSecret.key }}
+{{- else if .Values.elasticsearch.auth.password }}
         - name: OUTPUT_PASSWORD
           value: {{ .Values.elasticsearch.auth.password | quote }}
 {{- end }}
@@ -91,6 +97,8 @@ spec:
           value: "/etc/fluent/config.d/{{ .Values.elasticsearch.template.file }}"
         - name: TEMPLATE_OVERWRITE
           value: {{ .Values.elasticsearch.template.overwrite | quote }}
+        - name: USE_LEGACY_TEMPLATE
+          value: {{ .Values.elasticsearch.template.useLegacy | quote }}
 {{- end }}
         - name: OUTPUT_SCHEME
           {{- if .Values.awsSigningSidecar.enabled }}
@@ -219,6 +227,12 @@ spec:
         env:
         - name: PORT_NUM
           value: {{ .Values.awsSigningSidecar.network.port | quote }}
+        {{- if .Values.awsSigningSidecar.extraEnvs }}
+        {{- range $env := .Values.awsSigningSidecar.extraEnvs }}
+        - name: {{ $env.name }}
+          value: {{ $env.value | quote }}
+        {{- end }}
+        {{- end }}
         resources:
 {{ toYaml .Values.awsSigningSidecar.resources | indent 10 }}
         volumeMounts:
