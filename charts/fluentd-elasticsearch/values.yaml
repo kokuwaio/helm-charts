@@ -283,7 +283,6 @@ serviceMonitor:
   labels: {}
   metricRelabelings: []
   relabelings: []
-  jobLabel: "app.kubernetes.io/instance"
   type: ClusterIP
 
 serviceMetric:
@@ -301,7 +300,7 @@ prometheusRule:
   labels: {}
   rules:
   - alert: FluentdNodeDown
-    expr: up{job="{{ include "fluentd-elasticsearch.fullname" . }}"} == 0
+    expr: up{job="{{ include "fluentd-elasticsearch.metricsServiceName" . }}"} == 0
     for: 10m
     labels:
       service: fluentd
@@ -310,7 +309,7 @@ prometheusRule:
       summary: fluentd cannot be scraped
       description: Prometheus could not scrape {{ "{{ $labels.job }}" }} for more than 10 minutes
   - alert: FluentdNodeDown
-    expr: up{job="{{ include "fluentd-elasticsearch.fullname" . }}"} == 0
+    expr: up{job="{{ include "fluentd-elasticsearch.metricsServiceName" . }}"} == 0
     for: 30m
     labels:
       service: fluentd
@@ -338,8 +337,8 @@ prometheusRule:
       description: In the last 5 minutes, fluentd queues increased 50%. Current value is {{ "{{ $value }}" }}
   - alert: FluentdRecordsCountsHigh
     expr: >
-      sum(rate(fluentd_output_status_emit_records{job="{{ tpl .Release.Name . }}"}[5m]))
-      BY (instance) >  (3 * sum(rate(fluentd_output_status_emit_records{job="{{ tpl .Release.Name . }}"}[15m]))
+      sum(rate(fluentd_output_status_emit_records{job="{{ include "fluentd-elasticsearch.metricsServiceName" . }}"}[5m]))
+      BY (instance) >  (3 * sum(rate(fluentd_output_status_emit_records{job="{{ include "fluentd-elasticsearch.metricsServiceName" . }}"}[15m]))
       BY (instance))
     for: 1m
     labels:
