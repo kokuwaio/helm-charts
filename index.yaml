@@ -3,6 +3,33 @@ entries:
   fluentd-elasticsearch:
   - apiVersion: v2
     appVersion: 3.2.0
+    created: "2021-08-13T12:55:09.323533088Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: fd354b00fa907f3aaf79551de937dc9e97f1076cdf88ad33de5b2dafbe6d537b
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    kubeVersion: '>=1.16.0-0'
+    maintainers:
+    - email: monotek23@gmail.com
+      name: monotek
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kokuwaio/helm-charts/tree/main/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    type: application
+    urls:
+    - https://github.com/kokuwaio/helm-charts/releases/download/fluentd-elasticsearch-11.14.0/fluentd-elasticsearch-11.14.0.tgz
+    version: 11.14.0
+  - apiVersion: v2
+    appVersion: 3.2.0
     created: "2021-06-16T12:50:36.231231056Z"
     description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
     digest: 348f4680deac585b2025f1a30e7232f35bbb2ed208eb21a41907c2de7e80e1fc
@@ -877,4 +904,4 @@ entries:
     urls:
     - https://github.com/kokuwaio/helm-charts/releases/download/mysqldump-3.0.0/mysqldump-3.0.0.tgz
     version: 3.0.0
-generated: "2021-06-16T12:50:36.23146906Z"
+generated: "2021-08-13T12:55:09.32384729Z"
