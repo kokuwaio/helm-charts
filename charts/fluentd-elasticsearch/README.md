@@ -171,7 +171,7 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `serviceMonitor.labels`                              | Optional labels for serviceMonitor                                             | `{}`                                               |
 | `serviceMonitor.metricRelabelings`                   | Optional metric relabel configs to apply to samples before ingestion           | `[]`                                               |
 | `serviceMonitor.relabelings`                         | Optional relabel configs to apply to samples before scraping                   | `[]`                                               |
-| `serviceMonitor.jobLabel`                            | Label whose value will define the job name                                     | `app.kubernetes.io/instance`                       |
+| `serviceMonitor.jobLabel`                            | PrometheusRule jobLabel. Uses the created metrics service name if not set.     | Not Set                     |
 | `serviceMonitor.type`                                | Optional the type of the metrics service                                       | `ClusterIP`                                        |
 | `tolerations`                                        | Optional daemonset tolerations                                                 | `[]`                                               |
 | `updateStrategy`                                     | Optional daemonset update strategy                                             | `type: RollingUpdate`                              |

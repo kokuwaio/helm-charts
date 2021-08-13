@@ -60,3 +60,10 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the metrics service
+*/}}
+{{- define "fluentd-elasticsearch.metricsServiceName" -}}
+{{- include "fluentd-elasticsearch.fullname" . }}-metrics
+{{- end }}
