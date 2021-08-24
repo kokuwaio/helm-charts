@@ -237,6 +237,13 @@ spec:
 {{ toYaml .Values.awsSigningSidecar.resources | indent 10 }}
         volumeMounts:
       {{- end }}
+{{- if .Values.extraContainers }}
+{{ toYaml .Values.extraContainers | indent 6 }}
+{{- end }}
+{{- if .Values.extraInitContainers }}
+      initContainers:
+{{ toYaml .Values.extraInitContainers | indent 6 }}
+{{- end }}
       terminationGracePeriodSeconds: 30
       volumes:
       - name: varlog

@@ -127,6 +127,8 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `fluentdArgs`                                        | Fluentd args                                                                   | `--no-supervisor -q`                               |
 | `fluentdLogFormat`                                   | Fluentd output log format in the default system.conf (either "text" or "json") | `text`                                             |
 | `secret`                                             | List of env vars that are set from secrets and added to the fluentd pods       | `[]`                                               |
+| `extraContainers`                                    | Add sidecar containers to each pod in the daemonset                            | `[]`                                               |
+| `extraInitContainers`                                | Add init containers to each pod in the daemonset                               | `[]`                                               |
 | `extraVolumeMounts`                                  | Mount extra volume, required to mount ssl certificates when ES has tls enabled | `[]`                                               |
 | `extraVolumes`                                       | Extra volume                                                                   | `[]`                                               |
 | `fluentConfDir`                                      | Specify where to mount fluentd location                                        | `/etc/fluent/config.d`                             |

@@ -395,3 +395,13 @@ extraVolumeMounts: []
 #   - name: es-certs
 #     mountPath: /certs
 #     readOnly: true
+
+extraContainers: []
+#   - name: do-something
+#     image: busybox
+#     command: ['do', 'something']
+
+extraInitContainers: []
+#   - name: do-something
+#     image: busybox
+#     command: ['do', 'something']
