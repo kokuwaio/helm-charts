@@ -202,7 +202,8 @@ extraVolumes: |
 
 ### AWS Elasticsearch Domains
 
-AWS Elasticsearch requires requests to upload data to be signed using [AWS Signature V4](https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html). In order to support this, you can add a sidecar to the `extraContainers` configuration. An example is provided in `values.yaml`. This results in a sidecar container being deployed that proxies all requests to your Elasticsearch domain and signs them appropriately.
+AWS Elasticsearch requires requests to upload data to be signed using [AWS Signature V4](https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html). In order to support this, you can add a sidecar to the `extraContainers` configuration. An example is provided in `values.yaml`. This results in a sidecar container being deployed that proxies all requests to your Elasticsearch domain
+and signs them appropriately.
 
 ## Upgrading
 
