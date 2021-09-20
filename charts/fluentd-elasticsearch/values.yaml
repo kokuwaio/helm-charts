@@ -12,33 +12,6 @@ image:
   # pullSecrets:
   #   - myRegistrKeySecretName
 
-## If using AWS Elasticsearch, all requests to ES need to be signed regardless of whether
-## one is using Cognito or not. By setting this to true, this chart will install a sidecar
-## proxy that takes care of signing all requests being sent to the AWS ES Domain.
-awsSigningSidecar:
-  enabled: false
-  # You can configure some features of AWS ES Proxy by passing specific environment
-  # variables. E.g. AWS EKS IRSA is supported by providing AWS_ROLE_ARN and
-  # AWS_WEB_IDENTITY_TOKEN_FILE
-  extraEnvs: []
-  # name: FOO
-  # value: BAR
-  resources: {}
-  # limits:
-  #   cpu: 100m
-  #   memory: 500Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 200Mi
-  network:
-    port: 8080
-    address: localhost
-    remoteReadTimeoutSeconds: 15
-  image:
-    repository: abutaha/aws-es-proxy
-    tag: v1.0
-  args: []
-
 # Specify to use specific priorityClass for pods
 # ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
 # If a Pod cannot be scheduled, the scheduler tries to preempt (evict) lower priority
@@ -74,7 +47,9 @@ elasticsearch:
       key: null
   includeTagKey: true
   setOutputHostEnvVar: true
-  # If setOutputHostEnvVar is false this value is ignored
+  # If setOutputHostEnvVar is false the hosts value is ignored
+  # If you are configuring an AWS signing sidecar, hosts should be the network
+  # address of the sidecar, like "localhost:8080"
   hosts: ["elasticsearch-client:9200"]
   indexName: "fluentd"
   logstash:
@@ -124,6 +99,7 @@ elasticsearch:
       }
 
   path: ""
+  # If you are configuring an AWS signing sidecar, scheme should be "http"
   scheme: "http"
   sslVerify: true
   sslVersion: "TLSv1_2"
@@ -386,22 +362,51 @@ extraConfigMaps: {}
   #   </system>
 
 extraVolumes: []
-#   - name: es-certs
-#     secret:
-#       defaultMode: 420
-#       secretName: es-certs
+# - name: es-certs
+#   secret:
+#     defaultMode: 420
+#     secretName: es-certs
 
 extraVolumeMounts: []
-#   - name: es-certs
-#     mountPath: /certs
-#     readOnly: true
+# - name: es-certs
+#   mountPath: /certs
+#   readOnly: true
 
-extraContainers: []
-#   - name: do-something
-#     image: busybox
-#     command: ['do', 'something']
+## Sidecar containers
+##
+## If using AWS Elasticsearch, all requests to ES need to be signed regardless
+## of whether one is using Cognito or not. The example here shows how to
+## configure a sidecar proxy that takes care of signing all requests being sent
+## to the AWS ES Domain.
+extraContainers: # []
+# - name: aws-es-proxy
+#   image: abutaha/aws-es-proxy:v1.0
+#   imagePullPolicy: IfNotPresent
+#   args:
+#   - "-endpoint"
+#   # Put your ElasticSearch host here as the endpoint and set...
+#   # elasticsearch.hosts location to the sidecar address, e.g. localhost:8080
+#   # elasticsearch.scheme to http
+#   - "http://elasticsearch-client:9200"
+#   - "-listen"
+#   - "localhost:8080"
+#   - "-timeout"
+#   - "15"
+#   # You can configure some features of AWS ES Proxy by passing specific
+#   # environment variables. E.g. AWS EKS IRSA is supported by providing
+#   # AWS_ROLE_ARN and AWS_WEB_IDENTITY_TOKEN_FILE
+#   env:
+#   - name: PORT_NUM
+#     value: "8080"
+#   resources:
+#     limits:
+#       cpu: 100m
+#       memory: 500Mi
+#     requests:
+#       cpu: 100m
+#       memory: 200Mi
 
 extraInitContainers: []
-#   - name: do-something
-#     image: busybox
-#     command: ['do', 'something']
+# - name: do-something
+#   image: busybox
+#   command: ['do', 'something']
