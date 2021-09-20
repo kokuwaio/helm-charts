@@ -63,15 +63,6 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `configMaps.useDefaults.monitoringConf`              | Use default monitoring.conf                                                    | `true`                                             |
 | `configMaps.useDefaults.outputConf`                  | Use default output.conf                                                        | `true`                                             |
 | `extraConfigMaps`                                    | Add additional Configmap or overwrite disabled default                         | `{}`                                               |
-| `awsSigningSidecar.enabled`                          | Enable AWS request signing sidecar                                             | `false`                                            |
-| `awsSigningSidecar.extraEnvs`                        | List of env vars that are added to the AWS signing sidecar pods                | `[]`                                               |
-| `awsSigningSidecar.resources`                        | AWS Sidecar resources                                                          | `{}`                                               |
-| `awsSigningSidecar.network.port`                     | AWS Sidecar exposure port                                                      | `8080`                                             |
-| `awsSigningSidecar.network.address`                  | AWS Sidecar listen address                                                     | `localhost`                                        |
-| `awsSigningSidecar.network.remoteReadTimeoutSeconds` | AWS Sidecar socket read timeout when talking to ElasticSearch                  | `15`                                               |
-| `awsSigningSidecar.image.repository`                 | AWS signing sidecar repository image                                           | `abutaha/aws-es-proxy`                             |
-| `awsSigningSidecar.image.tag`                        | AWS signing sidecar repository tag                                             | `v1.0`                                             |
-| `awsSigningSidecar.args`                             | Additional command-line arguments for the AWS signing sidecar container        | `[]`                                               |
 | `elasticsearch.auth.enabled`                         | Elasticsearch Auth enabled                                                     | `false`                                            |
 | `elasticsearch.auth.user`                            | Elasticsearch Auth User                                                        | `null`                                             |
 | `elasticsearch.auth.password`                        | Elasticsearch Auth Password                                                    | `null`                                             |
@@ -127,6 +118,8 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `fluentdArgs`                                        | Fluentd args                                                                   | `--no-supervisor -q`                               |
 | `fluentdLogFormat`                                   | Fluentd output log format in the default system.conf (either "text" or "json") | `text`                                             |
 | `secret`                                             | List of env vars that are set from secrets and added to the fluentd pods       | `[]`                                               |
+| `extraContainers`                                    | Add sidecar containers to each pod in the daemonset                            | `[]`                                               |
+| `extraInitContainers`                                | Add init containers to each pod in the daemonset                               | `[]`                                               |
 | `extraVolumeMounts`                                  | Mount extra volume, required to mount ssl certificates when ES has tls enabled | `[]`                                               |
 | `extraVolumes`                                       | Extra volume                                                                   | `[]`                                               |
 | `fluentConfDir`                                      | Specify where to mount fluentd location                                        | `/etc/fluent/config.d`                             |
@@ -209,7 +202,8 @@ extraVolumes: |
 
 ### AWS Elasticsearch Domains
 
-AWS Elasticsearch requires requests to upload data to be signed using [AWS Signature V4](https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html). In order to support this, you can add `awsSigningSidecar: {enabled: true}` to your configuration. This results in a sidecar container being deployed that proxies all requests to your Elasticsearch domain and signs them appropriately.
+AWS Elasticsearch requires requests to upload data to be signed using [AWS Signature V4](https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html). In order to support this, you can add a sidecar to the `extraContainers` configuration. An example is provided in `values.yaml`. This results in a sidecar container being deployed that proxies all requests to your Elasticsearch domain
+and signs them appropriately.
 
 ## Upgrading
 
@@ -354,3 +348,7 @@ In this version elasticsearch template in `output.conf` configmap was expanded t
 ### From a version < 10.0.0 to version => 11.0.0
 
 The chart requires now Helm >= 3.0.0 and Kubernetes >= 1.16.0
+
+### From a version < 11.0.0 to version => 12.0.0
+
+If you were using `awsSigningSidecar` to set up an AWS signing sidecar proxy, this has now moved to the `extraContainers` property. The example in the `values.yaml` shows the equivalent AWS signing sidecar configuration expressed now as `extraContainers`.

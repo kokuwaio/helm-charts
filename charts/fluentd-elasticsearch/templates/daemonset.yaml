@@ -44,11 +44,7 @@ spec:
           value: {{ .Values.fluentdArgs | quote }}
         {{- if .Values.elasticsearch.setOutputHostEnvVar }}
         - name: OUTPUT_HOSTS
-          {{- if .Values.awsSigningSidecar.enabled }}
-          value: "{{ .Values.awsSigningSidecar.network.address }}:{{ .Values.awsSigningSidecar.network.port }}"
-          {{- else }}
           value: "{{- join "," .Values.elasticsearch.hosts }}"
-          {{- end }}
         {{- end }}
         - name: OUTPUT_PATH
           value: {{ .Values.elasticsearch.path | quote }}
@@ -101,11 +97,7 @@ spec:
           value: {{ .Values.elasticsearch.template.useLegacy | quote }}
 {{- end }}
         - name: OUTPUT_SCHEME
-          {{- if .Values.awsSigningSidecar.enabled }}
-          value: 'http'
-          {{- else }}
           value: {{ .Values.elasticsearch.scheme | quote }}
-          {{- end }}
         - name: OUTPUT_TYPE
           value: {{ .Values.elasticsearch.outputType | quote }}
         - name: OUTPUT_SSL_VERIFY
@@ -210,33 +202,13 @@ spec:
             protocol: {{ $port.protocol }}
 {{- end }}
 {{- end }}
-      {{- if .Values.awsSigningSidecar.enabled }}
-      - name: {{ include "fluentd-elasticsearch.fullname" . }}-aws-es-proxy
-        image: {{ .Values.awsSigningSidecar.image.repository }}:{{ .Values.awsSigningSidecar.image.tag }}
-        imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
-        args:
-          - "-endpoint"
-          - "{{ .Values.elasticsearch.scheme }}://{{ index .Values.elasticsearch.hosts 0 }}"
-          - "-listen"
-          - "{{ .Values.awsSigningSidecar.network.address }}:{{ .Values.awsSigningSidecar.network.port }}"
-          - "-timeout"
-          - "{{ .Values.awsSigningSidecar.network.remoteReadTimeoutSeconds }}"
-{{- range $arg := .Values.awsSigningSidecar.args }}
-          - "{{ $arg }}"
+{{- if .Values.extraContainers }}
+{{ toYaml .Values.extraContainers | indent 6 }}
 {{- end }}
-        env:
-        - name: PORT_NUM
-          value: {{ .Values.awsSigningSidecar.network.port | quote }}
-        {{- if .Values.awsSigningSidecar.extraEnvs }}
-        {{- range $env := .Values.awsSigningSidecar.extraEnvs }}
-        - name: {{ $env.name }}
-          value: {{ $env.value | quote }}
-        {{- end }}
-        {{- end }}
-        resources:
-{{ toYaml .Values.awsSigningSidecar.resources | indent 10 }}
-        volumeMounts:
-      {{- end }}
+{{- if .Values.extraInitContainers }}
+      initContainers:
+{{ toYaml .Values.extraInitContainers | indent 6 }}
+{{- end }}
       terminationGracePeriodSeconds: 30
       volumes:
       - name: varlog
