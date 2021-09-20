@@ -378,7 +378,7 @@ extraVolumeMounts: []
 ## of whether one is using Cognito or not. The example here shows how to
 ## configure a sidecar proxy that takes care of signing all requests being sent
 ## to the AWS ES Domain.
-extraContainers: # []
+extraContainers: []
 # - name: aws-es-proxy
 #   image: abutaha/aws-es-proxy:v1.0
 #   imagePullPolicy: IfNotPresent
