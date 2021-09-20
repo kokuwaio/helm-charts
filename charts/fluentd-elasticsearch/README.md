@@ -347,3 +347,7 @@ In this version elasticsearch template in `output.conf` configmap was expanded t
 ### From a version < 10.0.0 to version => 11.0.0
 
 The chart requires now Helm >= 3.0.0 and Kubernetes >= 1.16.0
+
+### From a version < 11.0.0 to version => 12.0.0
+
+If you were using `awsSigningSidecar` to set up an AWS signing sidecar proxy, this has now moved to the `extraContainers` property. The example in the `values.yaml` shows the equivalent AWS signing sidecar configuration expressed now as `extraContainers`.
