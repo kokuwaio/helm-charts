@@ -112,7 +112,7 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `elasticsearch.buffer.retryForever`                  | Elasticsearch Buffer retry forever                                             | `true`                                             |
 | `elasticsearch.buffer.retryMaxInterval`              | Elasticsearch Buffer retry max interval                                        | `30`                                               |
 | `elasticsearch.buffer.chunkLimitSize`                | Elasticsearch Buffer chunk limit size                                          | `2M`                                               |
-| `elasticsearch.buffer.queueLimitLength`              | Elasticsearch Buffer queue limit size                                          | `8`                                                |
+| `elasticsearch.buffer.totalLimitSize`                | Elasticsearch Buffer queue limit size                                          | `512M`                                             |
 | `elasticsearch.buffer.overflowAction`                | Elasticsearch Buffer over flow action                                          | `block`                                            |
 | `env`                                                | List of env vars that are added to the fluentd pods                            | `{}`                                               |
 | `fluentdArgs`                                        | Fluentd args                                                                   | `--no-supervisor -q`                               |
@@ -352,3 +352,9 @@ The chart requires now Helm >= 3.0.0 and Kubernetes >= 1.16.0
 ### From a version < 11.0.0 to version => 12.0.0
 
 If you were using `awsSigningSidecar` to set up an AWS signing sidecar proxy, this has now moved to the `extraContainers` property. The example in the `values.yaml` shows the equivalent AWS signing sidecar configuration expressed now as `extraContainers`.
+
+### From a version < 12.0.0 to version => 13.0.0
+
+#### The following fields were changed in the elasticsearch block
+
+- `buffer.queueLimitLength` in favor of `buffer.totalLimitSize` since `queueLimitLength` [is deprecated](https://docs.fluentd.org/configuration/buffer-section#buffering-parameters).

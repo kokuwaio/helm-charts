@@ -561,7 +561,7 @@ data:
         retry_forever "#{ENV['OUTPUT_BUFFER_RETRY_FOREVER']}"
         retry_max_interval "#{ENV['OUTPUT_BUFFER_RETRY_MAX_INTERVAL']}"
         chunk_limit_size "#{ENV['OUTPUT_BUFFER_CHUNK_LIMIT']}"
-        queue_limit_length "#{ENV['OUTPUT_BUFFER_QUEUE_LIMIT']}"
+        total_limit_size "#{ENV['OUTPUT_BUFFER_TOTAL_LIMIT_SIZE']}"
         overflow_action "#{ENV['OUTPUT_BUFFER_OVERFLOW_ACTION']}"
       </buffer>
 {{- end }}

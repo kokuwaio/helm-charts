@@ -126,7 +126,7 @@ elasticsearch:
     retryForever: true
     retryMaxInterval: 30
     chunkLimitSize: "2M"
-    queueLimitLength: 8
+    totalLimitSize: "512M"
     overflowAction: "block"
 
 # If you want to change args of fluentd process
