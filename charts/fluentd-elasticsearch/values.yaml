@@ -354,6 +354,12 @@ configMaps:
     monitoringConf: true
     outputConf: true
 
+    # kubernetesMetadataFilterConfig lets you set arbitrary
+    # configuration key-value pairs for the kubernetes_metadata
+    # filter. See
+    # https://github.com/fabric8io/fluent-plugin-kubernetes_metadata_filter#configuration
+    kubernetesMetadataFilterConfig: {}
+
 # can be used to add new config or overwrite the default configmaps completely after the configmaps default has been disabled above
 extraConfigMaps: {}
   # system.conf: |-

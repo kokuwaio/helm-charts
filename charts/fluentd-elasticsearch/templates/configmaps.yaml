@@ -130,14 +130,14 @@ data:
           time_format %Y-%m-%dT%H:%M:%S.%NZ
 {{- if .Values.configMaps.useDefaults.containersKeepTimeKey }}
           keep_time_key true
-{{- end }}          
+{{- end }}
         </pattern>
         <pattern>
           format /^(?<time>.+) (?<stream>stdout|stderr) [^ ]* (?<log>.*)$/
           time_format %Y-%m-%dT%H:%M:%S.%N%:z
 {{- if .Values.configMaps.useDefaults.containersKeepTimeKey }}
           keep_time_key true
-{{- end }}          
+{{- end }}
         </pattern>
       </parse>
     </source>
@@ -169,6 +169,9 @@ data:
     <filter kubernetes.**>
       @id filter_kubernetes_metadata
       @type kubernetes_metadata
+{{- range $key, $value := .Values.configMaps.useDefaults.kubernetesMetadataFilterConfig }}
+      {{ $key }} {{ $value }}
+{{- end }}
     </filter>
 
     # Fixes json fields in Elasticsearch
