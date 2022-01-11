@@ -48,7 +48,7 @@ The following tables lists the configurable parameters of the mysqldump chart an
 | --------------------------------------------- | ------------------------------------------------------------------------------ | ---------------------------- |
 | image.registry                                | Name of docker registry to use                                                 | quay.io                      |
 | image.repository                              | Name of image to use                                                           | monotek/gcloud-mysql         |
-| image.tag                                     | Version of image to use                                                        | "master-13"                  |
+| image.tag                                     | Version of image to use                                                        | "master-15"                 |
 | image.pullPolicy                              | Pull Policy to use for image                                                   | IfNotPresent                 |
 | mysql.db                                      | single mysql db to backup (optional)                                           | mysql                        |
 | mysql.host                                    | mysql host to backup                                                           | mysql                        |
@@ -64,6 +64,7 @@ The following tables lists the configurable parameters of the mysqldump chart an
 | additionalSteps                               | run these extra shell steps after all backup jobs completed                    | []                           |
 | successfulJobsHistoryLimit                    | number of successful jobs to remember                                          | 5                            |
 | failedJobsHistoryLimit                        | number of failed jobs to remember                                              | 5                            |
+| sshMountpath                                  | User's path (used to mount ssh key if needed)                                  | "/home/cloudsdk"             |
 | persistentVolumeClaim                         | existing Persistent Volume Claim to backup to, leave blank to create a new one |                              |
 | persistence.enabled                           | create new PVC (unless `persistentVolumeClaim` is set)                         | true                         |
 | persistence.size                              | size of PVC to create                                                          | 8Gi                          |
