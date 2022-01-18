@@ -60,11 +60,11 @@ spec:
       mountPath: /scripts
 {{- if .Values.upload.ssh.enabled }}
     - name: ssh-privatekey
-      mountPath: /root/.ssh
+      mountPath: {{ .Values.sshMountpath }}/.ssh
 {{- end }}
 {{- if .Values.upload.googlestoragebucket.enabled }}
     - name: gcloud-keyfile
-      mountPath: /root/gcloud
+      mountPath: {{ .Values.sshMountpath }}/gcloud
 {{- end }}
     resources: 
 {{ toYaml .Values.resources | indent 6 }}
