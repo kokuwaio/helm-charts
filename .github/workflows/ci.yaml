@@ -60,6 +60,7 @@ jobs:
           VALIDATE_JSCPD: false
           VALIDATE_KUBERNETES_KUBEVAL: false
           VALIDATE_YAML: false
+          VALIDATE_NATURAL_LANGUAGE: false
 
   kubeval-chart:
     runs-on: ubuntu-20.04
