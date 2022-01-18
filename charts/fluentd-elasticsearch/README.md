@@ -83,7 +83,7 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `elasticsearch.ilm.policy_overwrite`                    | Elastichsarch ILM policy overwrite                                                | `false`                                             |
 | `elasticsearch.template.enabled`                        | Elastichsarch Template enabled                                                    | `false`                                             |
 | `elasticsearch.template.name`                           | Elastichsarch Template Name                                                       | `fluentd-template`                                  |
-| `elasticsearch.template.file`                           | Elasticsearch Template File Name (inside the daemonset)                           | `fluentd-template.json`                             |
+| `elasticsearch.template.file`                           | Elasticsearch Template FileName (inside the daemonset)                            | `fluentd-template.json`                             |
 | `elasticsearch.template.content`                        | Elasticsearch Template Content                                                    | _see `values.yaml`_                                 |
 | `elasticsearch.template.overwrite`                      | Elasticsearch Template Overwrite (update even if it already exists)               | `false`                                             |
 | `elasticsearch.template.useLegacy`                      | Use legacy Elasticsearch template                                                 | `true`                                              |
@@ -128,7 +128,7 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `hostLogDir.dockerContainers`                           | Specify where fluentd can find logs for docker container                          | `/var/lib/docker/containers`                        |
 | `hostLogDir.libSystemdDir`                              | Specify where fluentd can find logs for lib Systemd                               | `/usr/lib64`                                        |
 | `image.repository`                                      | Image                                                                             | `quay.io/fluentd_elasticsearch/fluentd`             |
-| `image.tag`                                             | Image tag                                                                         | `v3.3.0`                                            |
+| `image.tag`                                             | Image tag                                                                         | `v3.4.0`                                            |
 | `image.pullPolicy`                                      | Image pull policy                                                                 | `IfNotPresent`                                      |
 | `image.pullSecrets`                                     | Image pull secrets                                                                | ``                                                  |
 | `livenessProbe.enabled`                                 | Whether to enable livenessProbe                                                   | `true`                                              |
