@@ -169,6 +169,7 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `serviceMonitor.type`                                   | Optional the type of the metrics service                                          | `ClusterIP`                                         |
 | `tolerations`                                           | Optional daemonset tolerations                                                    | `[]`                                                |
 | `updateStrategy`                                        | Optional daemonset update strategy                                                | `type: RollingUpdate`                               |
+| `extraObjects`                                          | Array of extra K8s manifests to deploy                                            | `[]`                                                |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
