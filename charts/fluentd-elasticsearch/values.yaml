@@ -222,6 +222,10 @@ podAnnotations: {}
   # prometheus.io/scrape: "true"
   # prometheus.io/port: "24231"
 
+securityContext: {}
+  # seLinuxOptions:
+  #   type: spc_t
+
 ## DaemonSet update strategy
 ## Ref: https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/
 updateStrategy:
