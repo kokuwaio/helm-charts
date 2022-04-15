@@ -1,6 +1,6 @@
 apiVersion: v2
 name: fluentd-elasticsearch
-version: 13.3.0
+version: 13.3.1
 appVersion: 3.4.0
 type: application
 home: https://www.fluentd.org/
