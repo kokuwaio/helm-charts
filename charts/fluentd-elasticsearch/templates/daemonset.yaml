@@ -35,6 +35,10 @@ spec:
         - name: {{ . }}
       {{- end }}
       {{- end }}
+{{- if .Values.securityContext }}
+      securityContext:
+{{ toYaml .Values.securityContext | indent 8 }}
+{{- end }}
       containers:
       - name: {{ include "fluentd-elasticsearch.fullname" . }}
         image:  "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
