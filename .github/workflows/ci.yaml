@@ -8,6 +8,7 @@ on:
 env:
   helm-version: "v3.8.2"
   kubeval-version: "v0.16.1"
+  k8s-versions: "['v1.21.10' 'v1.22.7' 'v1.23.5']"
 
 jobs:
   lint-chart:
@@ -52,11 +53,7 @@ jobs:
       - lint-chart
     strategy:
       matrix:
-        k8s:
-          - v1.21.10
-          - v1.22.7
-          - v1.23.5
-
+        k8s: ${{ env.k8s-versions }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -79,10 +76,7 @@ jobs:
       - kubeval-chart
     strategy:
       matrix:
-        k8s:
-          - v1.21.10
-          - v1.22.7
-          - v1.23.5
+        k8s: ${{ env.k8s-versions }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
