@@ -15,7 +15,7 @@ This chart bootstraps a [Fluentd](https://www.fluentd.org/) daemonset on a [Kube
 
 It's meant to be a drop in replacement for [fluentd-gcp](https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-gcp) on [GKE](https://cloud.google.com/kubernetes-engine) which sends logs to Google [Stackdriver](https://cloud.google.com/stackdriver), but can also be used in other places where logging to [ElasticSearch](https://www.elastic.co/elasticsearch/) is required.
 
-The used [Docker](https://docker.com) image ([Dockerfile](https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image)) also contains the following plugins:
+The used [Docker](https://docker.com) image ([Dockerfile](https://github.com/monotek/fluentd-elasticsearch)) also contains the following plugins:
 
 - [Detect exceptions](https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions) (for Java multiline stacktraces)
 - [Kubernetes metadata filter](https://github.com/fabric8io/fluent-plugin-kubernetes_metadata_filter)
@@ -51,7 +51,7 @@ The command removes all the Kubernetes components associated with the chart and 
 The following table lists the configurable parameters of the Fluentd elasticsearch chart and their default values.
 
 | Parameter                                               | Description                                                                       | Default                                             |
-| ----------------------------------------------------    | ------------------------------------------------------------------------------    | --------------------------------------------------  |
+| ------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------- |
 | `affinity`                                              | Optional daemonset affinity                                                       | `{}`                                                |
 | `annotations`                                           | Optional daemonset annotations                                                    | `NULL`                                              |
 | `podAnnotations`                                        | Optional daemonset's pods annotations                                             | `NULL`                                              |
@@ -128,7 +128,7 @@ The following table lists the configurable parameters of the Fluentd elasticsear
 | `hostLogDir.dockerContainers`                           | Specify where fluentd can find logs for docker container                          | `/var/lib/docker/containers`                        |
 | `hostLogDir.libSystemdDir`                              | Specify where fluentd can find logs for lib Systemd                               | `/usr/lib64`                                        |
 | `image.repository`                                      | Image                                                                             | `quay.io/fluentd_elasticsearch/fluentd`             |
-| `image.tag`                                             | Image tag                                                                         | `v3.4.0`                                            |
+| `image.tag`                                             | Image tag                                                                         | `v4.0.0`                                            |
 | `image.pullPolicy`                                      | Image pull policy                                                                 | `IfNotPresent`                                      |
 | `image.pullSecrets`                                     | Image pull secrets                                                                | ``                                                  |
 | `livenessProbe.enabled`                                 | Whether to enable livenessProbe                                                   | `true`                                              |
@@ -209,7 +209,7 @@ and signs them appropriately.
 
 ## Upgrading
 
-### From a version < 2.0.0
+### To version 2.0.0
 
 When you upgrade this chart you have to add the "--force" parameter to your helm upgrade command as there have been changes to the labels which makes a normal upgrade impossible.
 
