@@ -209,7 +209,7 @@ and signs them appropriately.
 
 ## Upgrading
 
-### To version 2.0.0
+### From a version < 2.0.0
 
 When you upgrade this chart you have to add the "--force" parameter to your helm upgrade command as there have been changes to the labels which makes a normal upgrade impossible.
 
