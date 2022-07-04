@@ -15,7 +15,7 @@ spec:
   {{- end }}
   containers:
   - name: mysql-backup
-    image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+    image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
     imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
     command: ["/bin/bash", "/scripts/backup.sh"]
 {{- if or .Values.mysql.existingSecret .Values.upload.openstack.existingSecret }}
