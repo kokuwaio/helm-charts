@@ -4,6 +4,7 @@ fullnameOverride: ""
 imagePullSecrets: []
 
 vrtConfig:
+  appFrontendUrl: "http://localhost:8080"
   bodyParserJsonLimit: "5mb"
   elasticsearch:
     # enable/disable elasticsearch chart dependency
@@ -29,6 +30,7 @@ vrtConfig:
     port: 5432
     # needs to be the same as the postgresql.postgresqlUsername
     user: vrt
+  reactAppApiUrl: "http://localhost:4200"
 
 # Configuration for persistence
 persistence:
