@@ -2,8 +2,8 @@ apiVersion: v2
 name: visual-regression-tracker
 description: A Helm chart for Visual Regression Tracker
 home: https://visual-regression-tracker.com
-sources: 
- - https://github.com/Visual-Regression-Tracker/Visual-Regression-Tracker
+sources:
+  - https://github.com/Visual-Regression-Tracker/Visual-Regression-Tracker
 type: application
 version: 0.1.0
 appVersion: "4.20.4"
