@@ -5,7 +5,7 @@ home: https://visual-regression-tracker.com
 sources:
   - https://github.com/Visual-Regression-Tracker/Visual-Regression-Tracker
 type: application
-version: 0.1.1
+version: 0.2.0
 appVersion: "4.20.4"
 maintainers:
   - name: monotek
