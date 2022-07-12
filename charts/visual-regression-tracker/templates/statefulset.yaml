@@ -1,0 +1,178 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "visual-regression-tracker.fullname" . }}
+  labels:
+    {{- include "visual-regression-tracker.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  serviceName: {{ include "visual-regression-tracker.name" . }}
+  selector:
+    matchLabels:
+      {{- include "visual-regression-tracker.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "visual-regression-tracker.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "visual-regression-tracker.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: {{ .Chart.Name }}-migration
+          env:
+            - name: POSTGRES_DB
+              value: "{{ .Values.vrtConfig.postgresql.db }}"
+            - name: POSTGRES_HOST
+              value: "{{ .Values.vrtConfig.postgresql.host }}"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "visual-regression-tracker.postgresqlSecretName" . }}
+                  key: {{ .Values.secrets.postgresql.secretKey }}
+            - name: POSTGRES_PORT
+              value: "{{ .Values.vrtConfig.postgresql.port }}"
+            - name: POSTGRES_USER
+              value: "{{ .Values.vrtConfig.postgresql.user }}"
+            - name: DATABASE_URL
+              value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)"
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.migration.image.repository }}:{{ .Values.migration.image.tag }}"
+          imagePullPolicy: {{ .Values.migration.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.migration.resources | nindent 12 }}
+      containers:
+        - name: {{ .Chart.Name }}-api
+          env:
+            - name: APP_FRONTEND_URL
+              value: "http://localhost:8080"
+            - name: BODY_PARSER_JSON_LIMIT
+              value: "{{ .Values.vrtConfig.bodyParserJsonLimit }}"
+            {{- if or .Values.vrtConfig.elasticsearch.pass .Values.secrets.elasticsearch.useExisting }}
+            - name: ELASTICSEARCH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "visual-regression-tracker.elasticsearchSecretName" . }}
+                  key: {{ .Values.secrets.elasticsearch.secretKey }}
+            {{- end }}
+            - name: ELASTIC_URL
+              value: "{{ .Values.vrtConfig.elasticsearch.schema }}://{{ if .Values.vrtConfig.elasticsearch.user }}{{ .Values.vrtConfig.elasticsearch.user }}{{ end }}{{- if or .Values.vrtConfig.elasticsearch.pass .Values.secrets.elasticsearch.useExisting }}:$(ELASTICSEARCH_PASSWORD)@{{ end }}{{ .Values.vrtConfig.elasticsearch.host }}:{{ .Values.vrtConfig.elasticsearch.port }}"
+            - name: JWT_LIFE_TIME
+              value: "{{ .Values.vrtConfig.jwt.lifeTime }}"
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "visual-regression-tracker.jwtSecretName" . }}
+                  key: {{ .Values.secrets.jwt.secretKey }}
+            - name: POSTGRES_DB
+              value: "{{ .Values.vrtConfig.postgresql.db }}"
+            - name: POSTGRES_HOST
+              value: "{{ .Values.vrtConfig.postgresql.host }}"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "visual-regression-tracker.postgresqlSecretName" . }}
+                  key: {{ .Values.secrets.postgresql.secretKey }}
+            - name: POSTGRES_PORT
+              value: "{{ .Values.vrtConfig.postgresql.port }}"
+            - name: POSTGRES_USER
+              value: "{{ .Values.vrtConfig.postgresql.user }}"
+            - name: DATABASE_URL
+              value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)"
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+          imagePullPolicy: {{ .Values.api.image.pullPolicy }}
+          ports:
+            - name: api
+              containerPort: 3000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: api
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: api
+          resources:
+            {{- toYaml .Values.ui.resources | nindent 12 }}
+          volumeMounts:
+            - name: {{ template "visual-regression-tracker.fullname" . }}
+              mountPath: /imageUploads
+        - name: {{ .Chart.Name }}-ui
+          env:
+            - name: REACT_APP_API_URL
+              value: "http://localhost:3000"
+            - name: VRT_VERSION
+              value: "{{ .Chart.AppVersion }}"
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.ui.image.repository }}:{{ .Values.ui.image.tag }}"
+          imagePullPolicy: {{ .Values.ui.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.ui.resources | nindent 12 }}
+          volumeMounts:
+            - name: {{ template "visual-regression-tracker.fullname" . }}
+              mountPath: /usr/share/nginx/html/static/imageUploads
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+  {{- if and .Values.persistence.enabled .Values.persistence.existingClaim }}
+        - name: {{ template "visual-regression-tracker.fullname" . }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim | default (include "visual-regression-tracker.fullname" .) }}
+  {{- else if not .Values.persistence.enabled }}
+      - name: {{ template "visual-regression-tracker.fullname" . }}
+        emptyDir: {}
+  {{- else if and .Values.persistence.enabled (not .Values.persistence.existingClaim) }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ template "visual-regression-tracker.fullname" . }}
+      spec:
+        accessModes:
+        {{- range .Values.persistence.accessModes }}
+          - {{ . | quote }}
+        {{- end }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size | quote }}
+        {{- if .Values.persistence.storageClass }}
+        {{- if (eq "-" .Values.persistence.storageClass) }}
+        storageClassName: ""
+        {{- else }}
+        storageClassName: "{{ .Values.persistence.storageClass }}"
+        {{- end }}
+        {{- end }}
+  {{- end }}
