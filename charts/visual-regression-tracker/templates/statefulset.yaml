@@ -105,7 +105,7 @@ spec:
               path: /health
               port: api
           resources:
-            {{- toYaml .Values.ui.resources | nindent 12 }}
+            {{- toYaml .Values.api.resources | nindent 12 }}
           volumeMounts:
             - name: {{ template "visual-regression-tracker.fullname" . }}
               mountPath: /imageUploads
