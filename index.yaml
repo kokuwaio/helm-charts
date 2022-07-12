@@ -1201,4 +1201,30 @@ entries:
     urls:
     - https://github.com/kokuwaio/helm-charts/releases/download/mysqldump-3.0.0/mysqldump-3.0.0.tgz
     version: 3.0.0
-generated: "2022-07-06T07:50:53.407427172Z"
+  visual-regression-tracker:
+  - apiVersion: v2
+    appVersion: 4.20.4
+    created: "2022-07-12T11:20:14.66872262Z"
+    dependencies:
+    - condition: vrtConfig.elasticsearch.enabled
+      name: elasticsearch
+      repository: https://helm.elastic.co
+      version: 7.17.3
+    - condition: vrtConfig.postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.6.15
+    description: A Helm chart for Visual Regression Tracker
+    digest: 37d95ef82bc004092d7bae98315f2e4a5494c093d3cd9f70d93a5c05d6b0915e
+    home: https://visual-regression-tracker.com
+    maintainers:
+    - email: monotek23@gmail.com
+      name: monotek
+    name: visual-regression-tracker
+    sources:
+    - https://github.com/Visual-Regression-Tracker/Visual-Regression-Tracker
+    type: application
+    urls:
+    - https://github.com/kokuwaio/helm-charts/releases/download/visual-regression-tracker-0.1.0/visual-regression-tracker-0.1.0.tgz
+    version: 0.1.0
+generated: "2022-07-12T11:20:14.66897702Z"
