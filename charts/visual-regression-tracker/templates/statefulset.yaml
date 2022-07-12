@@ -54,7 +54,7 @@ spec:
         - name: {{ .Chart.Name }}-api
           env:
             - name: APP_FRONTEND_URL
-              value: "http://localhost:8080"
+              value: "{{ .Values.vrtConfig.appFrontendUrl }}"
             - name: BODY_PARSER_JSON_LIMIT
               value: "{{ .Values.vrtConfig.bodyParserJsonLimit }}"
             {{- if or .Values.vrtConfig.elasticsearch.pass .Values.secrets.elasticsearch.useExisting }}
@@ -112,7 +112,7 @@ spec:
         - name: {{ .Chart.Name }}-ui
           env:
             - name: REACT_APP_API_URL
-              value: "http://localhost:3000"
+              value: "{{ .Values.vrtConfig.reactAppApiUrl }}"
             - name: VRT_VERSION
               value: "{{ .Chart.AppVersion }}"
           securityContext:
