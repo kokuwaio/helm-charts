@@ -1,0 +1,245 @@
+nameOverride: ""
+fullnameOverride: ""
+
+imagePullSecrets: []
+
+vrtConfig:
+  bodyParserJsonLimit: "5mb"
+  elasticsearch:
+    # enable/disable elasticsearch chart dependency
+    enabled: true
+    # host env var is only used when zammadConfig.elasticsearch.enabled is false
+    host: vrt-master
+    pass: ""
+    port: 9200
+    schema: http
+    user: ""
+  jwt:
+    pass: "jwtPrivateKey"  
+    lifeTime: "1d"
+  postgresql:
+    # enable/disable postgresql chart dependency
+    enabled: true
+    # needs to be the same as the postgresql.postgresqlPassword
+    db: vrt
+    # host env var is only used when postgresql.enabled is false
+    host: vrt-postgresql
+    pass: "vrt-db-password"
+    # needs to be the same as the postgresql.postgresqlDatabase
+    port: 5432
+    # needs to be the same as the postgresql.postgresqlUsername
+    user: vrt
+
+# Configuration for persistence
+persistence:
+  enabled: true
+  ## A manually managed Persistent Volume and Claim
+  ## If defined, PVC must be created manually before volume will be bound
+  ## The value is evaluated as a template, so, for example, the name can depend on .Release or .Chart
+  ##
+  # existingClaim:
+  accessModes:
+    - ReadWriteOnce
+  storageClass: ""
+  size: 10Gi
+  annotations: {}
+
+secrets:
+  elasticsearch:
+    useExisting: false
+    secretKey: es-pass
+    secretName: es-pass
+  jwt:
+    useExisting: false
+    secretKey: jwt-pass
+    secretName: jwt-pass
+  postgresql:
+    useExisting: false
+    secretKey: pg-pass
+    secretName: pg-pass
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+replicaCount: 1
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+api:
+  image:
+    repository: visualregressiontracker/api 
+    pullPolicy: IfNotPresent
+    tag: "4.20.2"
+
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
+
+  service:
+    type: ClusterIP
+    port: 4200
+
+  ingress:
+    enabled: false
+    className: ""
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    hosts:
+      - host: chart-example.local
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+migration:
+  image:
+    repository: visualregressiontracker/migration
+    pullPolicy: IfNotPresent
+    tag: "4.20.1"
+
+  imagePullSecrets: []
+
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
+ 
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+ui:
+  image:
+    repository: visualregressiontracker/ui 
+    pullPolicy: IfNotPresent
+    tag: "4.20.3"
+ 
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
+
+  service:
+    type: ClusterIP
+    port: 8080
+
+  ingress:
+    enabled: false
+    className: ""
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    hosts:
+      - host: chart-example.local
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+# dependency charts config
+elasticsearch:
+  clusterName: vrt
+  replicas: 1
+  # Workaround to get helm test to work in GitHub action CI
+  # the [ES chart](https://github.com/elastic/helm-charts/tree/master/elasticsearch)
+  # default would be: "wait_for_status=green&timeout=1s"
+  # see: <https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html#request-params>
+  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
+  resources: {}
+    # requests:
+    #   cpu: "100m"
+    #   memory: "2Gi"
+    # limits:
+    #   cpu: "1000m"
+    #   memory: "2Gi"
+  initResources: {}
+    # limits:
+    #   cpu: "25m"
+    #   # memory: "128Mi"
+    # requests:
+    #   cpu: "25m"
+    #   memory: "128Mi"
+  sidecarResources: {}
+    # limits:
+    #   cpu: "25m"
+    #   # memory: "128Mi"
+    # requests:
+    #   cpu: "25m"
+    #   memory: "128Mi"
+
+postgresql:
+  auth:
+    database: vrt
+    username: vrt
+    password: vrt-db-password
+  resources: {}
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
