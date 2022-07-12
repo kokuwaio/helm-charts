@@ -1204,6 +1204,31 @@ entries:
   visual-regression-tracker:
   - apiVersion: v2
     appVersion: 4.20.4
+    created: "2022-07-12T14:25:17.257264104Z"
+    dependencies:
+    - condition: vrtConfig.elasticsearch.enabled
+      name: elasticsearch
+      repository: https://helm.elastic.co
+      version: 7.17.3
+    - condition: vrtConfig.postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.6.15
+    description: A Helm chart for Visual Regression Tracker
+    digest: 3aa77f2d577b7ceea6e983969c8cceb4309b225533243f350ac56186354f863c
+    home: https://visual-regression-tracker.com
+    maintainers:
+    - email: monotek23@gmail.com
+      name: monotek
+    name: visual-regression-tracker
+    sources:
+    - https://github.com/Visual-Regression-Tracker/Visual-Regression-Tracker
+    type: application
+    urls:
+    - https://github.com/kokuwaio/helm-charts/releases/download/visual-regression-tracker-0.2.0/visual-regression-tracker-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 4.20.4
     created: "2022-07-12T11:20:14.66872262Z"
     dependencies:
     - condition: vrtConfig.elasticsearch.enabled
@@ -1227,4 +1252,4 @@ entries:
     urls:
     - https://github.com/kokuwaio/helm-charts/releases/download/visual-regression-tracker-0.1.0/visual-regression-tracker-0.1.0.tgz
     version: 0.1.0
-generated: "2022-07-12T11:20:14.66897702Z"
+generated: "2022-07-12T14:25:17.257562508Z"
