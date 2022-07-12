@@ -236,6 +236,7 @@ postgresql:
     database: vrt
     username: vrt
     password: vrt-db-password
+  fullnameOverride: vrt-postgresql
   resources: {}
     # limits:
     #   cpu: 100m
