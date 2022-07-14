@@ -64,15 +64,19 @@ spec:
                   name: {{ template "visual-regression-tracker.elasticsearchSecretName" . }}
                   key: {{ .Values.secrets.elasticsearch.secretKey }}
             {{- end }}
+            {{- if or .Values.vrtConfig.elasticsearch.host }}
             - name: ELASTIC_URL
               value: "{{ .Values.vrtConfig.elasticsearch.schema }}://{{ if .Values.vrtConfig.elasticsearch.user }}{{ .Values.vrtConfig.elasticsearch.user }}{{ end }}{{- if or .Values.vrtConfig.elasticsearch.pass .Values.secrets.elasticsearch.useExisting }}:$(ELASTICSEARCH_PASSWORD)@{{ end }}{{ .Values.vrtConfig.elasticsearch.host }}:{{ .Values.vrtConfig.elasticsearch.port }}"
-            - name: JWT_LIFE_TIME
-              value: "{{ .Values.vrtConfig.jwt.lifeTime }}"
+            {{- end }}
+            {{- if or .Values.vrtConfig.jwt.pass .Values.secrets.jwt.useExisting }}
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
                   name: {{ template "visual-regression-tracker.jwtSecretName" . }}
                   key: {{ .Values.secrets.jwt.secretKey }}
+            - name: JWT_LIFE_TIME
+              value: "{{ .Values.vrtConfig.jwt.lifeTime }}"
+            {{- end }}
             - name: POSTGRES_DB
               value: "{{ .Values.vrtConfig.postgresql.db }}"
             - name: POSTGRES_HOST

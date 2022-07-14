@@ -7,28 +7,25 @@ vrtConfig:
   appFrontendUrl: "http://localhost:8080"
   bodyParserJsonLimit: "5mb"
   elasticsearch:
-    # enable/disable elasticsearch chart dependency
-    enabled: true
-    # host env var is only used when zammadConfig.elasticsearch.enabled is false
-    host: vrt-master
+    host: ""
     pass: ""
     port: 9200
     schema: http
     user: ""
   jwt:
-    pass: "jwtPrivateKey"
+    pass: ""
     lifeTime: "1d"
   postgresql:
     # enable/disable postgresql chart dependency
     enabled: true
-    # needs to be the same as the postgresql.postgresqlPassword
+    # needs to be the same as the postgresql.auth.password
     db: vrt
-    # host env var is only used when postgresql.enabled is false
+    # host env var is only used when vrtConfig.postgresql.enabled is false
     host: vrt-postgresql
     pass: "vrt-db-password"
-    # needs to be the same as the postgresql.postgresqlDatabase
+    # needs to be the same as the postgresql.auth.database
     port: 5432
-    # needs to be the same as the postgresql.postgresqlUsername
+    # needs to be the same as the postgresql.auth.username
     user: vrt
   reactAppApiUrl: "http://localhost:4200"
 
@@ -71,6 +68,7 @@ podAnnotations: {}
 podSecurityContext: {}
   # fsGroup: 2000
 
+# if used > 1 you need a ReadWriteMany storageclass
 replicaCount: 1
 
 serviceAccount:
@@ -162,13 +160,13 @@ ui:
     pullPolicy: IfNotPresent
     tag: "4.20.3"
 
-  securityContext: {}
-    # capabilities:
-    #   drop:
-    #   - ALL
-    # readOnlyRootFilesystem: true
-    # runAsNonRoot: true
-    # runAsUser: 1000
+  securityContext:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1000
 
   service:
     type: ClusterIP
@@ -202,37 +200,7 @@ ui:
     #   cpu: 100m
     #   memory: 128Mi
 
-# dependency charts config
-elasticsearch:
-  clusterName: vrt
-  replicas: 1
-  # Workaround to get helm test to work in GitHub action CI
-  # the [ES chart](https://github.com/elastic/helm-charts/tree/master/elasticsearch)
-  # default would be: "wait_for_status=green&timeout=1s"
-  # see: <https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html#request-params>
-  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
-  resources: {}
-    # requests:
-    #   cpu: "100m"
-    #   memory: "2Gi"
-    # limits:
-    #   cpu: "1000m"
-    #   memory: "2Gi"
-  initResources: {}
-    # limits:
-    #   cpu: "25m"
-    #   # memory: "128Mi"
-    # requests:
-    #   cpu: "25m"
-    #   memory: "128Mi"
-  sidecarResources: {}
-    # limits:
-    #   cpu: "25m"
-    #   # memory: "128Mi"
-    # requests:
-    #   cpu: "25m"
-    #   memory: "128Mi"
-
+# dependency chart config
 postgresql:
   auth:
     database: vrt
