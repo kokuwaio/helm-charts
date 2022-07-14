@@ -5,16 +5,12 @@ home: https://visual-regression-tracker.com
 sources:
   - https://github.com/Visual-Regression-Tracker/Visual-Regression-Tracker
 type: application
-version: 0.2.1
+version: 0.3.0
 appVersion: "4.20.4"
 maintainers:
   - name: monotek
     email: monotek23@gmail.com
 dependencies:
-  - name: elasticsearch
-    version: "7.17.3"
-    repository: https://helm.elastic.co
-    condition: vrtConfig.elasticsearch.enabled
   - name: postgresql
     version: "11.6.15"
     repository: https://charts.bitnami.com/bitnami
