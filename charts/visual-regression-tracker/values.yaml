@@ -121,10 +121,10 @@ api:
     # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
     # limits:
     #   cpu: 100m
-    #   memory: 128Mi
+    #   memory: 512Mi
     # requests:
     #   cpu: 100m
-    #   memory: 128Mi
+    #   memory: 512Mi
 
 migration:
   image:
@@ -209,8 +209,8 @@ postgresql:
   fullnameOverride: vrt-postgresql
   resources: {}
     # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
+    #   cpu: 50m
+    #   memory: 64Mi
     # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
+    #   cpu: 50m
+    #   memory: 64Mi
