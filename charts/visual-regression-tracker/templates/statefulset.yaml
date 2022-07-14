@@ -68,7 +68,6 @@ spec:
             - name: ELASTIC_URL
               value: "{{ .Values.vrtConfig.elasticsearch.schema }}://{{ if .Values.vrtConfig.elasticsearch.user }}{{ .Values.vrtConfig.elasticsearch.user }}{{ end }}{{- if or .Values.vrtConfig.elasticsearch.pass .Values.secrets.elasticsearch.useExisting }}:$(ELASTICSEARCH_PASSWORD)@{{ end }}{{ .Values.vrtConfig.elasticsearch.host }}:{{ .Values.vrtConfig.elasticsearch.port }}"
             {{- end }}
-            {{- if or .Values.vrtConfig.jwt.pass .Values.secrets.jwt.useExisting }}
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
@@ -76,7 +75,6 @@ spec:
                   key: {{ .Values.secrets.jwt.secretKey }}
             - name: JWT_LIFE_TIME
               value: "{{ .Values.vrtConfig.jwt.lifeTime }}"
-            {{- end }}
             - name: POSTGRES_DB
               value: "{{ .Values.vrtConfig.postgresql.db }}"
             - name: POSTGRES_HOST

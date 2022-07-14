@@ -13,7 +13,7 @@ vrtConfig:
     schema: http
     user: ""
   jwt:
-    pass: ""
+    pass: "JWTprivateKey"
     lifeTime: "1d"
   postgresql:
     # enable/disable postgresql chart dependency
