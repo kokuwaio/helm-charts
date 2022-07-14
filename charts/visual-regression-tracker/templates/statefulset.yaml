@@ -68,13 +68,13 @@ spec:
             - name: ELASTIC_URL
               value: "{{ .Values.vrtConfig.elasticsearch.schema }}://{{ if .Values.vrtConfig.elasticsearch.user }}{{ .Values.vrtConfig.elasticsearch.user }}{{ end }}{{- if or .Values.vrtConfig.elasticsearch.pass .Values.secrets.elasticsearch.useExisting }}:$(ELASTICSEARCH_PASSWORD)@{{ end }}{{ .Values.vrtConfig.elasticsearch.host }}:{{ .Values.vrtConfig.elasticsearch.port }}"
             {{- end }}
+            - name: JWT_LIFE_TIME
+              value: "{{ .Values.vrtConfig.jwt.lifeTime }}"
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
                   name: {{ template "visual-regression-tracker.jwtSecretName" . }}
                   key: {{ .Values.secrets.jwt.secretKey }}
-            - name: JWT_LIFE_TIME
-              value: "{{ .Values.vrtConfig.jwt.lifeTime }}"
             - name: POSTGRES_DB
               value: "{{ .Values.vrtConfig.postgresql.db }}"
             - name: POSTGRES_HOST
