@@ -1,11 +1,12 @@
 apiVersion: v2
 name: visual-regression-tracker
-description: A Helm chart for Visual Regression Tracker
+description: Backend and Frontend application for tracking differences via image comparison
 home: https://visual-regression-tracker.com
 sources:
   - https://github.com/Visual-Regression-Tracker/Visual-Regression-Tracker
+  - https://github.com/kokuwaio/helm-charts/tree/main/charts/visual-regression-tracker
 type: application
-version: 0.3.0
+version: 0.3.1
 appVersion: "4.20.4"
 maintainers:
   - name: monotek
