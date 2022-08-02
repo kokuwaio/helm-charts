@@ -15,7 +15,7 @@ This chart helps set up a cronjob or one time job to backup a MySQL database wit
 
 ## Prerequisites
 
-- Kubernetes 1.16
+- Kubernetes 1.21
 - Helm 3.0
 
 ## Installing the Chart
