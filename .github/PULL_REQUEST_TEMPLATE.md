@@ -40,4 +40,4 @@ We would like these checks to pass before we even continue reviewing your change
 <!-- [Place an '[x]' (no spaces) in all applicable fields. Please remove unrelated fields.] -->
 - [ ] [DCO](https://github.com/kokuwaio/helm-charts/blob/main/CONTRIBUTING.md#sign-off-your-work) signed
 - [ ] Chart Version bumped
-- [ ] All variables are documented in the charts README
+- [ ] README is up to date regarding breaking changes / upgrading instructions
