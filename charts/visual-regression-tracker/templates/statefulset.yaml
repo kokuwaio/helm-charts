@@ -150,14 +150,19 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      volumes:
+      {{- if .Values.topologySpreadConstraints }}
+      topologySpreadConstraints: 
+        {{- toYaml .Values.topologySpreadConstraints | nindent 8 }}
+      {{- end }}
   {{- if and .Values.persistence.enabled .Values.persistence.existingClaim }}
+      volumes:
         - name: {{ template "visual-regression-tracker.fullname" . }}
           persistentVolumeClaim:
             claimName: {{ .Values.persistence.existingClaim | default (include "visual-regression-tracker.fullname" .) }}
   {{- else if not .Values.persistence.enabled }}
-      - name: {{ template "visual-regression-tracker.fullname" . }}
-        emptyDir: {}
+      volumes:
+        - name: {{ template "visual-regression-tracker.fullname" . }}
+          emptyDir: {}
   {{- else if and .Values.persistence.enabled (not .Values.persistence.existingClaim) }}
   volumeClaimTemplates:
     - metadata:
