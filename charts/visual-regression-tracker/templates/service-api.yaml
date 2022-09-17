@@ -4,6 +4,7 @@ metadata:
   name: {{ include "visual-regression-tracker.fullname" . }}-api
   labels:
     {{- include "visual-regression-tracker.labels" . | nindent 4 }}
+    component: api
 spec:
   type: {{ .Values.api.service.type }}
   ports:
