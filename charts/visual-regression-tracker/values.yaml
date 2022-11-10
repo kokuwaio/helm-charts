@@ -86,7 +86,7 @@ api:
   image:
     repository: visualregressiontracker/api
     pullPolicy: IfNotPresent
-    tag: "4.20.2"
+    tag: "4.20.3"
 
   securityContext: {}
     # capabilities:
