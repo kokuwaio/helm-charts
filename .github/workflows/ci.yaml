@@ -6,7 +6,7 @@ on:
       - 'charts/**/**'
 
 env:
-  helm-version: "v3.9.0"
+  helm-version: "v3.10.0"
   kubeval-version: "v0.16.1"
 
 jobs:
