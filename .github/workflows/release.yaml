@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  helm-version: "v3.8.2"
+  helm-version: "v3.10.0"
 
 jobs:
   release:
