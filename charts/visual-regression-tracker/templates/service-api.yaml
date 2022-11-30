@@ -6,9 +6,9 @@ metadata:
     {{- include "visual-regression-tracker.labels" . | nindent 4 }}
     component: api
 spec:
-  type: {{ .Values.api.service.type }}
+  type: {{ .Values.vrtComponents.api.service.type }}
   ports:
-    - port: {{ .Values.api.service.port }}
+    - port: {{ .Values.vrtComponents.api.service.port }}
       targetPort: api
       protocol: TCP
       name: api

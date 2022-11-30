@@ -1,9 +1,9 @@
-{{- if .Values.ui.ingress.enabled -}}
+{{- if .Values.vrtComponents.ui.ingress.enabled -}}
 {{- $fullName := include "visual-regression-tracker.fullname" . -}}
-{{- $svcPort := .Values.ui.service.port -}}
-{{- if and .Values.ui.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
-  {{- if not (hasKey .Values.ui.ingress.annotations "kubernetes.io/ingress.class") }}
-  {{- $_ := set .Values.ui.ingress.annotations "kubernetes.io/ingress.class" .Values.ui.ingress.className}}
+{{- $svcPort := .Values.vrtComponents.ui.service.port -}}
+{{- if and .Values.vrtComponents.ui.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
+  {{- if not (hasKey .Values.vrtComponents.ui.ingress.annotations "kubernetes.io/ingress.class") }}
+  {{- $_ := set .Values.vrtComponents.ui.ingress.annotations "kubernetes.io/ingress.class" .Values.vrtComponents.ui.ingress.className}}
   {{- end }}
 {{- end }}
 {{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
@@ -18,17 +18,17 @@ metadata:
   name: {{ $fullName }}
   labels:
     {{- include "visual-regression-tracker.labels" . | nindent 4 }}
-  {{- with .Values.ui.ingress.annotations }}
+  {{- with .Values.vrtComponents.ui.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- if and .Values.ui.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
-  ingressClassName: {{ .Values.ui.ingress.className }}
+  {{- if and .Values.vrtComponents.ui.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  ingressClassName: {{ .Values.vrtComponents.ui.ingress.className }}
   {{- end }}
-  {{- if .Values.ui.ingress.tls }}
+  {{- if .Values.vrtComponents.ui.ingress.tls }}
   tls:
-    {{- range .Values.ui.ingress.tls }}
+    {{- range .Values.vrtComponents.ui.ingress.tls }}
     - hosts:
         {{- range .hosts }}
         - {{ . | quote }}
@@ -37,7 +37,7 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    {{- range .Values.ui.ingress.hosts }}
+    {{- range .Values.vrtComponents.ui.ingress.hosts }}
     - host: {{ .host | quote }}
       http:
         paths:
