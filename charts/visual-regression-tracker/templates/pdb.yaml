@@ -1,0 +1,13 @@
+{{- if .Values.podDisruptionBudget -}}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "visual-regression-tracker.fullname" . }}
+  labels:
+    {{- include "visual-regression-tracker.labels" . | nindent 4 }}
+spec:
+  {{- toYaml .Values.podDisruptionBudget | nindent 2}}
+  selector:
+    matchLabels:
+      {{- include "visual-regression-tracker.selectorLabels" . | nindent 6 }}
+{{- end -}}

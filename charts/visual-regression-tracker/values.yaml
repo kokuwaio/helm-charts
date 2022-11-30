@@ -67,6 +67,9 @@ topologySpreadConstraints: []
 
 podAnnotations: {}
 
+podDisruptionBudget: {}
+  # maxUnavailable: 1
+
 podSecurityContext: {}
   # fsGroup: 2000
 
