@@ -18,6 +18,9 @@ spec:
       {{- end }}
       labels:
         {{- include "visual-regression-tracker.selectorLabels" . | nindent 8 }}
+      {{- with .Values.podLables }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -46,10 +49,10 @@ spec:
               value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)"
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.migration.image.repository }}:{{ .Values.migration.image.tag }}"
-          imagePullPolicy: {{ .Values.migration.image.pullPolicy }}
+          image: "{{ .Values.vrtComponents.migration.image.repository }}:{{ .Values.vrtComponents.migration.image.tag }}"
+          imagePullPolicy: {{ .Values.vrtComponents.migration.image.pullPolicy }}
           resources:
-            {{- toYaml .Values.migration.resources | nindent 12 }}
+            {{- toYaml .Values.vrtComponents.migration.resources | nindent 12 }}
       containers:
         - name: {{ .Chart.Name }}-api
           env:
@@ -92,8 +95,8 @@ spec:
               value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)"
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
-          imagePullPolicy: {{ .Values.api.image.pullPolicy }}
+          image: "{{ .Values.vrtComponents.api.image.repository }}:{{ .Values.vrtComponents.api.image.tag }}"
+          imagePullPolicy: {{ .Values.vrtComponents.api.image.pullPolicy }}
           ports:
             - name: api
               containerPort: 3000
@@ -107,7 +110,7 @@ spec:
               path: /health
               port: api
           resources:
-            {{- toYaml .Values.api.resources | nindent 12 }}
+            {{- toYaml .Values.vrtComponents.api.resources | nindent 12 }}
           volumeMounts:
             - name: {{ template "visual-regression-tracker.fullname" . }}
               mountPath: /imageUploads
@@ -119,8 +122,8 @@ spec:
               value: "{{ .Chart.AppVersion }}"
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.ui.image.repository }}:{{ .Values.ui.image.tag }}"
-          imagePullPolicy: {{ .Values.ui.image.pullPolicy }}
+          image: "{{ .Values.vrtComponents.ui.image.repository }}:{{ .Values.vrtComponents.ui.image.tag }}"
+          imagePullPolicy: {{ .Values.vrtComponents.ui.image.pullPolicy }}
           ports:
             - name: http
               containerPort: 8080
@@ -134,7 +137,7 @@ spec:
               path: /
               port: http
           resources:
-            {{- toYaml .Values.ui.resources | nindent 12 }}
+            {{- toYaml .Values.vrtComponents.ui.resources | nindent 12 }}
           volumeMounts:
             - name: {{ template "visual-regression-tracker.fullname" . }}
               mountPath: /usr/share/nginx/html/static/imageUploads

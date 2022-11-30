@@ -48,3 +48,11 @@ helm upgrade vrt kokuwa/visual-regression-tracker
 ```
 
 _See [`helm upgrade`](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
+
+### From 0.x.0 to 1.0.0
+
+Container config has been moved from `.Values.ui`, `.Values.api`, & `.Values.migration` to  `.Values.vrtComponents.ui`, `.Values.vrtComponents.api`, & `.Values.vrtComponents.migration`.
+
+Default securityContexts and podSecurityContexts have been set.
+
+PostgreSQL dependency has beend updated to 12.1.2 which changes the default PostgreSQL image from 14.x to 15.x. Follow the [official instructions](https://www.postgresql.org/docs/15/upgrading.html) to upgrade.
