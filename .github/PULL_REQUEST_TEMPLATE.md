@@ -26,7 +26,11 @@ We would like these checks to pass before we even continue reviewing your change
 -->
 # Which chart
 
+- .
+
 # What this PR does / why we need it
+
+- .
 
 # Which issue this PR fixes
 
@@ -35,6 +39,8 @@ We would like these checks to pass before we even continue reviewing your change
 - fixes #
 
 # Special notes for your reviewer
+
+- .
 
 # Checklist
 <!-- [Place an '[x]' (no spaces) in all applicable fields. Please remove unrelated fields.] -->
