@@ -18,7 +18,7 @@ spec:
       {{- end }}
       labels:
         {{- include "visual-regression-tracker.selectorLabels" . | nindent 8 }}
-      {{- with .Values.podLables }}
+      {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
     spec:
@@ -47,12 +47,12 @@ spec:
               value: "{{ .Values.vrtConfig.postgresql.user }}"
             - name: DATABASE_URL
               value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)"
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.vrtComponents.migration.image.repository }}:{{ .Values.vrtComponents.migration.image.tag }}"
           imagePullPolicy: {{ .Values.vrtComponents.migration.image.pullPolicy }}
           resources:
             {{- toYaml .Values.vrtComponents.migration.resources | nindent 12 }}
+          securityContext:
+            {{- toYaml .Values.vrtComponents.migration.initSecurityContext | nindent 12 }}
       containers:
         - name: {{ .Chart.Name }}-api
           env:
@@ -93,8 +93,6 @@ spec:
               value: "{{ .Values.vrtConfig.postgresql.user }}"
             - name: DATABASE_URL
               value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)"
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.vrtComponents.api.image.repository }}:{{ .Values.vrtComponents.api.image.tag }}"
           imagePullPolicy: {{ .Values.vrtComponents.api.image.pullPolicy }}
           ports:
@@ -102,6 +100,7 @@ spec:
               containerPort: 3000
               protocol: TCP
           livenessProbe:
+            failureThreshold: 10
             httpGet:
               path: /health
               port: api
@@ -111,6 +110,8 @@ spec:
               port: api
           resources:
             {{- toYaml .Values.vrtComponents.api.resources | nindent 12 }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
           volumeMounts:
             - name: {{ template "visual-regression-tracker.fullname" . }}
               mountPath: /imageUploads
@@ -120,8 +121,6 @@ spec:
               value: "{{ .Values.vrtConfig.reactAppApiUrl }}"
             - name: VRT_VERSION
               value: "{{ .Chart.AppVersion }}"
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.vrtComponents.ui.image.repository }}:{{ .Values.vrtComponents.ui.image.tag }}"
           imagePullPolicy: {{ .Values.vrtComponents.ui.image.pullPolicy }}
           ports:
@@ -129,6 +128,7 @@ spec:
               containerPort: 8080
               protocol: TCP
           livenessProbe:
+            failureThreshold: 10
             httpGet:
               path: /
               port: http
@@ -138,6 +138,8 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.vrtComponents.ui.resources | nindent 12 }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
           volumeMounts:
             - name: {{ template "visual-regression-tracker.fullname" . }}
               mountPath: /usr/share/nginx/html/static/imageUploads

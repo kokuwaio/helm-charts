@@ -6,12 +6,12 @@ on:
       - 'charts/**/**'
 
 env:
-  helm-version: "v3.10.0"
+  helm-version: "v3.10.2"
   kubeval-version: "v0.16.1"
 
 jobs:
   lint-chart:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -30,7 +30,7 @@ jobs:
         run: ct lint --config .github/ct.yaml
 
   super-linter:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -47,15 +47,15 @@ jobs:
           VALIDATE_YAML: false
 
   kubeval-chart:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs:
       - lint-chart
     strategy:
       matrix:
         k8s:
-          - v1.21.10
-          - v1.22.7
-          - v1.23.5
+          - v1.23.13
+          - v1.24.7
+          - v1.25.3
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -79,9 +79,9 @@ jobs:
     strategy:
       matrix:
         k8s:
-          - v1.21.10
-          - v1.22.7
-          - v1.23.5
+          - v1.23.13
+          - v1.24.7
+          - v1.25.3
     steps:
       - name: Checkout
         uses: actions/checkout@v3
