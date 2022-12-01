@@ -40,6 +40,9 @@ helm.sh/chart: {{ include "fluentd-elasticsearch.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- $k, $v := range .Values.labels }}
+{{ $k }}: {{ $v }}
+{{- end }}
 {{- end }}
 
 {{/*
