@@ -19,6 +19,9 @@ spec:
     metadata:
       labels:
         {{- include "fluentd-elasticsearch.selectorLabels" . | nindent 8 }}
+        {{- with .Values.labels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmaps.yaml") . | sha256sum }}
 {{- if .Values.podAnnotations }}

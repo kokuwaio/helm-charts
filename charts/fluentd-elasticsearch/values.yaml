@@ -219,6 +219,9 @@ livenessProbe:
           exit 1;
         fi;
 
+## Extra labels to be added to created resources
+labels: {}
+
 annotations: {}
 
 podAnnotations: {}
