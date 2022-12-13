@@ -196,7 +196,7 @@ livenessProbe:
       # liveness probe off completely.
       - '/bin/sh'
       - '-c'
-      - >
+      - |
         LIVENESS_THRESHOLD_SECONDS=${LIVENESS_THRESHOLD_SECONDS:-300};
         STUCK_THRESHOLD_SECONDS=${STUCK_THRESHOLD_SECONDS:-900};
         BUFFER_PATH=${BUFFER_PATH:-/var/log/fluentd-buffers/kubernetes.system.buffer}
