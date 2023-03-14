@@ -70,7 +70,6 @@ vrtComponents:
         drop:
           - ALL
       privileged: false
-      readOnlyRootFilesystem: true
 
     service:
       type: ClusterIP
@@ -83,13 +82,6 @@ vrtComponents:
       tag: "4.20.1"
 
     imagePullSecrets: []
-
-    initSecurityContext:
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-          - ALL
-      privileged: false
 
     resources: {}
       # We usually recommend not to specify default resources and to leave this as a conscious
@@ -109,7 +101,6 @@ vrtComponents:
         drop:
           - ALL
       privileged: false
-      readOnlyRootFilesystem: true
 
   ui:
     image:
@@ -151,7 +142,6 @@ vrtComponents:
         drop:
           - ALL
       privileged: false
-      readOnlyRootFilesystem: true
 
     service:
       type: ClusterIP
@@ -205,6 +195,8 @@ podSecurityContext:
   runAsGroup: 1000
   runAsNonRoot: true
   runAsUser: 1000
+  seccompProfile:
+    type: RuntimeDefault
 
 # if used > 1 you need a ReadWriteMany storageclass
 replicaCount: 1

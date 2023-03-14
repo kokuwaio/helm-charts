@@ -49,6 +49,13 @@ helm upgrade vrt kokuwa/visual-regression-tracker
 
 _See [`helm upgrade`](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
 
+### From 1.0.x to 2.0.0
+
+Renamed migration securityContext var from `.Values.vrtComponents.migration.initSecurityContext` to `.Values.vrtComponents.migration.securityContext`
+Fixed securityContext config for API and UI containers, where the configvalues were ignored.
+Added `seccompProfile` with default of `type: RuntimeDefault` to `podSecurityContext`.
+`readOnlyRootFilesystem` setting was removed.
+
 ### From 0.x.0 to 1.0.0
 
 Container config has been moved from `.Values.ui`, `.Values.api`, & `.Values.migration` to  `.Values.vrtComponents.ui`, `.Values.vrtComponents.api`, & `.Values.vrtComponents.migration`.

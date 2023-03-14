@@ -52,7 +52,7 @@ spec:
           resources:
             {{- toYaml .Values.vrtComponents.migration.resources | nindent 12 }}
           securityContext:
-            {{- toYaml .Values.vrtComponents.migration.initSecurityContext | nindent 12 }}
+            {{- toYaml .Values.vrtComponents.migration.securityContext | nindent 12 }}
       containers:
         - name: {{ .Chart.Name }}-api
           env:
@@ -111,7 +111,7 @@ spec:
           resources:
             {{- toYaml .Values.vrtComponents.api.resources | nindent 12 }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{- toYaml .Values.vrtComponents.api.securityContext | nindent 12 }}
           volumeMounts:
             - name: {{ template "visual-regression-tracker.fullname" . }}
               mountPath: /imageUploads
@@ -139,7 +139,7 @@ spec:
           resources:
             {{- toYaml .Values.vrtComponents.ui.resources | nindent 12 }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{- toYaml .Values.vrtComponents.ui.securityContext | nindent 12 }}
           volumeMounts:
             - name: {{ template "visual-regression-tracker.fullname" . }}
               mountPath: /usr/share/nginx/html/static/imageUploads
