@@ -28,7 +28,7 @@ mysql:
   # no password means random value
   password: ""
   port: 3306
-  # db name for single db backup
+  # db name for db(s) backup
   db: ""
   # Get password from existing secret
   existingSecret: ""
@@ -37,7 +37,7 @@ mysql:
 # use --all-databases if enabled
 allDatabases:
   enabled: true
-  # creates single backup file with all databases
+  # creates single backup file with all databases (works with mysql.db too)
   singleBackupFile: false
 
 # options to pass to mysqldump
