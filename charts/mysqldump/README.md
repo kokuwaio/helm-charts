@@ -50,7 +50,7 @@ The following tables lists the configurable parameters of the mysqldump chart an
 | image.repository                              | Name of image to use                                                            | monotek/gcloud-mysql         |
 | image.tag                                     | Version of image to use (uses appVersion form Chart.yaml as default if not set) | ""                           |
 | image.pullPolicy                              | Pull Policy to use for image                                                    | IfNotPresent                 |
-| mysql.db                                      | single mysql db to backup (optional)                                            | mysql                        |
+| mysql.db                                      | mysql db(s) to backup (optional)                                                   | mysql                        |
 | mysql.host                                    | mysql host to backup                                                            | mysql                        |
 | mysql.username                                | mysql username                                                                  | root                         |
 | mysql.password                                | mysql password                                                                  | ""                           |
@@ -72,7 +72,7 @@ The following tables lists the configurable parameters of the mysqldump chart an
 | persistence.storageClass                      | storage class to use for PVC                                                    |                              |
 | persistence.subPath                           | subPath for PVC                                                                 |                              |
 | allDatabases.enabled                          | backup all databases                                                            | true                         |
-| allDatabases.SingleSqlFile                    | backup all databases to single file                                             | false                        |
+| allDatabases.SingleSqlFile                    | backup all databases to single file (works with mysql.db too)                   | false                        |
 | housekeeping.enabled                          | delete olf backups in pvc                                                       | true                         |
 | housekeeping.keepDays                         | keep last x days of backups in PVC                                              | 10                           |
 | saveToDirectory                               | saves the sql backup to a directory named like the database or alldatabases     | false                        |
