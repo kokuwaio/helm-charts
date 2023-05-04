@@ -34,7 +34,7 @@ vrtComponents:
     image:
       repository: visualregressiontracker/api
       pullPolicy: IfNotPresent
-      tag: "4.20.3"
+      tag: "4.20.4"
 
     ingress:
       enabled: false
@@ -106,7 +106,7 @@ vrtComponents:
     image:
       repository: visualregressiontracker/ui
       pullPolicy: IfNotPresent
-      tag: "4.20.4"
+      tag: "4.20.5"
 
     ingress:
       enabled: false
