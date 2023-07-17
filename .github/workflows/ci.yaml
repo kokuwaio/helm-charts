@@ -21,7 +21,7 @@ jobs:
         uses: azure/setup-helm@v3.5
         with:
           version: "${{ env.helm-version }}"
-      - uses: actions/setup-python@v4.6.1
+      - uses: actions/setup-python@v4.7.0
         with:
           python-version: 3.7
       - name: Set up chart-testing
@@ -91,7 +91,7 @@ jobs:
         uses: azure/setup-helm@v3.5
         with:
           version: "${{ env.helm-version }}"
-      - uses: actions/setup-python@v4.6.1
+      - uses: actions/setup-python@v4.7.0
         with:
           python-version: 3.7
       - name: Set up chart-testing
