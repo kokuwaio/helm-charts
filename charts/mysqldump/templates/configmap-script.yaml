@@ -61,7 +61,7 @@ data:
     rc=$?
     {{- end -}}
 
-    {{- if or (.Values.upload.googlestoragebucket.enabled) (.Values.upload.ssh.enabled) (.Values.upload.openstack.enabled) -}}
+    {{- if or (.Values.upload.googlestoragebucket.enabled) (.Values.upload.ssh.enabled) (.Values.upload.openstack.enabled) (.Values.upload.s3.enabled) -}}
     {{ if .Values.upload.ssh.enabled -}}
     echo "upload files via ssh to {{ .Values.upload.ssh.user }}@{{ .Values.upload.ssh.host }}:{{ .Values.upload.ssh.dir }}"
     rsync -av --delete --exclude=*.state -e 'ssh -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=/dev/null' ${BACKUP_DIR}/ {{ .Values.upload.ssh.user }}@{{ .Values.upload.ssh.host }}:{{ .Values.upload.ssh.dir }}
@@ -82,6 +82,13 @@ data:
       --destination={{ .Values.upload.openstack.destination }} \
       {{ if .Values.upload.openstack.ttlDays -}} --ttl-days={{ .Values.upload.openstack.ttlDays }} {{- end }} \
       {{ if .Values.debug -}} --verbose {{- end }}
+    rcu=$?
+    {{ end }}
+
+    {{ if .Values.upload.s3.enabled -}}
+    echo "upload files to s3 storage bucket {{ .Values.upload.s3.bucketname }}"
+    mc alias set s3 ${S3_ENDPOINT} ${S3_ACCESSKEY} ${S3_SECRET_KEY}
+    find ${BACKUP_DIR} -type d -name 'lost+found' -prune -o -maxdepth 2 -name "${TIMESTAMP}_*.sql.gz" -type f -exec mc cp {} s3/${S3_BACKETNAME}/${TIMESTAMP}/ \;
     rcu=$?
     {{ end }}
 
