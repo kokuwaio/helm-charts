@@ -142,8 +142,9 @@ upload:
 
   s3:
     enabled: false
-    bucketname: /mysql-backup
+    bucketname: mysql-backup
     endpoint: https://yourdomain/
+    region: "us-east-1"
     accesskey: ""
     secretkey: ""
     # existingSecret can be enabled to use an existing secret

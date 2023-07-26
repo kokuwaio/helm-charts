@@ -21,4 +21,5 @@ data:
   S3_ENDPOINT: {{ .Values.upload.s3.endpoint }}
   S3_ACCESSKEY: {{ .Values.upload.s3.accesskey }}
   S3_BACKETNAME: {{ .Values.upload.s3.bucketname }}
+  S3_REGION: {{ .Values.upload.s3.region }}
 {{- end }}

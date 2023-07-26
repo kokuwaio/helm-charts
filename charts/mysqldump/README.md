@@ -100,8 +100,9 @@ The following tables lists the configurable parameters of the mysqldump chart an
 | upload.openstack.existingSecretKey            | optional, specify a secret key to use for password                              | openstack-backup-password    |
 | upload.openstack.ttlDays                      | days to set time-to-live on uploaded objects (0 to disable)                     | 30                           |
 | upload.s3.enabled                             | upload backups to s3 storage                                                    | false                        |
-| upload.s3.bucketname                          | s3 bucket name                                                                  | /mysql-backup                |
+| upload.s3.bucketname                          | s3 bucket name                                                                  | mysql-backup                 |
 | upload.s3.endpoint                            | URL endpoint of the S3 service                                                  | https://yourdomain/          |
+| upload.s3.region                              | AWS region to use                                                               | us-east-1                    |
 | upload.s3.accesskey                           | s3 access key                                                                   | ""                           |
 | upload.s3.secretkey                           | s3 secret key                                                                   | ""                           |
 | upload.s3.existingSecret                      | optional, existing secret name, used to get s3 Secret key (if set)              | ""                           |

@@ -87,8 +87,8 @@ data:
 
     {{ if .Values.upload.s3.enabled -}}
     echo "upload files to s3 storage bucket {{ .Values.upload.s3.bucketname }}"
-    mc alias set s3 ${S3_ENDPOINT} ${S3_ACCESSKEY} ${S3_SECRET_KEY}
-    find ${BACKUP_DIR} -type d -name 'lost+found' -prune -o -maxdepth 2 -name "${TIMESTAMP}_*.sql.gz" -type f -exec mc cp {} s3/${S3_BACKETNAME}/${TIMESTAMP}/ \;
+    aws configure set aws_access_key_id "$S3_ACCESSKEY" && aws configure set aws_secret_access_key "$S3_SECRET_KEY" && aws configure set region "$S3_REGION"
+    find ${BACKUP_DIR} -type d -name 'lost+found' -prune -o -maxdepth 2 -name "${TIMESTAMP}_*.sql.gz" -type f -exec aws --endpoint-url ${S3_ENDPOINT} s3 cp {} s3://${S3_BACKETNAME} \;
     rcu=$?
     {{ end }}
 
