@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "mysqldump.fullname" . }}-script
   labels:
-{{ include "mysqldump.labels" . | indent 4 }}
+    {{- include "mysqldump.labels" . | nindent 4 }}
 data:
 {{- if .Values.upload.openstack.enabled }}
   openstack-upload.py: |-
