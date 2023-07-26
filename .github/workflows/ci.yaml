@@ -70,7 +70,7 @@ jobs:
         env:
           KUBERNETES_VERSION: ${{ matrix.k8s }}
           KUBECONFORM_VERSION: "${{ env.kubeconform-version }}"
-        run: .github/kubeval.sh
+        run: .github/kubeconform.sh
 
   install-chart:
     name: install-chart
