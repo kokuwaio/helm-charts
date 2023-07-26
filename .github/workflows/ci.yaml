@@ -6,8 +6,8 @@ on:
       - 'charts/**/**'
 
 env:
-  helm-version: "v3.10.2"
-  kubeval-version: "v0.16.1"
+  helm-version: "v3.12.2"
+  kubeconform-version: "v0.6.3"
 
 jobs:
   lint-chart:
@@ -43,19 +43,20 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_JSCPD: false
-          VALIDATE_KUBERNETES_KUBEVAL: false
+          VALIDATE_KUBERNETES_KUBECONFORM: false
           VALIDATE_YAML: false
 
-  kubeval-chart:
+  kubeconform-chart:
     runs-on: ubuntu-22.04
     needs:
       - lint-chart
     strategy:
       matrix:
         k8s:
-          - v1.23.13
-          - v1.24.7
-          - v1.25.3
+          - v1.25.11
+          - v1.26.6
+          - v1.27.3
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -65,23 +66,23 @@ jobs:
         uses: azure/setup-helm@v3.5
         with:
           version: "${{ env.helm-version }}"
-      - name: Run kubeval
+      - name: Run kubeconform
         env:
           KUBERNETES_VERSION: ${{ matrix.k8s }}
-          KUBEVAL_VERSION: "${{ env.kubeval-version }}"
+          KUBECONFORM_VERSION: "${{ env.kubeconform-version }}"
         run: .github/kubeval.sh
 
   install-chart:
     name: install-chart
     runs-on: ubuntu-20.04
     needs: 
-      - kubeval-chart
+      - kubeconform-chart
     strategy:
       matrix:
         k8s:
-          - v1.23.13
-          - v1.24.7
-          - v1.25.3
+          - v1.25.11
+          - v1.26.6
+          - v1.27.3
     steps:
       - name: Checkout
         uses: actions/checkout@v3
