@@ -61,7 +61,7 @@ spec:
     - secretRef:
         name: "{{ template "mysqldump.fullname" . }}"
 {{- end }}
-{{- if not .Values.upload.s3.existingSecret }}
+{{- if and (.Values.upload.s3.enabled) (not .Values.upload.s3.existingSecret) }}
     - secretRef:
         name: "{{ template "mysqldump.fullname" . }}-s3-secretkey"
 {{- end }}
