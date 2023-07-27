@@ -149,7 +149,7 @@ upload:
     secretkey: ""
     # existingSecret can be enabled to use an existing secret
     existingSecret: ""
-    # existingSecretKey defines the key to use, or 'openstack-backup-password' if not set
+    # existingSecretKey defines the key to use, or 'S3_SECRET_KEY' if not set
     existingSecretKey: ""
 
 resources: {}
