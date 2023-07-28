@@ -14,3 +14,16 @@ mariadb:
     password: "MySqlDumpTest"
     username: "MySqlDumpTest"
   fullnameOverride: "mysqldump-mariadb"
+
+upload:
+  googlestoragebucket:
+    enabled: false
+
+  ssh:
+    enabled: false
+
+  openstack:
+    enabled: false
+
+  s3:
+    enabled: false
