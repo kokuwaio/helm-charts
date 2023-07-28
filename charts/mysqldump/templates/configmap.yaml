@@ -17,3 +17,9 @@ data:
   OS_USERNAME: {{ .Values.upload.openstack.user }}
   OS_USER_DOMAIN_NAME: {{ .Values.upload.openstack.userDomain }}
 {{- end }}
+{{- if .Values.upload.s3.enabled }}
+  S3_ENDPOINT: {{ .Values.upload.s3.endpoint }}
+  S3_ACCESSKEY: {{ .Values.upload.s3.accesskey }}
+  S3_BUCKETNAME: {{ .Values.upload.s3.bucketname }}
+  S3_REGION: {{ .Values.upload.s3.region }}
+{{- end }}
