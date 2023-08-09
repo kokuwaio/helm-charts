@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "mysqldump.fullname" . }}-script
   labels:
-{{ include "mysqldump.labels" . | indent 4 }}
+    {{- include "mysqldump.labels" . | nindent 4 }}
 data:
 {{- if .Values.upload.openstack.enabled }}
   openstack-upload.py: |-
@@ -35,7 +35,7 @@ data:
     {{ if or (.Values.persistence.enabled) (.Values.persistentVolumeClaim) }}
     {{ if .Values.housekeeping.enabled }}
     echo "delete old backups"
-    find ${BACKUP_DIR} -maxdepth 2 -mtime +${KEEP_DAYS} -regex "^${BACKUP_DIR}/.*[0-9]*_.*\.sql\.gz$" -type f -exec rm {} \;
+    find ${BACKUP_DIR} -type d -name 'lost+found' -prune -o -maxdepth 2 -mtime +${KEEP_DAYS} -regex "^${BACKUP_DIR}/.*[0-9]*_.*\.sql\.gz$" -type f -exec rm {} \;
     {{ end -}}
     {{ end -}}
 
@@ -66,7 +66,7 @@ data:
     {{ end }}
 
 
-    {{- if or (.Values.upload.googlestoragebucket.enabled) (.Values.upload.ssh.enabled) (.Values.upload.openstack.enabled) -}}
+    {{- if or (.Values.upload.googlestoragebucket.enabled) (.Values.upload.ssh.enabled) (.Values.upload.openstack.enabled) (.Values.upload.s3.enabled) -}}
     {{ if .Values.upload.ssh.enabled -}}
     echo "upload files via ssh to {{ .Values.upload.ssh.user }}@{{ .Values.upload.ssh.host }}:{{ .Values.upload.ssh.dir }}"
     rsync -av --delete --exclude=*.state -e 'ssh -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=/dev/null' ${BACKUP_DIR}/ {{ .Values.upload.ssh.user }}@{{ .Values.upload.ssh.host }}:{{ .Values.upload.ssh.dir }}
@@ -87,6 +87,13 @@ data:
       --destination={{ .Values.upload.openstack.destination }} \
       {{ if .Values.upload.openstack.ttlDays -}} --ttl-days={{ .Values.upload.openstack.ttlDays }} {{- end }} \
       {{ if .Values.debug -}} --verbose {{- end }}
+    rcu=$?
+    {{ end }}
+
+    {{ if .Values.upload.s3.enabled -}}
+    echo "upload files to s3 storage bucket {{ .Values.upload.s3.bucketname }}"
+    aws configure set aws_access_key_id "$S3_ACCESSKEY" && aws configure set aws_secret_access_key "$S3_SECRET_KEY" && aws configure set region "$S3_REGION"
+    find ${BACKUP_DIR} -type d -name 'lost+found' -prune -o -maxdepth 2 -name "${TIMESTAMP}_*.sql.gz" -type f -exec aws --endpoint-url ${S3_ENDPOINT} s3 cp {} s3://${S3_BUCKETNAME} \;
     rcu=$?
     {{ end }}
 

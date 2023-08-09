@@ -18,7 +18,7 @@ spec:
     image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
     imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
     command: ["/bin/bash", "/scripts/backup.sh"]
-{{- if or .Values.mysql.existingSecret .Values.upload.openstack.existingSecret }}
+{{- if or .Values.mysql.existingSecret .Values.upload.openstack.existingSecret .Values.upload.s3.existingSecret }}
     env:
 {{- end }}
 {{- if .Values.mysql.existingSecret }}
@@ -43,12 +43,27 @@ spec:
             key: "openstack-backup-password"
             {{- end }}
 {{- end }}
+{{- if .Values.upload.s3.existingSecret }}
+      - name: S3_SECRET_KEY
+        valueFrom:
+          secretKeyRef:
+            name: {{ .Values.upload.s3.existingSecret | quote }}
+            {{- if .Values.upload.s3.existingSecretKey }}
+            key: {{ .Values.upload.s3.existingSecretKey | quote }}
+            {{- else }}
+            key: "secret-key"
+            {{- end }}
+{{- end }}
     envFrom:
     - configMapRef:
         name: "{{ template "mysqldump.fullname" . }}"
 {{- if not .Values.mysql.existingSecret }}
     - secretRef:
         name: "{{ template "mysqldump.fullname" . }}"
+{{- end }}
+{{- if and (.Values.upload.s3.enabled) (not .Values.upload.s3.existingSecret) }}
+    - secretRef:
+        name: "{{ template "mysqldump.fullname" . }}-s3-secretkey"
 {{- end }}
     volumeMounts:
     - name: backups
