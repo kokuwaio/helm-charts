@@ -39,27 +39,32 @@ data:
     {{ end -}}
     {{ end -}}
 
-    {{ if and (.Values.mysql.db) (eq .Values.allDatabases.enabled false) }}
-    MYSQL_DB="{{ .Values.mysql.db }}"
-    echo "Backing up single db ${MYSQL_DB}"
-    {{ if .Values.saveToDirectory }}mkdir -p "${BACKUP_DIR}"/"${MYSQL_DB}"{{ end }}
-    mysqldump ${MYSQL_OPTS} -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USERNAME} --databases ${MYSQL_DB} | gzip > ${BACKUP_DIR}/{{ if .Values.saveToDirectory }}${MYSQL_DB}/{{ end }}${TIMESTAMP}_${MYSQL_DB}.sql.gz
-    rc=$?
-    {{ else if and (.Values.allDatabases.enabled) (eq .Values.allDatabases.singleBackupFile false)}}
-    for MYSQL_DB in $(mysql -h "${MYSQL_HOST}" -P ${MYSQL_PORT} -u ${MYSQL_USERNAME} -B -N -e "SHOW DATABASES;"|egrep -v '^(information|performance)_schema$'); do
+    {{ if (eq .Values.allDatabases.singleBackupFile false) }}
+      {{ if and (.Values.mysql.db) (eq .Values.allDatabases.enabled false) }}
+    MYSQL_DBS="{{ .Values.mysql.db }}"
+      {{ else if (.Values.allDatabases.enabled) }}
+    MYSQL_DBS=$(mysql -h "${MYSQL_HOST}" -P ${MYSQL_PORT} -u ${MYSQL_USERNAME} -B -N -e "SHOW DATABASES;"|egrep -v '^(information|performance)_schema$')
+      {{ end }}
+    for MYSQL_DB in $MYSQL_DBS; do
       echo "Backing up db ${MYSQL_DB}"
       {{ if .Values.saveToDirectory }}mkdir -p "${BACKUP_DIR}"/"${MYSQL_DB}"{{ end }}
       mysqldump ${MYSQL_OPTS} -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USERNAME} --databases ${MYSQL_DB} | gzip > ${BACKUP_DIR}/{{ if .Values.saveToDirectory }}${MYSQL_DB}/{{ end }}${TIMESTAMP}_${MYSQL_DB}.sql.gz
       rc=$?
     done
-
-    {{ else if and (.Values.allDatabases.enabled) (.Values.allDatabases.singleBackupFile) }}
-    echo "Backing up all databases"
+    {{ else if (.Values.allDatabases.singleBackupFile) }}
     MYSQL_DB="alldatabases"
     {{ if .Values.saveToDirectory }}mkdir -p "${BACKUP_DIR}"/"${MYSQL_DB}"{{ end }}
+      {{ if and (.Values.mysql.db) (eq .Values.allDatabases.enabled false) }}
+    echo "Backing up all this databases {{ .Values.mysql.db }}"
+    mysqldump ${MYSQL_OPTS} -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USERNAME} --databases {{ .Values.mysql.db }} | gzip > ${BACKUP_DIR}/{{ if .Values.saveToDirectory }}${MYSQL_DB}/{{ end }}${TIMESTAMP}_${MYSQL_DB}.sql.gz
+    rc=$?
+      {{ else if (.Values.allDatabases.enabled) }}
+    echo "Backing up all databases"
     mysqldump ${MYSQL_OPTS} -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USERNAME} --all-databases | gzip > ${BACKUP_DIR}/{{ if .Values.saveToDirectory }}${MYSQL_DB}/{{ end }}${TIMESTAMP}_${MYSQL_DB}.sql.gz
     rc=$?
-    {{- end -}}
+      {{ end }}
+    {{ end }}
+
 
     {{- if or (.Values.upload.googlestoragebucket.enabled) (.Values.upload.ssh.enabled) (.Values.upload.openstack.enabled) (.Values.upload.s3.enabled) -}}
     {{ if .Values.upload.ssh.enabled -}}
