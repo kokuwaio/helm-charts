@@ -43,6 +43,9 @@ allDatabases:
 # options to pass to mysqldump
 options: "--opt --single-transaction"
 
+# options to pass to rsync
+rsync_options: "-av"
+
 # save sql backup to a directory named like the database or "alldatabases"
 saveToDirectory: false
 
