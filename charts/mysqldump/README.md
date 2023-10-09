@@ -59,6 +59,7 @@ The following tables lists the configurable parameters of the mysqldump chart an
 | mysql.port                                    | mysql port                                                                      | 3306                         |
 | schedule                                      | crontab schedule to run on. set as `now` to run as a one time job               | "0 3 \* \* \*"               |
 | options                                       | options to pass onto MySQL                                                      | "--opt --single-transaction" |
+| rsync.options                                 | options to pass onto rsync                                                      | "-av"                        |
 | debug                                         | print some extra debug logs during backup                                       | false                        |
 | dumpAllToStdout                               | dump all database contents to stdout when not uploading                         | false                        |
 | additionalSteps                               | run these extra shell steps after all backup jobs completed                     | []                           |

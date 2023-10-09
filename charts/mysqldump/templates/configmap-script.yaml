@@ -69,7 +69,7 @@ data:
     {{- if or (.Values.upload.googlestoragebucket.enabled) (.Values.upload.ssh.enabled) (.Values.upload.openstack.enabled) (.Values.upload.s3.enabled) -}}
     {{ if .Values.upload.ssh.enabled -}}
     echo "upload files via ssh to {{ .Values.upload.ssh.user }}@{{ .Values.upload.ssh.host }}:{{ .Values.upload.ssh.dir }}"
-    rsync -av --delete --exclude=*.state -e 'ssh -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=/dev/null' ${BACKUP_DIR}/ {{ .Values.upload.ssh.user }}@{{ .Values.upload.ssh.host }}:{{ .Values.upload.ssh.dir }}
+    rsync {{ .Values.rsync.options }} --delete --exclude=*.state -e 'ssh -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=/dev/null' ${BACKUP_DIR}/ {{ .Values.upload.ssh.user }}@{{ .Values.upload.ssh.host }}:{{ .Values.upload.ssh.dir }}
     rcu=$?
     {{ end -}}
 
