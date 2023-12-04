@@ -5,7 +5,7 @@ metadata:
 data:
   env.sh: |
     #!/bin/sh
-    # dummy file which replaces env.sh to be able to use rofs
+    # dummy file which replaces env-config.js creation to be able to use rofs
     cat env-config.js
   env-config.js: |
     window._env_ = {
