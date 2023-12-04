@@ -143,6 +143,13 @@ spec:
           volumeMounts:
             - name: {{ template "visual-regression-tracker.fullname" . }}
               mountPath: /usr/share/nginx/html/static/imageUploads
+            - name: env-config
+              mountPath: /usr/share/nginx/html/env.sh
+              subPath: env.sh
+              defaultMode: 0777
+            - name: env-config
+              mountPath: /usr/share/nginx/html/env-config.js
+              subPath: env-config.js
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -159,13 +166,15 @@ spec:
       topologySpreadConstraints: 
         {{- toYaml .Values.topologySpreadConstraints | nindent 8 }}
       {{- end }}
-  {{- if and .Values.persistence.enabled .Values.persistence.existingClaim }}
       volumes:
+        env-config:
+          configMap:
+            name: env-config
+  {{- if and .Values.persistence.enabled .Values.persistence.existingClaim }}
         - name: {{ template "visual-regression-tracker.fullname" . }}
           persistentVolumeClaim:
             claimName: {{ .Values.persistence.existingClaim | default (include "visual-regression-tracker.fullname" .) }}
   {{- else if not .Values.persistence.enabled }}
-      volumes:
         - name: {{ template "visual-regression-tracker.fullname" . }}
           emptyDir: {}
   {{- else if and .Values.persistence.enabled (not .Values.persistence.existingClaim) }}
