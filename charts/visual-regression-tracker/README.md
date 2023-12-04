@@ -49,6 +49,12 @@ helm upgrade vrt kokuwa/visual-regression-tracker
 
 _See [`helm upgrade`](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
 
+### From 2.0.x to 3.0.0
+
+This updates Visual Regression Tracker to 5.0.3. Please follow the [official migration steps](https://github.com/Visual-Regression-Tracker/Visual-Regression-Tracker/releases/tag/5.0.0):
+
+The postgres dependency chart has also been updated to version 13.2.23. This major version changes the default PostgreSQL image from 15.x to 16.x. Follow [the official instructions](https://www.postgresql.org/docs/16/upgrading.html) to upgrade to 16.x.
+
 ### From 1.0.x to 2.0.0
 
 Renamed migration securityContext var from `.Values.vrtComponents.migration.initSecurityContext` to `.Values.vrtComponents.migration.securityContext`
