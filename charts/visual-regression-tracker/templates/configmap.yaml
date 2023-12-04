@@ -9,7 +9,7 @@ data:
     cat env-config.js
   env-config.js: |
     window._env_ = {
-        REACT_APP_API_URL: "http://localhost:4200",
-        PORT: "8080",
-        VRT_VERSION: "5.0.0",
+        REACT_APP_API_URL: "{{ .Values.vrtConfig.reactAppApiUrl }}",
+        PORT: "{{ .Values.ui.service.port }}",
+        VRT_VERSION: "{{ .Chart.AppVersion }}",
     }
