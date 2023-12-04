@@ -146,7 +146,6 @@ spec:
             - name: env-config
               mountPath: /usr/share/nginx/html/env.sh
               subPath: env.sh
-              defaultMode: 0777
             - name: env-config
               mountPath: /usr/share/nginx/html/env-config.js
               subPath: env-config.js
@@ -170,6 +169,7 @@ spec:
         - name: env-config
           configMap:
             name: env-config
+            defaultMode: 0777
   {{- if and .Values.persistence.enabled .Values.persistence.existingClaim }}
         - name: {{ template "visual-regression-tracker.fullname" . }}
           persistentVolumeClaim:
