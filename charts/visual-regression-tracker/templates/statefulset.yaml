@@ -149,6 +149,8 @@ spec:
             - name: env-config
               mountPath: /usr/share/nginx/html/env-config.js
               subPath: env-config.js
+            - name: tmp
+              mountPath: /var/cache/nginx/client_temp
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -170,6 +172,9 @@ spec:
           configMap:
             name: env-config
             defaultMode: 0777
+        - name: tmp
+          emptyDir:
+            sizeLimit: 10Mi
   {{- if and .Values.persistence.enabled .Values.persistence.existingClaim }}
         - name: {{ template "visual-regression-tracker.fullname" . }}
           persistentVolumeClaim:
