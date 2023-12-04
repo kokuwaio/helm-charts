@@ -143,11 +143,11 @@ spec:
           volumeMounts:
             - name: {{ template "visual-regression-tracker.fullname" . }}
               mountPath: /usr/share/nginx/html/static/imageUploads
-            - name: env-sh
+            - name: env-config
               mountPath: /usr/share/nginx/html/env.sh
               subPath: env.sh
               defaultMode: 0777
-            - name: env-config-js
+            - name: env-config
               mountPath: /usr/share/nginx/html/env-config.js
               subPath: env-config.js
       {{- with .Values.nodeSelector }}
