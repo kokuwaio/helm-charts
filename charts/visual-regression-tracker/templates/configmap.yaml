@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: env-config
+  labels:
+    {{- include "visual-regression-tracker.labels" . | nindent 4 }}
+data:
+  env.sh: |
+    #!/bin/sh
+    # dummy file which replaces env-config.js creation to be able to use rofs
+    cat env-config.js
+  env-config.js: |
+    window._env_ = {
+        REACT_APP_API_URL: "{{ .Values.vrtConfig.reactAppApiUrl }}",
+        PORT: "{{ .Values.vrtComponents.ui.service.port }}",
+        VRT_VERSION: "{{ .Chart.AppVersion }}",
+    }

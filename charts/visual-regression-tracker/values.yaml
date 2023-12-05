@@ -34,7 +34,7 @@ vrtComponents:
     image:
       repository: visualregressiontracker/api
       pullPolicy: IfNotPresent
-      tag: "4.20.4"
+      tag: "5.0.4"
 
     ingress:
       enabled: false
@@ -79,7 +79,7 @@ vrtComponents:
     image:
       repository: visualregressiontracker/migration
       pullPolicy: IfNotPresent
-      tag: "4.20.1"
+      tag: "5.0.1"
 
     imagePullSecrets: []
 
@@ -106,7 +106,7 @@ vrtComponents:
     image:
       repository: visualregressiontracker/ui
       pullPolicy: IfNotPresent
-      tag: "4.20.5"
+      tag: "5.0.2"
 
     ingress:
       enabled: false
@@ -146,6 +146,10 @@ vrtComponents:
     service:
       type: ClusterIP
       port: 8080
+
+    tmpDirVolume:
+      emptyDir:
+        sizeLimit: 100Mi
 
 # Configuration for persistence
 persistence:
