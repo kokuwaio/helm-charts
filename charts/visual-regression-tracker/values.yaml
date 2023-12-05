@@ -147,6 +147,10 @@ vrtComponents:
       type: ClusterIP
       port: 8080
 
+    tmpDirVolume:
+      emptyDir:
+        sizeLimit: 100Mi
+
 # Configuration for persistence
 persistence:
   enabled: true

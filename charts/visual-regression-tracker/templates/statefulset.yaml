@@ -151,6 +151,8 @@ spec:
               subPath: env-config.js
             - name: tmp
               mountPath: /var/cache/nginx
+            - name: tmp
+              mountPath: /var/run
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -173,9 +175,8 @@ spec:
             name: env-config
             defaultMode: 0777
         - name: tmp
-          emptyDir:
-            sizeLimit: 100Mi
-  {{- if and .Values.persistence.enabled .Values.persistence.existingClaim }}
+          {{- toYaml .Values.vrtComponents.ui.tmpDirVolume | nindent 10 }}
+    {{- if and .Values.persistence.enabled .Values.persistence.existingClaim }}
         - name: {{ template "visual-regression-tracker.fullname" . }}
           persistentVolumeClaim:
             claimName: {{ .Values.persistence.existingClaim | default (include "visual-regression-tracker.fullname" .) }}
