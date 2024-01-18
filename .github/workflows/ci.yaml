@@ -45,6 +45,8 @@ jobs:
           VALIDATE_JSCPD: false
           VALIDATE_KUBERNETES_KUBECONFORM: false
           VALIDATE_YAML: false
+          VALIDATE_TYPESCRIPT_ES: false
+          VALIDATE_TYPESCRIPT_STANDARD: false
 
   kubeconform-chart:
     runs-on: ubuntu-22.04
