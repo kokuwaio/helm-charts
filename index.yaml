@@ -1528,6 +1528,29 @@ entries:
   visual-regression-tracker:
   - apiVersion: v2
     appVersion: 5.0.3
+    created: "2024-01-18T18:45:09.829788337Z"
+    dependencies:
+    - condition: vrtConfig.postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 13.3.0
+    description: Backend and Frontend application for tracking differences via image
+      comparison
+    digest: 9c39bfd9ca08425a004505dce8dd94186ab3b656f7918df75e742e111041e223
+    home: https://visual-regression-tracker.com
+    maintainers:
+    - email: monotek23@gmail.com
+      name: monotek
+    name: visual-regression-tracker
+    sources:
+    - https://github.com/Visual-Regression-Tracker/Visual-Regression-Tracker
+    - https://github.com/kokuwaio/helm-charts/tree/main/charts/visual-regression-tracker
+    type: application
+    urls:
+    - https://github.com/kokuwaio/helm-charts/releases/download/visual-regression-tracker-3.1.0/visual-regression-tracker-3.1.0.tgz
+    version: 3.1.0
+  - apiVersion: v2
+    appVersion: 5.0.3
     created: "2023-12-05T09:59:21.863623125Z"
     dependencies:
     - condition: vrtConfig.postgresql.enabled
@@ -1875,4 +1898,4 @@ entries:
     urls:
     - https://github.com/kokuwaio/helm-charts/releases/download/visual-regression-tracker-0.1.0/visual-regression-tracker-0.1.0.tgz
     version: 0.1.0
-generated: "2024-01-18T18:44:53.262555873Z"
+generated: "2024-01-18T18:45:09.830012894Z"
