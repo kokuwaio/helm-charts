@@ -93,3 +93,14 @@ postgresql secret name
 {{ template "visual-regression-tracker.fullname" . }}-{{ .Values.secrets.postgresql.secretName }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+vrt secret name
+*/}}
+{{- define "visual-regression-tracker.vrtSecretName" -}}
+{{- if .Values.secrets.defaults.useExisting -}}
+{{ .Values.secrets.defaults.secretName }}
+{{- else -}}
+{{ template "visual-regression-tracker.fullname" . }}-{{ .Values.secrets.defaults.secretName }}
+{{- end -}}
+{{- end -}}

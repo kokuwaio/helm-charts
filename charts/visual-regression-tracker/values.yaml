@@ -6,6 +6,11 @@ imagePullSecrets: []
 vrtConfig:
   appFrontendUrl: "http://localhost:8080"
   bodyParserJsonLimit: "5mb"
+  defaults:
+    apiKey: "DEFAULT_USER_API_KEY_TO_BE_CHANGED"
+    email: "admin@example.com"
+    pass: "Change_Me"
+    project: "Default"
   elasticsearch:
     host: ""
     pass: ""
@@ -166,6 +171,10 @@ persistence:
   annotations: {}
 
 secrets:
+  defaults:
+    useExisting: false
+    secretName: vrt
+    secretKey: seed.ts
   elasticsearch:
     useExisting: false
     secretKey: es-pass
