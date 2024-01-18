@@ -53,6 +53,10 @@ spec:
             {{- toYaml .Values.vrtComponents.migration.resources | nindent 12 }}
           securityContext:
             {{- toYaml .Values.vrtComponents.migration.securityContext | nindent 12 }}
+          volumeMounts:
+            - name: vrt
+              mountPath: /app/seed.ts
+              subPath: seed.ts
       containers:
         - name: {{ .Chart.Name }}-api
           env:
@@ -176,6 +180,9 @@ spec:
             defaultMode: 0777
         - name: tmp
           {{- toYaml .Values.vrtComponents.ui.tmpDirVolume | nindent 10 }}
+        - name: vrt
+          secret:
+            secretName: {{ template "visual-regression-tracker.vrtSecretName" . }}
     {{- if and .Values.persistence.enabled .Values.persistence.existingClaim }}
         - name: {{ template "visual-regression-tracker.fullname" . }}
           persistentVolumeClaim:
