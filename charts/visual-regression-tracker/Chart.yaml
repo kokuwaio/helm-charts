@@ -13,6 +13,6 @@ maintainers:
     email: monotek23@gmail.com
 dependencies:
   - name: postgresql
-    version: 13.2.23
+    version: 13.3.0
     repository: https://charts.bitnami.com/bitnami
     condition: vrtConfig.postgresql.enabled
