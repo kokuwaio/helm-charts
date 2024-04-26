@@ -6,8 +6,8 @@ on:
       - 'charts/**/**'
 
 env:
-  helm-version: "v3.12.2"
-  kubeconform-version: "v0.6.3"
+  helm-version: "v3.14.4"
+  kubeconform-version: "v0.6.4"
 
 jobs:
   lint-chart:
@@ -55,9 +55,9 @@ jobs:
     strategy:
       matrix:
         k8s:
-          - v1.25.11
-          - v1.26.6
-          - v1.27.3
+          - v1.27.10
+          - v1.28.6
+          - v1.29.1
 
     steps:
       - name: Checkout
@@ -76,15 +76,15 @@ jobs:
 
   install-chart:
     name: install-chart
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs: 
       - kubeconform-chart
     strategy:
       matrix:
         k8s:
-          - v1.25.11
-          - v1.26.6
-          - v1.27.3
+          - v1.27.10
+          - v1.28.6
+          - v1.29.1
     steps:
       - name: Checkout
         uses: actions/checkout@v4
