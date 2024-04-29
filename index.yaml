@@ -2,6 +2,33 @@ apiVersion: v1
 entries:
   fluentd-elasticsearch:
   - apiVersion: v2
+    appVersion: v4.7.5
+    created: "2024-04-29T12:12:47.033224922Z"
+    description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
+    digest: 8b516da89495dbaa04ce3e3899881b77546dc30e864bae35bcaec99c0e0f1d52
+    home: https://www.fluentd.org/
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    keywords:
+    - fluentd
+    - elasticsearch
+    - multiline
+    - detect-exceptions
+    - logging
+    kubeVersion: '>=1.16.0-0'
+    maintainers:
+    - email: monotek23@gmail.com
+      name: monotek
+    name: fluentd-elasticsearch
+    sources:
+    - https://github.com/kokuwaio/helm-charts/tree/main/charts/fluentd-elasticsearch
+    - https://github.com/fluent/fluentd-kubernetes-daemonset
+    - https://github.com/GoogleCloudPlatform/fluent-plugin-detect-exceptions
+    - https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/fluentd-elasticsearch/fluentd-es-image
+    type: application
+    urls:
+    - https://github.com/kokuwaio/helm-charts/releases/download/fluentd-elasticsearch-13.12.2/fluentd-elasticsearch-13.12.2.tgz
+    version: 13.12.2
+  - apiVersion: v2
     appVersion: v4.7.4
     created: "2024-04-29T09:56:35.931934861Z"
     description: A Fluentd Helm chart for Kubernetes with Elasticsearch output
@@ -1925,4 +1952,4 @@ entries:
     urls:
     - https://github.com/kokuwaio/helm-charts/releases/download/visual-regression-tracker-0.1.0/visual-regression-tracker-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-29T09:56:35.93228292Z"
+generated: "2024-04-29T12:12:47.033773874Z"
