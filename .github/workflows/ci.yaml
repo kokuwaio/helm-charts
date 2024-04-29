@@ -32,6 +32,8 @@ jobs:
         run: ct lint --config .github/ct.yaml
 
   super-linter:
+    permissions:
+      statuses: write
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Code
