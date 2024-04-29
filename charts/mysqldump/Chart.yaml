@@ -1,6 +1,6 @@
 apiVersion: v2
-version: 6.3.0
-appVersion: v3.1.1
+version: 6.4.0
+appVersion: v3.2.ß
 description: A Helm chart to help backup MySQL databases using mysqldump
 name: mysqldump
 keywords:
@@ -18,6 +18,6 @@ maintainers:
 type: application
 dependencies:
   - name: mariadb
-    version: 12.2.9
+    version: 18.0.2
     repository: "https://charts.bitnami.com/bitnami"
     condition: mariadb.enabled
