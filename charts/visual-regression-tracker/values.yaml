@@ -171,6 +171,10 @@ persistence:
   annotations: {}
 
 secrets:
+  apiUrl:
+    useExisting: false
+    secretKey: api-url
+    secretName: vrt-api-url
   defaults:
     useExisting: false
     secretName: vrt

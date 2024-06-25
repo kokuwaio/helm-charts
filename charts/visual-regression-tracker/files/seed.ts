@@ -46,8 +46,8 @@ async function createDefaultUser() {
         },
         create: {
         email: defaultEmail,
-        firstName: 'Admin',
-        lastName: 'Admin',
+        firstName: 'fname',
+        lastName: 'lname',
         role: Role.admin,
         apiKey: defaultApiKey,
         password: await hash(defaultPassword, salt),
