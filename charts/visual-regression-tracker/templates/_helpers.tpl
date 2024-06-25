@@ -104,3 +104,14 @@ vrt secret name
 {{ template "visual-regression-tracker.fullname" . }}-{{ .Values.secrets.defaults.secretName }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+vrt api url secret name
+*/}}
+{{- define "visual-regression-tracker.vrtApiUrlSecretName" -}}
+{{- if .Values.secrets.apiUrl.useExisting -}}
+{{ .Values.secrets.apiUrl.secretName }}
+{{- else -}}
+{{ template "visual-regression-tracker.fullname" . }}-{{ .Values.secrets.apiUrl.secretName }}
+{{- end -}}
+{{- end -}}

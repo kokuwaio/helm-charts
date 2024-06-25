@@ -122,7 +122,10 @@ spec:
         - name: {{ .Chart.Name }}-ui
           env:
             - name: REACT_APP_API_URL
-              value: "{{ .Values.vrtConfig.reactAppApiUrl }}"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "visual-regression-tracker.vrtApiUrlSecretName" . }}
+                  key: {{ .Values.secrets.apiUrl.secretKey }}
             - name: VRT_VERSION
               value: "{{ .Chart.AppVersion }}"
           image: "{{ .Values.vrtComponents.ui.image.repository }}:{{ .Values.vrtComponents.ui.image.tag }}"
