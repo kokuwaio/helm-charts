@@ -5,4 +5,3 @@ check-version-increment: true
 debug: true
 helm-extra-args: --timeout 600s
 target-branch: main
-upgrade: true
