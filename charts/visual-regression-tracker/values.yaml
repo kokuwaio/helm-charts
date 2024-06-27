@@ -6,6 +6,8 @@ imagePullSecrets: []
 authProxy:
   replicaCount: 1
 
+  affinity: {}
+
   basicAuth:
     username: api-user
     password: "ChangeTheApiPassword!"
@@ -54,7 +56,11 @@ authProxy:
     #    hosts:
     #      - chart-example.local
 
+  nodeSelector: {}
+
   podAnnotations: {}
+
+  podDisruptionBudget: {}
 
   podLabels: {}
 
@@ -90,6 +96,10 @@ authProxy:
     port: 8080
 
   tmpDirSizeLimit: 100Mi
+
+  tolerations: []
+
+  topologySpreadConstraints: []
 
 vrtConfig:
   appFrontendUrl: "http://localhost:8080"
