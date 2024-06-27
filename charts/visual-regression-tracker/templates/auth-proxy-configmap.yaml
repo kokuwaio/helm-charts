@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "visual-regression-tracker.fullname" . }}-auth
+  labels:
+    {{- include "visual-regression-tracker.labels" . | nindent 4 }}
+    component: auth-proxy
+data:
+  default.conf: |
+    server {
+      listen 8080;
+
+      server_name _;
+
+      location /health {
+        return 200 'ok\n';
+      }
+
+      location / {
+        auth_basic "restricted";
+        auth_basic_user_file /tmp/htpass;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header Host $host;
+        proxy_pass "http://{{ include "visual-regression-tracker.fullname" . }}-api:4200";
+        proxy_http_version 1.1;
+      }
+    }

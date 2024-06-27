@@ -49,6 +49,16 @@ helm upgrade vrt kokuwa/visual-regression-tracker
 
 _See [`helm upgrade`](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
 
+### From 3.0.x to 4.0.0
+
+This version adds a proxy in fornt of the API server which protects it via basic auth. The configuration can be done via `authProxy.basicAuth.username`, `authProxy.basicAuth.password`. The password can also be populated by predefined secret via `secrets.authProxy`.
+
+The `secrets.apiUrl` secrets has been removed.
+
+The `reactAppApiUrl` variables has been split up into `reactAppApi.protocol` & `reactAppApi.url`.
+
+The `vrtComponents.api.ingress` config has been moved to `authProxy.ingress`.
+
 ### From 2.0.x to 3.0.0
 
 This updates Visual Regression Tracker to 5.0.3. Please follow the [official migration steps](https://github.com/Visual-Regression-Tracker/Visual-Regression-Tracker/releases/tag/5.0.0):
