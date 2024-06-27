@@ -37,9 +37,9 @@ spec:
             - -c
             - /tmp/htpass
             - {{ .Values.authProxy.basicAuth.username }}
-            - $(AUTH_SECRET)
+            - $(BASIC_AUTH_SECRET)
           env:
-            - name: AUTH_SECRET
+            - name: BASIC_AUTH_SECRET
               valueFrom:
                 secretKeyRef:
                   name: {{ template "visual-regression-tracker.authProxySecretName" . }}
