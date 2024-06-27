@@ -264,6 +264,10 @@ secrets:
     useExisting: false
     secretKey: seed.ts
     secretName: vrt
+  envConfig:
+    useExisting: false
+    secretKey: env-config.js
+    secretName: env-config
   elasticsearch:
     useExisting: false
     secretKey: es-pass
