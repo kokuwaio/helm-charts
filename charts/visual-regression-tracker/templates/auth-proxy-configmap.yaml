@@ -9,8 +9,8 @@ data:
   default.conf: |
     server {
       listen 8080;
+
       server_name _;
-      resolver kube-dns.kube-system.svc.cluster.local valid=10s;
 
       location /health {
         return 200 'ok\n';
