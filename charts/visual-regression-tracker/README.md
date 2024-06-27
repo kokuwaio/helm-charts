@@ -51,7 +51,7 @@ _See [`helm upgrade`](https://helm.sh/docs/helm/helm_upgrade/) for command docum
 
 ### From 3.0.x to 4.0.0
 
-This version adds a proxy in fornt of the api server which protects it via basic auth. The configuration can be done via `authProxy.basicAuth.username`, `authProxy.basicAuth.password`. The password can also be populated by predefined secret via `secrets.authProxy`.
+This version adds a proxy in fornt of the API server which protects it via basic auth. The configuration can be done via `authProxy.basicAuth.username`, `authProxy.basicAuth.password`. The password can also be populated by predefined secret via `secrets.authProxy`.
 
 The `secrets.apiUrl` secrets has been removed.
 
