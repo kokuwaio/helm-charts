@@ -105,13 +105,14 @@ vrt secret name
 {{- end -}}
 {{- end -}}
 
+
 {{/*
-vrt api url secret name
+vrt auth proxy secret name
 */}}
-{{- define "visual-regression-tracker.vrtApiUrlSecretName" -}}
-{{- if .Values.secrets.apiUrl.useExisting -}}
-{{ .Values.secrets.apiUrl.secretName }}
+{{- define "visual-regression-tracker.authProxySecretName" -}}
+{{- if .Values.secrets.authProxy.useExisting -}}
+{{ .Values.secrets.authProxy.secretName }}
 {{- else -}}
-{{ template "visual-regression-tracker.fullname" . }}-{{ .Values.secrets.apiUrl.secretName }}
+{{ template "visual-regression-tracker.fullname" . }}-{{ .Values.secrets.authProxy.secretName }}
 {{- end -}}
 {{- end -}}
