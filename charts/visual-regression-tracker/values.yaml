@@ -5,7 +5,7 @@ imagePullSecrets: []
 
 authProxy:
   replicaCount: 1
-  
+
   basicAuth:
     username: api-user
     password: "ChangeTheApiPassword!"
@@ -15,7 +15,8 @@ authProxy:
       repository: httpd
       pullPolicy: IfNotPresent
       tag: "2.4.59"
-    resources: {}
+    resources:
+      {}
       # We usually recommend not to specify default resources and to leave this as a conscious
       # choice for the user. This also increases chances charts run on environments with little
       # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -41,7 +42,8 @@ authProxy:
   ingress:
     enabled: false
     className: ""
-    annotations: {}
+    annotations:
+      {}
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
     hosts:
@@ -58,7 +60,8 @@ authProxy:
 
   podLabels: {}
 
-  resources: {}
+  resources:
+    {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -124,7 +127,8 @@ vrtComponents:
       pullPolicy: IfNotPresent
       tag: "5.0.5"
 
-    resources: {}
+    resources:
+      {}
       # We usually recommend not to specify default resources and to leave this as a conscious
       # choice for the user. This also increases chances charts run on environments with little
       # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -155,7 +159,8 @@ vrtComponents:
 
     imagePullSecrets: []
 
-    resources: {}
+    resources:
+      {}
       # We usually recommend not to specify default resources and to leave this as a conscious
       # choice for the user. This also increases chances charts run on environments with little
       # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -183,7 +188,8 @@ vrtComponents:
     ingress:
       enabled: false
       className: ""
-      annotations: {}
+      annotations:
+        {}
         # kubernetes.io/ingress.class: nginx
         # kubernetes.io/tls-acme: "true"
       hosts:
@@ -196,7 +202,8 @@ vrtComponents:
       #    hosts:
       #      - chart-example.local
 
-    resources: {}
+    resources:
+      {}
       # We usually recommend not to specify default resources and to leave this as a conscious
       # choice for the user. This also increases chances charts run on environments with little
       # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -271,7 +278,8 @@ podAnnotations: {}
 
 podLabels: {}
 
-podDisruptionBudget: {}
+podDisruptionBudget:
+  {}
   # maxUnavailable: 1
 
 podSecurityContext:
@@ -301,7 +309,8 @@ postgresql:
     username: vrt
     password: vrt-db-password
   fullnameOverride: vrt-postgresql
-  resources: {}
+  resources:
+    {}
     # limits:
     #   cpu: 50m
     #   memory: 64Mi
