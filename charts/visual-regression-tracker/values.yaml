@@ -113,6 +113,7 @@ vrtConfig:
     # needs to be the same as the postgresql.auth.username
     user: vrt
   reactAppApi:
+    # the basic auth username & password are included automaticaly
     protocol: "http"
     url: "localhost:4200"
 
