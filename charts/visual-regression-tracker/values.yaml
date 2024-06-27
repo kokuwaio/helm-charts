@@ -114,8 +114,7 @@ vrtConfig:
     user: vrt
   reactAppApi:
     protocol: "http"
-    url: "localhost"
-    port: "4200"
+    url: "localhost:4200"
 
 vrtComponents:
   api:

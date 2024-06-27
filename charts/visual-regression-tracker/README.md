@@ -55,7 +55,7 @@ This version adds a proxy in fornt of the API server which protects it via basic
 
 The `secrets.apiUrl` secrets has been removed.
 
-The `reactAppApiUrl` variables has been split up into `reactAppApi.protocol`, `reactAppApi.url` & `reactAppApi.port`.
+The `reactAppApiUrl` variables has been split up into `reactAppApi.protocol` & `reactAppApi.url`.
 
 The `vrtComponents.api.ingress` config has been moved to `authProxy.ingress`.
 
