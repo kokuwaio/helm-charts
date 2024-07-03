@@ -120,6 +120,16 @@ spec:
             - name: {{ template "visual-regression-tracker.fullname" . }}
               mountPath: /imageUploads
         - name: {{ .Chart.Name }}-ui
+          env:
+            - name: BASIC_AUTH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name:  {{ template "visual-regression-tracker.authProxySecretName" . }}
+                  key: {{ .Values.secrets.authProxy.secretKey }}
+            - name: REACT_APP_API_URL
+              value: "{{ .Values.vrtConfig.reactAppApi.protocol }}://{{ .Values.authProxy.basicAuth.username }}:$(BASIC_AUTH_PASSWORD)@{{ .Values.vrtConfig.reactAppApi.url }}"
+            - name: VRT_VERSION
+              value: "{{ .Chart.AppVersion }}"
           image: "{{ .Values.vrtComponents.ui.image.repository }}:{{ .Values.vrtComponents.ui.image.tag }}"
           imagePullPolicy: {{ .Values.vrtComponents.ui.image.pullPolicy }}
           ports:
