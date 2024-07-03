@@ -124,7 +124,7 @@ spec:
             - name: BASIC_AUTH_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{- define "visual-regression-tracker.authProxySecretName" -}}
+                  name:  {{ template "visual-regression-tracker.authProxySecretName" . }}
                   key: {{ .Values.secrets.authProxy.secretKey }}
             - name: REACT_APP_API_URL
               value: "{{ .Values.vrtConfig.reactAppApi.protocol }}://{{ .Values.authProxy.basicAuth.username }}:$(BASIC_AUTH_PASSWORD)@{{ .Values.vrtConfig.reactAppApi.url }}"
