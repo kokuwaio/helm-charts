@@ -53,6 +53,8 @@ _See [`helm upgrade`](https://helm.sh/docs/helm/helm_upgrade/) for command docum
 
 Auth proxy was removed as it does nto work as expected.
 
+The `reactAppApi.protocol` & `reactAppApi.url` have been removed and `reactAppApiUrl` is used again.
+
 ### From 3.0.x to 4.0.0
 
 This version adds a proxy in fornt of the API server which protects it via basic auth. The configuration can be done via `authProxy.basicAuth.username`, `authProxy.basicAuth.password`. The password can also be populated by predefined secret via `secrets.authProxy`.
