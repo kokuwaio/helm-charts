@@ -256,10 +256,6 @@ persistence:
   annotations: {}
 
 secrets:
-  authProxy:
-    useExisting: false
-    secretKey: password
-    secretName: auth
   defaults:
     useExisting: false
     secretKey: seed.ts
