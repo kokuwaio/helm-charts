@@ -1,9 +1,9 @@
-{{- if .Values.authProxy.ingress.enabled -}}
+{{- if .Values.vrtComponents.api.ingress.enabled -}}
 {{- $fullName := include "visual-regression-tracker.fullname" . -}}
-{{- $svcPort := .Values.authProxy.service.port -}}
-{{- if and .Values.authProxy.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
-  {{- if not (hasKey .Values.authProxy.ingress.annotations "kubernetes.io/ingress.class") }}
-  {{- $_ := set .Values.authProxy.ingress.annotations "kubernetes.io/ingress.class" .Values.authProxy.ingress.className}}
+{{- $svcPort := .Values.vrtComponents.api.service.port -}}
+{{- if and .Values.vrtComponents.api.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
+  {{- if not (hasKey .Values.vrtComponents.api.ingress.annotations "kubernetes.io/ingress.class") }}
+  {{- $_ := set .Values.vrtComponents.api.ingress.annotations "kubernetes.io/ingress.class" .Values.vrtComponents.api.ingress.className}}
   {{- end }}
 {{- end }}
 {{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
@@ -15,20 +15,20 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: "{{ $fullName }}-auth"
+  name: "{{ $fullName }}-ui"
   labels:
     {{- include "visual-regression-tracker.labels" . | nindent 4 }}
-  {{- with .Values.authProxy.ingress.annotations }}
+  {{- with .Values.vrtComponents.api.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- if and .Values.authProxy.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
-  ingressClassName: {{ .Values.authProxy.ingress.className }}
+  {{- if and .Values.vrtComponents.api.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  ingressClassName: {{ .Values.vrtComponents.api.ingress.className }}
   {{- end }}
-  {{- if .Values.authProxy.ingress.tls }}
+  {{- if .Values.vrtComponents.api.ingress.tls }}
   tls:
-    {{- range .Values.authProxy.ingress.tls }}
+    {{- range .Values.vrtComponents.api.ingress.tls }}
     - hosts:
         {{- range .hosts }}
         - {{ . | quote }}
@@ -37,7 +37,7 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    {{- range .Values.authProxy.ingress.hosts }}
+    {{- range .Values.vrtComponents.api.ingress.hosts }}
     - host: {{ .host | quote }}
       http:
         paths:

@@ -106,17 +106,6 @@ vrt secret name
 {{- end -}}
 
 {{/*
-vrt auth proxy secret name
-*/}}
-{{- define "visual-regression-tracker.authProxySecretName" -}}
-{{- if .Values.secrets.authProxy.useExisting -}}
-{{ .Values.secrets.authProxy.secretName }}
-{{- else -}}
-{{ template "visual-regression-tracker.fullname" . }}-{{ .Values.secrets.authProxy.secretName }}
-{{- end -}}
-{{- end -}}
-
-{{/*
 vrt env secret name
 */}}
 {{- define "visual-regression-tracker.envSecretName" -}}
