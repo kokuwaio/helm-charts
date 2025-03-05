@@ -1,6 +1,6 @@
 apiVersion: v2
-version: 6.4.0
-appVersion: v3.2.0
+version: 6.4.1
+appVersion: v3.2.11
 description: A Helm chart to help backup MySQL databases using mysqldump
 name: mysqldump
 keywords:
@@ -12,6 +12,7 @@ icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
 sources:
 - https://github.com/kokuwaio/helm-charts
 - https://dev.mysql.com/doc/refman/5.7/en/mysqldump.html
+- https://github.com/kokuwaio/gcloud-mysql
 maintainers:
 - name: monotek
   email: monotek23@gmail.com
