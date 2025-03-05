@@ -8,12 +8,12 @@ on:
       - 'charts/**/**'
 
 env:
-  helm-version: "v3.14.4"
-  kubeconform-version: "v0.6.4"
+  helm-version: "v3.17.1"
+  kubeconform-version: "v0.6.7"
 
 jobs:
   lint-chart:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,7 +25,7 @@ jobs:
           version: "${{ env.helm-version }}"
       - uses: actions/setup-python@v5.4.0
         with:
-          python-version: 3.7
+          python-version: 3.11
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.7.0
       - name: Run chart-testing (lint)
@@ -34,7 +34,7 @@ jobs:
   super-linter:
     permissions:
       statuses: write
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -53,15 +53,15 @@ jobs:
           VALIDATE_TYPESCRIPT_STANDARD: false
 
   kubeconform-chart:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs:
       - lint-chart
     strategy:
       matrix:
         k8s:
-          - v1.27.10
-          - v1.28.6
-          - v1.29.1
+          - v1.29.14
+          - v1.30.10.6
+          - v1.31.6
 
     steps:
       - name: Checkout
@@ -80,37 +80,43 @@ jobs:
 
   install-chart:
     name: install-chart
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: 
       - kubeconform-chart
     strategy:
       matrix:
         k8s:
-          - v1.27.10
-          - v1.28.6
-          - v1.29.1
+          - v1.29.14
+          - v1.30.10.6
+          - v1.31.6
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Set up Helm
         uses: azure/setup-helm@v4
         with:
           version: "${{ env.helm-version }}"
+
       - uses: actions/setup-python@v5.4.0
         with:
-          python-version: 3.7
+          python-version: 3.11
+
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.7.0
+
       - name: Run chart-testing (list-changed)
         id: list-changed
         run: if [[ -n "$(ct list-changed --config .github/ct.yaml)" ]]; then echo 'changed=true' >> "$GITHUB_OUTPUT"; fi
+
       - name: Create kind cluster
         uses: helm/kind-action@v1.12.0
         if: steps.list-changed.outputs.changed == 'true'
         with:
           config: .github/kind-config.yaml
           node_image: kindest/node:${{ matrix.k8s }}
+
       - name: Run chart-testing (install)
         run: ct install --config .github/ct.yaml
