@@ -1,0 +1,33 @@
+{{- if not .Values.nginx.useExistingConfigmap.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "nginx-php-fpm.fullname" . }}-nginx
+  labels:
+    component: nginx
+    {{- include "nginx-php-fpm.labels" . | nindent 4 }}
+data:
+  default.conf: |
+    server {
+        listen       {{ .Values.nginx.service.port }};
+        server_name  _;
+
+        location / {
+            root   /var/www/html;
+            index  index.html index.htm index.php {{ if .Values.createPhpInfo }}phpinfo.php{{ end }};
+
+            location ~ \.php(/|$) {
+              include fastcgi.conf;
+              fastcgi_param DOCUMENT_ROOT $realpath_root;
+              fastcgi_param PATH_INFO $fastcgi_path_info;
+              fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+              fastcgi_split_path_info ^(.+\.php)(/.*)$;
+              fastcgi_pass   {{ include "nginx-php-fpm.fullname" . }}-php:9000;
+          	}
+        }
+
+        location /health {
+          return 200 'health ok';
+        }
+    }
+{{- end }}

@@ -1,0 +1,107 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "nginx-php-fpm.fullname" . }}-nginx
+  labels:
+    component: nginx
+    {{- include "nginx-php-fpm.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.nginx.autoscaling.enabled }}
+  replicas: {{ .Values.nginx.replicaCount }}
+  {{- end }}
+  {{- with .Values.deploymentStrategy }}
+  strategy:
+    {{- toYaml . | trim | nindent 4 }}
+  {{- end }}
+  selector:
+    matchLabels:
+      component: nginx
+      {{- include "nginx-php-fpm.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.nginx.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        component: nginx
+        {{- include "nginx-php-fpm.labels" . | nindent 8 }}
+        {{- with .Values.nginx.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "nginx-php-fpm.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.nginx.podSecurityContext | nindent 8 }}
+      initContainers:
+      {{- if .Values.createPhpInfo }}
+        - name: init-php-info
+          command:
+            - /bin/sh
+            - -c
+            - "echo -e '<?php\\nphpinfo();\\n?>' > /var/www/html/phpinfo.php"
+          securityContext:
+            {{- toYaml .Values.nginx.securityContext | nindent 12 }}
+          image: "{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag | default (include "nginx-php-fpm.nginxVersion" .) }}"
+          imagePullPolicy: {{ .Values.nginx.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.nginx.resources | nindent 12 }}
+          volumeMounts:
+            - name: www
+              mountPath: /var/www/html
+      {{- end }}
+      {{- with .Values.nginx.initContainers }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: nginx
+          securityContext:
+            {{- toYaml .Values.nginx.securityContext | nindent 12 }}
+          image: "{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag | default (include "nginx-php-fpm.nginxVersion" .) }}"
+          imagePullPolicy: {{ .Values.nginx.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.nginx.service.port }}
+              protocol: TCP
+          {{- with .Values.nginx.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . |nindent 12 }}
+          {{- end }}
+          readinessProbe:
+            {{- toYaml .Values.nginx.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.nginx.resources | nindent 12 }}
+          volumeMounts:
+            - name: conf
+              mountPath: /etc/nginx/conf.d/default.conf
+              subPath: default.conf
+            - name: tmp
+              mountPath: /tmp
+            - name: www
+              mountPath: /var/www/html
+          {{- with .Values.nginx.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+        - name: conf
+          configMap:
+            name: {{ if .Values.nginx.useExistingConfigmap.enabled }}{{ .Values.nginx.useExistingConfigmap.name }}{{ else }}{{ include "nginx-php-fpm.fullname" . }}-nginx{{ end }}
+      {{- with .Values.nginx.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nginx.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nginx.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nginx.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

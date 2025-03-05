@@ -1,0 +1,20 @@
+{{- if not .Values.php.useExistingConfigmap.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "nginx-php-fpm.fullname" . }}-php
+  labels:
+    component: php
+    {{- include "nginx-php-fpm.labels" . | nindent 4 }}
+data:
+  php.ini: |
+    {{- .Values.php.config | nindent 4}}
+  www.conf: |
+    [www]
+    listen = 0.0.0.0:9000
+    pm = dynamic
+    pm.max_children = {{ .Values.php.fpmConfig.pmMaxChildren }}
+    pm.start_servers = {{ .Values.php.fpmConfig.pmStartServers }}
+    pm.min_spare_servers = {{ .Values.php.fpmConfig.pmMinSpareServers }}
+    pm.max_spare_servers = {{ .Values.php.fpmConfig.pmMaxSpareServers }}
+{{- end }}
