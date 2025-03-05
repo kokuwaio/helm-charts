@@ -60,7 +60,7 @@ jobs:
       matrix:
         k8s:
           - v1.29.14
-          - v1.30.10.6
+          - v1.30.6
           - v1.31.6
 
     steps:
@@ -87,7 +87,7 @@ jobs:
       matrix:
         k8s:
           - v1.29.14
-          - v1.30.10.6
+          - v1.30.6
           - v1.31.6
     steps:
       - name: Checkout
