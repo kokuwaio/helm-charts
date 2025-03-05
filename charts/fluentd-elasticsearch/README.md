@@ -358,6 +358,13 @@ If you were using `awsSigningSidecar` to set up an AWS signing sidecar proxy, th
 
 ### From a version < 12.0.0 to version => 13.0.0
 
+* nothing to do
+
+### From a version < 13.0.0 to version => 14.0.0
+
+* nothing to do
+* docker image repo changed to ghcr.io/kokuwaio/fluentd-elasticsearch
+
 #### The following fields were changed in the elasticsearch block
 
 - `buffer.queueLimitLength` in favor of `buffer.totalLimitSize` since `queueLimitLength` [is deprecated](https://docs.fluentd.org/configuration/buffer-section#buffering-parameters).
