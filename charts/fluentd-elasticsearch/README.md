@@ -292,6 +292,7 @@ You can now [configure multiple elasticsearch hosts](https://docs.fluentd.org/ou
 
 The following parameters are deprecated and will be replaced by `elasticsearch.hosts` with a default value of `["elasticsearch-client:9200"]`
 
+<!-- textlint-disable -->
 ```yaml
 elasticsearch:
   host: elasticsearch-client
@@ -311,6 +312,7 @@ elasticsearch:
     - "elasticsearch-node-1:9200"
     - "elasticsearch-node-2:9200"
 ```
+<!-- textlint-enable -->
 
 If were using `--set elasticsearch.host=elasticsearch-client --set elasticsearch.port=9200` previously, you will need to pass those values as an array as in `--set elasticsearch.host="{elasticsearch-client:9200}"`. The quotes around the curly brackets are important in order to make sure your shell passes the string through without processing it.
 
@@ -357,6 +359,13 @@ The chart requires now Helm >= 3.0.0 and Kubernetes >= 1.16.0
 If you were using `awsSigningSidecar` to set up an AWS signing sidecar proxy, this has now moved to the `extraContainers` property. The example in the `values.yaml` shows the equivalent AWS signing sidecar configuration expressed now as `extraContainers`.
 
 ### From a version < 12.0.0 to version => 13.0.0
+
+- nothing to do
+
+### From a version < 13.0.0 to version => 14.0.0
+
+- nothing to do
+- docker image repository changed to ghcr.io/kokuwaio/fluentd-elasticsearch
 
 #### The following fields were changed in the elasticsearch block
 

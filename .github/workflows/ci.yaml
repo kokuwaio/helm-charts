@@ -49,6 +49,7 @@ jobs:
           VALIDATE_CHECKOV: false
           VALIDATE_JSCPD: false
           VALIDATE_KUBERNETES_KUBECONFORM: false
+          VALIDATE_MARKDOWN_PRETTIER: false
           VALIDATE_YAML: false
           VALIDATE_YAML_PRETTIER: false
           VALIDATE_TYPESCRIPT_ES: false

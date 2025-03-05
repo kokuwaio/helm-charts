@@ -1,5 +1,5 @@
 image:
-  repository: quay.io/fluentd_elasticsearch/fluentd
+  repository: ghcr.io/kokuwaio/fluentd-elasticsearch
   # if empty uses appVersion from Chart.yaml as default image tag
   tag: ""
   ## Specify an imagePullPolicy (Required)
