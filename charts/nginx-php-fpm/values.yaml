@@ -1,0 +1,180 @@
+createPhpInfo: true
+
+deploymentStrategy:
+  type: RollingUpdate
+
+fullnameOverride: ""
+
+imagePullSecrets: []
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+nameOverride: ""
+
+nginx:
+  affinity: {}
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
+  image:
+    pullPolicy: IfNotPresent
+    repository: nginxinc/nginx-unprivileged
+    # first part of .Chart.AppVersion is used if not set
+    tag: ""
+
+  initContainers: []
+
+  livenessProbe: {}
+
+  nodeSelector: {}
+
+  podAnnotations: {}
+
+  podLabels: {}
+
+  podSecurityContext:
+    fsGroup: 65534
+
+  readinessProbe:
+    httpGet:
+      path: /health
+      port: http
+
+  replicaCount: 1
+
+  resources: {}
+
+  securityContext:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 101
+    runAsGroup: 65534
+
+  service:
+    port: 8080
+    type: ClusterIP
+
+  tolerations: []
+
+  useExistingConfigmap:
+    enabled: false
+    name: ""
+
+  volumes:
+    - name: tmp
+      emptyDir:
+        sizeLimit: 10Mi
+    - name: www
+      emptyDir:
+        sizeLimit: 10Mi
+
+  volumeMounts: []
+
+php:
+  affinity: {}
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
+  config: |
+    disable_functions = "pcntl_alarm,pcntl_fork,pcntl_waitpid,pcntl_wait,pcntl_wifexited,pcntl_wifstopped,pcntl_wifsignaled,pcntl_wifcontinued,pcntl_wexitstatus,pcntl_wtermsig,pcntl_wstopsig,pcntl_signal,pcntl_signal_dispatch,pcntl_get_last_error,pcntl_strerror,pcntl_sigprocmask,pcntl_sigwaitinfo,pcntl_sigtimedwait,pcntl_exec,pcntl_getpriority,pcntl_setpriority,exec,system"
+    open_basedir = "/var/www/html:/tmp"
+    soap.wsdl_cache_dir = "/tmp"
+    session.save_path = "/tmp"
+    sys_tmp_dir = "/tmp"
+    upload_tmp_dir = "/tmp"
+
+  fpmConfig:
+    pm: dynamic
+    pmMaxChildren: 5
+    pmStartServers: 2
+    pmMinSpareServers: 1
+    pmMaxSpareServers: 3
+
+  image:
+    pullPolicy: IfNotPresent
+    repository: php
+    # second part of .Chart.AppVersion is used if not set
+    tag: ""
+
+  initContainers: []
+
+  livenessProbe: {}
+
+  nodeSelector: {}
+
+  podAnnotations: {}
+
+  podLabels: {}
+
+  podSecurityContext:
+    fsGroup: 65534
+
+  readinessProbe:
+    tcpSocket:
+      port: 9000
+
+  replicaCount: 1
+
+  resources: {}
+
+  securityContext:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 82
+    runAsGroup: 65534
+
+  service:
+    port: 9000
+    type: ClusterIP
+
+  tolerations: []
+
+  useExistingConfigmap:
+    enabled: false
+    name: ""
+
+  volumes:
+    - name: tmp
+      emptyDir:
+        sizeLimit: 10Mi
+    - name: www
+      emptyDir:
+        sizeLimit: 10Mi
+
+  volumeMounts: []
+
+serviceAccount:
+  automount: true
+  annotations: {}
+  create: true
+  name: ""

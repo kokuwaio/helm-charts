@@ -1,0 +1,9 @@
+apiVersion: v2
+name: nginx-php-fpm
+description: A Helm chart for Kubernetes deploying nginx with php fpm
+type: application
+version: 0.1.0
+appVersion: "nginx-1.27.4-alpine3.21-php-8.4.5-fpm-alpine3.21"
+maintainers:
+  - name: monotek
+    email: monotek23@gmail.com

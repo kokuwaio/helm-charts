@@ -1,0 +1,33 @@
+{{- if .Values.nginx.autoscaling.enabled }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "nginx-php-fpm.fullname" . }}-nginx
+  labels:
+    component: nginx
+    {{- include "nginx-php-fpm.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "nginx-php-fpm.fullname" . }}
+  minReplicas: {{ .Values.nginx.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.nginx.autoscaling.maxReplicas }}
+  metrics:
+    {{- if .Values.nginx.autoscaling.targetCPUUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.nginx.autoscaling.targetCPUUtilizationPercentage }}
+    {{- end }}
+    {{- if .Values.nginx.autoscaling.targetMemoryUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.nginx.autoscaling.targetMemoryUtilizationPercentage }}
+    {{- end }}
+{{- end }}
