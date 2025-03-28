@@ -1288,6 +1288,34 @@ entries:
   mysqldump:
   - apiVersion: v2
     appVersion: v3.2.13
+    created: "2025-03-28T20:08:00.345052877Z"
+    dependencies:
+    - condition: mariadb.enabled
+      name: mariadb
+      repository: https://charts.bitnami.com/bitnami
+      version: 20.4.2
+    description: A Helm chart to help backup MySQL databases using mysqldump
+    digest: 429b0c854210ec018cb317b623ccfbf1d3ced074f080558dc5397f013d13aed0
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - mysqldump
+    - backup
+    maintainers:
+    - email: monotek23@gmail.com
+      name: monotek
+    name: mysqldump
+    sources:
+    - https://github.com/kokuwaio/helm-charts
+    - https://dev.mysql.com/doc/refman/5.7/en/mysqldump.html
+    - https://github.com/kokuwaio/gcloud-mysql
+    type: application
+    urls:
+    - https://github.com/kokuwaio/helm-charts/releases/download/mysqldump-7.0.1/mysqldump-7.0.1.tgz
+    version: 7.0.1
+  - apiVersion: v2
+    appVersion: v3.2.13
     created: "2025-03-28T18:59:10.957791435Z"
     dependencies:
     - condition: mariadb.enabled
@@ -2260,4 +2288,4 @@ entries:
     urls:
     - https://github.com/kokuwaio/helm-charts/releases/download/visual-regression-tracker-0.1.0/visual-regression-tracker-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-28T18:59:10.958002751Z"
+generated: "2025-03-28T20:08:00.345282575Z"
