@@ -6,8 +6,8 @@ metadata:
   labels:
     {{- include "mysqldump.labels" . | nindent 4 }}
 spec:
-  backoffLimit: 1
+  backoffLimit: 0
   template:
 {{- $file := .Files.Get "files/job.tpl" }}
 {{ tpl $file . | indent 4 }}
-{{ end }}
+{{- end }}

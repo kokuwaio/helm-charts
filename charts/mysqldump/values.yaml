@@ -28,30 +28,18 @@ mysql:
   # no password means random value
   password: ""
   port: 3306
-  # db name for db(s) backup
+  # db name for single db backup
   db: ""
   # Get password from existing secret
   existingSecret: ""
   existingSecretKey: ""
 
-# use --all-databases if enabled
-allDatabases:
-  enabled: true
-  # creates single backup file with all databases (works with mysql.db too)
-  singleBackupFile: false
-
-# options to pass to mysqldump
-options: "--opt --single-transaction"
+  # options to pass to mysqldump
+  dumpOptions: "--opt --single-transaction"
 
 # options to pass to rsync
 rsync:
   options: "-av"
-
-# save sql backup to a directory named like the database or "alldatabases"
-saveToDirectory: false
-
-# if to dump all databases to stdout when not uploading
-dumpAllToStdout: false
 
 # cron time setting for backup scheduleq
 schedule: "0 3 * * *"
@@ -63,8 +51,8 @@ runDirectlyAfterInstall: true
 debug: false
 
 # cronjob history
-successfulJobsHistoryLimit: 5
-failedJobsHistoryLimit: 5
+successfulJobsHistoryLimit: 1
+failedJobsHistoryLimit: 1
 
 # additional steps for mysqldump shell script
 # will be inserted after all backup and upload jobs completed successfully.
@@ -117,15 +105,6 @@ upload:
     # usingGCPController to enable autogeneration and injection of the service account
     usingGCPController: false
 
-  ssh:
-    enabled: false
-    user: backup
-    host: yourdomain.com
-    dir: /backup
-    # id_rsa private key as string
-    privatekey: ""
-    existingSecret: ""
-
   openstack:
     enabled: false
     user: backup@mydomain
@@ -155,6 +134,15 @@ upload:
     existingSecret: ""
     # existingSecretKey defines the key to use, or 'S3_SECRET_KEY' if not set
     existingSecretKey: ""
+
+  ssh:
+    enabled: false
+    user: backup
+    host: yourdomain.com
+    dir: /backup
+    # id_rsa private key as string
+    privatekey: ""
+    existingSecret: ""
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

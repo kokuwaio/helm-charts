@@ -6,120 +6,74 @@ metadata:
   labels:
     {{- include "mysqldump.labels" . | nindent 4 }}
 data:
-{{- if .Values.upload.openstack.enabled }}
-  openstack-upload.py: |-
-{{ .Files.Get "files/openstack-upload.py" | indent 4 }}
-{{- end }}
-  backup.sh: |-
+  backup.sh: |
     #!/bin/sh
     #
     # mysql backup script
     #
-    {{ if .Values.debug }}
-    set -ex
-    {{ end }}
+    
+    set -e{{- if .Values.debug }}x{{ end }}
 
-    {{ if .Values.mysql.host }}
+    {{- if .Values.mysql.host }}
 
     BACKUP_DIR="/backup"
     TIMESTAMP="$(date +%Y%m%d%H%M%S)"
 
-    echo "test mysql connection"
-    if [ -z "$(mysql -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USERNAME} -B -N -e 'SHOW DATABASES;')" ]; then
+    echo "Testing mysql connection"
+    if [ -z "$(mysql -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USERNAME} -p${MYSQL_PWD} -B -N -e 'SHOW DATABASES;')" ]; then
       echo "mysql connection failed! exiting..."
-      exit 1
     fi
 
     echo "started" > ${BACKUP_DIR}/${TIMESTAMP}.state
 
-    {{ if or (.Values.persistence.enabled) (.Values.persistentVolumeClaim) }}
-    {{ if .Values.housekeeping.enabled }}
-    echo "delete old backups"
+    {{- if and (or (.Values.persistence.enabled) (.Values.persistentVolumeClaim)) (.Values.housekeeping.enabled) }}
+    echo "Deleting old backups"
     find ${BACKUP_DIR} -type d -name 'lost+found' -prune -o -maxdepth 2 -mtime +${KEEP_DAYS} -regex "^${BACKUP_DIR}/.*[0-9]*_.*\.sql\.gz$" -type f -exec rm {} \;
-    {{ end -}}
-    {{ end -}}
+    {{- end }}
 
-    {{ if (eq .Values.allDatabases.singleBackupFile false) }}
-      {{ if and (.Values.mysql.db) (eq .Values.allDatabases.enabled false) }}
+    {{- if .Values.mysql.db }}
     MYSQL_DBS="{{ .Values.mysql.db }}"
-      {{ else if (.Values.allDatabases.enabled) }}
-    MYSQL_DBS=$(mysql -h "${MYSQL_HOST}" -P ${MYSQL_PORT} -u ${MYSQL_USERNAME} -B -N -e "SHOW DATABASES;"|egrep -v '^(information|performance)_schema$')
-      {{ end }}
+    {{- else }}
+    MYSQL_DBS=$(mysql -h "${MYSQL_HOST}" -P ${MYSQL_PORT} -u ${MYSQL_USERNAME} -p${MYSQL_PWD} -B -N -e "SHOW DATABASES;" | egrep -v '^(information|performance)_schema$')
+    {{- end }}
+
     for MYSQL_DB in $MYSQL_DBS; do
       echo "Backing up db ${MYSQL_DB}"
-      {{ if .Values.saveToDirectory }}mkdir -p "${BACKUP_DIR}"/"${MYSQL_DB}"{{ end }}
-      mysqldump ${MYSQL_OPTS} -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USERNAME} --databases ${MYSQL_DB} | gzip > ${BACKUP_DIR}/{{ if .Values.saveToDirectory }}${MYSQL_DB}/{{ end }}${TIMESTAMP}_${MYSQL_DB}.sql.gz
-      rc=$?
+      mysqldump ${MYSQL_OPTS} -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USERNAME} -p${MYSQL_PWD} --databases ${MYSQL_DB} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_${MYSQL_DB}.sql.gz
     done
-    {{ else if (.Values.allDatabases.singleBackupFile) }}
-    MYSQL_DB="alldatabases"
-    {{ if .Values.saveToDirectory }}mkdir -p "${BACKUP_DIR}"/"${MYSQL_DB}"{{ end }}
-      {{ if and (.Values.mysql.db) (eq .Values.allDatabases.enabled false) }}
-    echo "Backing up all this databases {{ .Values.mysql.db }}"
-    mysqldump ${MYSQL_OPTS} -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USERNAME} --databases {{ .Values.mysql.db }} | gzip > ${BACKUP_DIR}/{{ if .Values.saveToDirectory }}${MYSQL_DB}/{{ end }}${TIMESTAMP}_${MYSQL_DB}.sql.gz
-    rc=$?
-      {{ else if (.Values.allDatabases.enabled) }}
-    echo "Backing up all databases"
-    mysqldump ${MYSQL_OPTS} -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USERNAME} --all-databases | gzip > ${BACKUP_DIR}/{{ if .Values.saveToDirectory }}${MYSQL_DB}/{{ end }}${TIMESTAMP}_${MYSQL_DB}.sql.gz
-    rc=$?
-      {{ end }}
-    {{ end }}
 
-
-    {{- if or (.Values.upload.googlestoragebucket.enabled) (.Values.upload.ssh.enabled) (.Values.upload.openstack.enabled) (.Values.upload.s3.enabled) -}}
-    {{ if .Values.upload.ssh.enabled -}}
-    echo "upload files via ssh to {{ .Values.upload.ssh.user }}@{{ .Values.upload.ssh.host }}:{{ .Values.upload.ssh.dir }}"
-    rsync {{ .Values.rsync.options }} --delete --exclude=*.state -e 'ssh -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=/dev/null' ${BACKUP_DIR}/ {{ .Values.upload.ssh.user }}@{{ .Values.upload.ssh.host }}:{{ .Values.upload.ssh.dir }}
-    rcu=$?
-    {{ end -}}
-
-    {{ if .Values.upload.googlestoragebucket.enabled -}}
+    {{- if .Values.upload.googlestoragebucket.enabled }}
     echo "upload files to google storage bucket {{ .Values.upload.googlestoragebucket.bucketname }}"
     gcloud auth activate-service-account --key-file /root/gcloud/{{ .Values.upload.googlestoragebucket.secretFileName }}
     gsutil -m rsync -r -x '.*\.state' -d ${BACKUP_DIR}/ {{ .Values.upload.googlestoragebucket.bucketname }}
-    rcu=$?
-    {{ end }}
+    {{- end }}
 
-    {{ if .Values.upload.openstack.enabled -}}
+    {{- if .Values.upload.openstack.enabled }}
     echo "upload files to openstack at {{ .Values.upload.openstack.destination }}"
     python /scripts/openstack-upload.py \
       --source=${BACKUP_DIR} \
       --destination={{ .Values.upload.openstack.destination }} \
       {{ if .Values.upload.openstack.ttlDays -}} --ttl-days={{ .Values.upload.openstack.ttlDays }} {{- end }} \
       {{ if .Values.debug -}} --verbose {{- end }}
-    rcu=$?
-    {{ end }}
+    {{- end }}
 
-    {{ if .Values.upload.s3.enabled -}}
+    {{- if .Values.upload.s3.enabled -}}
     echo "upload files to s3 storage bucket {{ .Values.upload.s3.bucketname }}"
     aws configure set aws_access_key_id "$S3_ACCESSKEY" && aws configure set aws_secret_access_key "$S3_SECRET_KEY" && aws configure set region "$S3_REGION"
     find ${BACKUP_DIR} -type d -name 'lost+found' -prune -o -maxdepth 2 -name "${TIMESTAMP}_*.sql.gz" -type f -exec aws --endpoint-url ${S3_ENDPOINT} s3 cp {} s3://${S3_BUCKETNAME} \;
-    rcu=$?
-    {{ end }}
+    {{- end }}
 
-    if [ "$rcu" != "0" ]; then
-      echo "upload failed"
-      exit 1
-    fi
+    {{- if .Values.upload.ssh.enabled -}}
+    echo "upload files via ssh to {{ .Values.upload.ssh.user }}@{{ .Values.upload.ssh.host }}:{{ .Values.upload.ssh.dir }}"
+    rsync {{ .Values.rsync.options }} --delete --exclude=*.state -e 'ssh -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=/dev/null' ${BACKUP_DIR}/ {{ .Values.upload.ssh.user }}@{{ .Values.upload.ssh.host }}:{{ .Values.upload.ssh.dir }}
+    {{- end }}
 
-    {{- else  }}
-    {{ if .Values.dumpAllToStdout }}
-    mysqldump ${MYSQL_OPTS} -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USERNAME} --all-databases
-    rc=$?
-    {{ end }}
-    {{ end }}
+    {{- if .Values.debug }}
+      echo "Contents of ${BACKUP_DIR}"
+      ls -lahR "${BACKUP_DIR}"
+    {{- end }}
 
-    {{ if .Values.debug }}
-      echo Contents of ${BACKUP_DIR}
-      ls -lahR ${BACKUP_DIR}
-    {{ end }}
-
-    if [ "$rc" != "0" ]; then
-      echo "backup failed"
-      exit 1
-    fi
-
-    {{ if .Values.additionalSteps }}
+    {{- if .Values.additionalSteps }}
      {{- range .Values.additionalSteps }}
       {{ . }}
      {{- end }}
@@ -128,9 +82,14 @@ data:
     echo "complete" > ${BACKUP_DIR}/${TIMESTAMP}.state
 
     echo "Disk usage in ${BACKUP_DIR}"
-    du -h -d 2 ${BACKUP_DIR}
+    du -h -d 2 "${BACKUP_DIR}"
 
     echo "Backup successful! :-)"
-    {{ else }}
-    echo "no mysql.host set in values file... nothing to do... exiting :)"
-    {{ end }}
+    {{- else }}
+    echo "no mysql.host set in values file... nothing to do... exiting..."
+    {{- end }}
+
+{{- if .Values.upload.openstack.enabled }}
+  openstack-upload.py: |-
+{{ .Files.Get "files/openstack-upload.py" | indent 4 }}
+{{- end }}
