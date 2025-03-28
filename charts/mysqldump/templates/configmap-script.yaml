@@ -19,22 +19,17 @@ data:
     BACKUP_DIR="/backup"
     TIMESTAMP="$(date +%Y%m%d%H%M%S)"
 
-    echo "Testing mysql connection"
-    if [ -z "$(mysql -h ${MYSQL_HOST} -P ${MYSQL_PORT} -u ${MYSQL_USERNAME} -p${MYSQL_PWD} -B -N -e 'SHOW DATABASES;')" ]; then
-      echo "mysql connection failed! exiting..."
-    fi
+    {{- if .Values.mysql.db }}
+    MYSQL_DBS="{{ .Values.mysql.db }}"
+    {{- else }}
+    MYSQL_DBS=$(mysql -h "${MYSQL_HOST}" -P ${MYSQL_PORT} -u ${MYSQL_USERNAME} -p${MYSQL_PWD} -B -N -e "SHOW DATABASES;" | egrep -v '^(information|performance)_schema$')
+    {{- end }}
 
     echo "started" > ${BACKUP_DIR}/${TIMESTAMP}.state
 
     {{- if and (or (.Values.persistence.enabled) (.Values.persistentVolumeClaim)) (.Values.housekeeping.enabled) }}
     echo "Deleting old backups"
     find ${BACKUP_DIR} -type d -name 'lost+found' -prune -o -maxdepth 2 -mtime +${KEEP_DAYS} -regex "^${BACKUP_DIR}/.*[0-9]*_.*\.sql\.gz$" -type f -exec rm {} \;
-    {{- end }}
-
-    {{- if .Values.mysql.db }}
-    MYSQL_DBS="{{ .Values.mysql.db }}"
-    {{- else }}
-    MYSQL_DBS=$(mysql -h "${MYSQL_HOST}" -P ${MYSQL_PORT} -u ${MYSQL_USERNAME} -p${MYSQL_PWD} -B -N -e "SHOW DATABASES;" | egrep -v '^(information|performance)_schema$')
     {{- end }}
 
     for MYSQL_DB in $MYSQL_DBS; do
