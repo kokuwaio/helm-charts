@@ -57,8 +57,8 @@ The following tables lists the configurable parameters of the mysqldump chart an
 | mysql.existingSecret                          | existing secret name, used to get mysql password (if set)                       |                              |
 | mysql.existingSecretKey                       | existing secret key                                                             | mysql-root-password          |
 | mysql.port                                    | mysql port                                                                      | 3306                         |
-| schedule                                      | crontab schedule to run on. set as `now` to run as a one time job               | "0 3 \* \* \*"               |
 | mysql.dumpOptions                             | options to pass onto MySQL dump                                                 | "--opt --single-transaction" |
+| schedule                                      | crontab schedule to run on. set as `now` to run as a one time job               | "0 3 \* \* \*"               |
 | rsync.options                                 | options to pass onto rsync                                                      | "-av"                        |
 | debug                                         | print some extra debug logs during backup                                       | false                        |
 | additionalSteps                               | run these extra shell steps after all backup jobs completed                     | []                           |
