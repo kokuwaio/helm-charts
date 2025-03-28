@@ -50,13 +50,13 @@ The following tables lists the configurable parameters of the mysqldump chart an
 | image.repository                              | Name of image to use                                                            | monotek/gcloud-mysql         |
 | image.tag                                     | Version of image to use (uses appVersion form Chart.yaml as default if not set) | ""                           |
 | image.pullPolicy                              | Pull Policy to use for image                                                    | IfNotPresent                 |
-| mysql.db                                      | mysql db(s) to backup (optional)                                                | mysql                        |
-| mysql.host                                    | mysql host to backup                                                            | mysql                        |
-| mysql.username                                | mysql username                                                                  | root                         |
-| mysql.password                                | mysql password                                                                  | ""                           |
-| mysql.existingSecret                          | existing secret name, used to get mysql password (if set)                       |                              |
+| mysql.db                                      | MySQL db(s) to backup (optional)                                                | mysql                        |
+| mysql.host                                    | MySQL host to backup                                                            | mysql                        |
+| mysql.username                                | MySQL username                                                                  | root                         |
+| mysql.password                                | MySQL password                                                                  | ""                           |
+| mysql.existingSecret                          | existing secret name, used to get MySQL password (if set)                       |                              |
 | mysql.existingSecretKey                       | existing secret key                                                             | mysql-root-password          |
-| mysql.port                                    | mysql port                                                                      | 3306                         |
+| mysql.port                                    | MySQL port                                                                      | 3306                         |
 | mysql.dumpOptions                             | options to pass onto MySQL dump                                                 | "--opt --single-transaction" |
 | schedule                                      | crontab schedule to run on. set as `now` to run as a one time job               | "0 3 \* \* \*"               |
 | rsync.options                                 | options to pass onto rsync                                                      | "-av"                        |
@@ -64,7 +64,7 @@ The following tables lists the configurable parameters of the mysqldump chart an
 | additionalSteps                               | run these extra shell steps after all backup jobs completed                     | []                           |
 | successfulJobsHistoryLimit                    | number of successful jobs to remember                                           | 1                            |
 | failedJobsHistoryLimit                        | number of failed jobs to remember                                               | 1                            |
-| sshMountpath                                  | User's path (used to mount ssh key if needed)                                   | "/home/cloudsdk"             |
+| sshMountpath                                  | User's path (used to mount SSH key if needed)                                   | "/home/cloudsdk"             |
 | persistentVolumeClaim                         | existing Persistent Volume Claim to backup to, leave blank to create a new one  |                              |
 | persistence.enabled                           | create new PVC (unless `persistentVolumeClaim` is set)                          | true                         |
 | persistence.size                              | size of PVC to create                                                           | 8Gi                          |
@@ -79,12 +79,12 @@ The following tables lists the configurable parameters of the mysqldump chart an
 | upload.googlestoragebucket.existingSecret     | specify a secretname to use                                                     | nil                          |
 | upload.googlestoragebucket.usingGCPController | enable the use of the GCP Service Account Controller                            | false                        |
 | upload.googlestoragebucket.serviceAccountName | specify a service account name to use                                           | nil                          |
-| upload.ssh.enabled                            | upload backups via ssh                                                          | false                        |
+| upload.ssh.enabled                            | upload backups via SSH                                                          | false                        |
 | upload.ssh.existingSecret                     | specify a secretname to use                                                     | nil                          |
-| upload.ssh.user                               | ssh user                                                                        | backup                       |
-| upload.ssh.host                               | ssh server URL                                                                  | yourdomain.com               |
-| upload.ssh.dir                                | directory on server                                                             | /backup                      |
-| upload.ssh.privatekey                         | ssh user private key                                                            | ""                           |
+| upload.ssh.user                               | SSH user                                                                        | backup                       |
+| upload.ssh.host                               | SSH server URL                                                                  | yourdomain.com               |
+| upload.ssh.dir                                | SSH directory on server                                                             | /backup                      |
+| upload.ssh.privatekey                         | SSH user private key                                                            | ""                           |
 | upload.openstack.enabled                      | upload backups via swift to openstack                                           | false                        |
 | upload.openstack.user                         | username                                                                        | backup@mydomain              |
 | upload.openstack.userDomain                   | user-domain                                                                     | default                      |
