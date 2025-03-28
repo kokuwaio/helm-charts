@@ -8,7 +8,7 @@ data:
   MYSQL_HOST: {{ .Values.mysql.host | quote }}
   MYSQL_USERNAME: {{ .Values.mysql.username | quote }}
   MYSQL_PORT: {{ .Values.mysql.port | quote }}
-  MYSQL_OPTS: {{ .Values.options | quote }}
+  MYSQL_OPTS: {{ .Values.mysql.dumpOptions | quote }}
   KEEP_DAYS: {{ .Values.housekeeping.keepDays | quote }}
 {{- if .Values.upload.openstack.enabled }}
   OS_AUTH_URL: {{ .Values.upload.openstack.authUrl }}
