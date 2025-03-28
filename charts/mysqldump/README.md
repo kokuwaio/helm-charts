@@ -43,7 +43,7 @@ The command removes all the Kubernetes components associated with the chart and 
 ## Configuration
 
 The following tables lists the configurable parameters of the mysqldump chart and their default values.
-
+<!-- textlint-disable -->
 | Parameter                                     | Description                                                                     | Default                      |
 | --------------------------------------------- | ------------------------------------------------------------------------------- | ---------------------------- |
 | image.registry                                | Name of docker registry to use                                                  | quay.io                      |
@@ -111,6 +111,7 @@ The following tables lists the configurable parameters of the mysqldump chart an
 | securityContext.enabled                       | set true to change default security context of job/cronjob                      | false                        |
 | securityContext.fsGroup                       | group ID to use                                                                 | 999                          |
 | securityContext.runAsUser                     | user ID to use                                                                  | 999                          |
+<!-- textlint-enable -->
 
 ### Auto generating the gcp service account
 
