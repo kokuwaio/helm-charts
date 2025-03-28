@@ -58,13 +58,12 @@ The following tables lists the configurable parameters of the mysqldump chart an
 | mysql.existingSecretKey                       | existing secret key                                                             | mysql-root-password          |
 | mysql.port                                    | mysql port                                                                      | 3306                         |
 | schedule                                      | crontab schedule to run on. set as `now` to run as a one time job               | "0 3 \* \* \*"               |
-| options                                       | options to pass onto MySQL                                                      | "--opt --single-transaction" |
+| mysql.dumpOptions                             | options to pass onto MySQL dump                                                 | "--opt --single-transaction" |
 | rsync.options                                 | options to pass onto rsync                                                      | "-av"                        |
 | debug                                         | print some extra debug logs during backup                                       | false                        |
-| dumpAllToStdout                               | dump all database contents to stdout when not uploading                         | false                        |
 | additionalSteps                               | run these extra shell steps after all backup jobs completed                     | []                           |
-| successfulJobsHistoryLimit                    | number of successful jobs to remember                                           | 5                            |
-| failedJobsHistoryLimit                        | number of failed jobs to remember                                               | 5                            |
+| successfulJobsHistoryLimit                    | number of successful jobs to remember                                           | 1                            |
+| failedJobsHistoryLimit                        | number of failed jobs to remember                                               | 1                            |
 | sshMountpath                                  | User's path (used to mount ssh key if needed)                                   | "/home/cloudsdk"             |
 | persistentVolumeClaim                         | existing Persistent Volume Claim to backup to, leave blank to create a new one  |                              |
 | persistence.enabled                           | create new PVC (unless `persistentVolumeClaim` is set)                          | true                         |
@@ -72,11 +71,8 @@ The following tables lists the configurable parameters of the mysqldump chart an
 | persistence.accessMode                        | accessMode to use for PVC                                                       | ReadWriteOnce                |
 | persistence.storageClass                      | storage class to use for PVC                                                    |                              |
 | persistence.subPath                           | subPath for PVC                                                                 |                              |
-| allDatabases.enabled                          | backup all databases                                                            | true                         |
-| allDatabases.SingleSqlFile                    | backup all databases to single file (works with mysql.db too)                   | false                        |
 | housekeeping.enabled                          | delete olf backups in pvc                                                       | true                         |
 | housekeeping.keepDays                         | keep last x days of backups in PVC                                              | 10                           |
-| saveToDirectory                               | saves the sql backup to a directory named like the database or alldatabases     | false                        |
 | upload.googlestoragebucket.enabled            | upload backups to google storage                                                | false                        |
 | upload.googlestoragebucket.bucketname         | google storage address                                                          | gs://mybucket/test           |
 | upload.googlestoragebucket.jsonKeyfile        | json keyfile for serviceaccount                                                 | ""                           |
