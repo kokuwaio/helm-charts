@@ -1,6 +1,6 @@
 apiVersion: v2
 name: fluentd-elasticsearch
-version: 14.0.0
+version: 15.0.0
 appVersion: v5.0.2
 type: application
 home: https://www.fluentd.org/
@@ -21,3 +21,4 @@ sources:
 maintainers:
 - name: monotek
   email: monotek23@gmail.com
+deprecated: true
