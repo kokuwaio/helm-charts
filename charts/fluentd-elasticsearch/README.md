@@ -1,4 +1,6 @@
-# Fluentd Elasticsearch
+# Fluentd Elasticsearch (deprecated)
+
+**THIS CHART IS DEPRECATED!!!**
 
 - Installs [Fluentd](https://www.fluentd.org/) log forwarder.
 
