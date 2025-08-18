@@ -15,12 +15,12 @@ jobs:
       contents: write # for git push
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - run: |
           cp -f README.md ${{ runner.temp }}/README.md
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: gh-pages
 
