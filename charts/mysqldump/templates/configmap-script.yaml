@@ -60,7 +60,7 @@ data:
 
     {{- if and (or (.Values.persistence.enabled) (.Values.persistentVolumeClaim)) (.Values.housekeeping.enabled) }}
     echo "Deleting old backups"
-    find ${BACKUP_DIR} -type d -name 'lost+found' -prune -o -maxdepth 2 -mtime +${KEEP_DAYS} -regex "^${BACKUP_DIR}/.*[0-9]*_.*\.sql\.gz$" -type f -exec rm {} \;
+    find ${BACKUP_DIR} -type d -name 'lost+found' -prune -o -maxdepth 2 -mtime +${KEEP_DAYS} -regex "^${BACKUP_DIR}/.*[0-9]*(_.*\.sql\.gz|\.state)$" -type f -exec rm {} \;
     {{- end }}
 
     {{- if .Values.debug }}
