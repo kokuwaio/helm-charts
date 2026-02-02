@@ -232,11 +232,6 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-# Additional environment variables for the API container
-extraEnv: []
-# - name: STATIC_SERVICE
-#   value: "s3"
-
 # dependency chart config
 postgresql:
   auth:
