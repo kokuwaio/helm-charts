@@ -6,7 +6,7 @@ sources:
   - https://github.com/Visual-Regression-Tracker/Visual-Regression-Tracker
   - https://github.com/kokuwaio/helm-charts/tree/main/charts/visual-regression-tracker
 type: application
-version: 5.0.2
+version: 5.1.0
 appVersion: "5.0.11"
 maintainers:
   - name: monotek
