@@ -39,7 +39,7 @@ vrtComponents:
     image:
       repository: visualregressiontracker/api
       pullPolicy: IfNotPresent
-      tag: "5.0.11"
+      tag: "5.1.1"
 
     # Additional environment variables for the API container
     extraEnv: []
@@ -89,7 +89,7 @@ vrtComponents:
     image:
       repository: visualregressiontracker/migration
       pullPolicy: IfNotPresent
-      tag: "5.0.1"
+      tag: "5.1.0"
 
     imagePullSecrets: []
 
@@ -116,7 +116,7 @@ vrtComponents:
     image:
       repository: visualregressiontracker/ui
       pullPolicy: IfNotPresent
-      tag: "5.0.4"
+      tag: "5.1.2"
 
     ingress:
       enabled: false

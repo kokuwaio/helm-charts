@@ -7,7 +7,7 @@ sources:
   - https://github.com/kokuwaio/helm-charts/tree/main/charts/visual-regression-tracker
 type: application
 version: 5.1.0
-appVersion: "5.0.11"
+appVersion: "5.1.1"
 maintainers:
   - name: monotek
     email: monotek23@gmail.com
