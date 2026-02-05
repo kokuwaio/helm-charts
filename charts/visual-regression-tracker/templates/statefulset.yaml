@@ -97,6 +97,9 @@ spec:
               value: "{{ .Values.vrtConfig.postgresql.user }}"
             - name: DATABASE_URL
               value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)"
+            {{- with .Values.vrtComponents.api.extraEnv }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
           image: "{{ .Values.vrtComponents.api.image.repository }}:{{ .Values.vrtComponents.api.image.tag }}"
           imagePullPolicy: {{ .Values.vrtComponents.api.image.pullPolicy }}
           ports:
@@ -170,7 +173,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- if .Values.topologySpreadConstraints }}
-      topologySpreadConstraints: 
+      topologySpreadConstraints:
         {{- toYaml .Values.topologySpreadConstraints | nindent 8 }}
       {{- end }}
       volumes:
