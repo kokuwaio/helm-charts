@@ -234,6 +234,8 @@ serviceAccount:
 
 # dependency chart config
 postgresql:
+  image:
+    repository: bitnamilegacy/postgresql
   auth:
     database: vrt
     username: vrt
