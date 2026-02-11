@@ -41,6 +41,11 @@ vrtComponents:
       pullPolicy: IfNotPresent
       tag: "5.0.11"
 
+    # Additional environment variables for the API container
+    extraEnv: []
+      # - name: STATIC_SERVICE
+      #   value: "s3"
+
     ingress:
       enabled: false
       className: ""
@@ -229,6 +234,8 @@ serviceAccount:
 
 # dependency chart config
 postgresql:
+  image:
+    repository: bitnamilegacy/postgresql
   auth:
     database: vrt
     username: vrt
