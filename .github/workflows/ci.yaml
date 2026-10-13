@@ -4,8 +4,6 @@ permissions: read-all
 
 on: 
   pull_request:
-    paths:
-      - 'charts/**/**'
 
 env:
   helm-version: "v3.17.1"
@@ -123,3 +121,21 @@ jobs:
 
       - name: Run chart-testing (install)
         run: ct install --config .github/ct.yaml
+
+  auto-merge:
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    needs:
+      - lint-chart
+      - super-linter
+      - kubeconform-chart
+      - install-chart
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Enable auto-merge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: gh pr merge "$PR_URL" --auto --squash
