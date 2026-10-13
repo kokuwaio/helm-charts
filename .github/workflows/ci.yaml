@@ -4,8 +4,6 @@ permissions: read-all
 
 on: 
   pull_request:
-    paths:
-      - 'charts/**/**'
 
 env:
   helm-version: "v3.17.1"
@@ -115,7 +113,7 @@ jobs:
         run: if [[ -n "$(ct list-changed --config .github/ct.yaml)" ]]; then echo 'changed=true' >> "$GITHUB_OUTPUT"; fi
 
       - name: Create kind cluster
-        uses: helm/kind-action@v1.15.0
+        uses: helm/kind-action@v1.15.1
         if: steps.list-changed.outputs.changed == 'true'
         with:
           config: .github/kind-config.yaml
@@ -123,3 +121,21 @@ jobs:
 
       - name: Run chart-testing (install)
         run: ct install --config .github/ct.yaml
+
+  auto-merge:
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    needs:
+      - lint-chart
+      - super-linter
+      - kubeconform-chart
+      - install-chart
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Enable auto-merge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: gh pr merge "$PR_URL" --auto --squash
