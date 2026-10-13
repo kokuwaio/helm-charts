@@ -4,6 +4,9 @@ permissions: read-all
 
 on: 
   pull_request:
+    paths:
+      - 'charts/**/**'
+      - '.github/workflows/**'
 
 env:
   helm-version: "v3.17.1"
@@ -25,7 +28,7 @@ jobs:
         with:
           python-version: 3.11
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.8.0
+        uses: helm/chart-testing-action@v2.9.0
       - name: Run chart-testing (lint)
         run: ct lint --config .github/ct.yaml
 
@@ -106,7 +109,7 @@ jobs:
           python-version: 3.11
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.8.0
+        uses: helm/chart-testing-action@v2.9.0
 
       - name: Run chart-testing (list-changed)
         id: list-changed
@@ -123,16 +126,18 @@ jobs:
         run: ct install --config .github/ct.yaml
 
   auto-merge:
-    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    if: >-
+      github.event.pull_request.user.login == 'dependabot[bot]' &&
+      !github.event.pull_request.draft
     needs:
       - lint-chart
       - super-linter
       - kubeconform-chart
       - install-chart
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
       pull-requests: write
-    runs-on: ubuntu-24.04
     steps:
       - name: Enable auto-merge
         env:
