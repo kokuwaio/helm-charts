@@ -1800,6 +1800,19 @@ entries:
     version: 3.0.0
   nginx-php-fpm:
   - apiVersion: v2
+    appVersion: 1.31.7-alpine3.24-8.5.12-fpm-alpine3.24
+    created: "2026-10-21T21:22:39.526535092Z"
+    description: A Helm chart for Kubernetes deploying nginx with php fpm
+    digest: c26f8eaec352f239b094e72efc7512e8571338dc138777bb6f38dcae742c8fb6
+    maintainers:
+    - email: monotek23@gmail.com
+      name: monotek
+    name: nginx-php-fpm
+    type: application
+    urls:
+    - https://github.com/kokuwaio/helm-charts/releases/download/nginx-php-fpm-0.1.5/nginx-php-fpm-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
     appVersion: nginx-1.29.0-alpine3.22-php-8.5.2-fpm-alpine3.22
     created: "2026-02-02T12:11:08.748701802Z"
     description: A Helm chart for Kubernetes deploying nginx with php fpm
@@ -2444,4 +2457,4 @@ entries:
     urls:
     - https://github.com/kokuwaio/helm-charts/releases/download/visual-regression-tracker-0.1.0/visual-regression-tracker-0.1.0.tgz
     version: 0.1.0
-generated: "2026-04-23T19:13:42.43206989Z"
+generated: "2026-10-21T21:22:39.526824854Z"
