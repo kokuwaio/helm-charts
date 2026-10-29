@@ -2,7 +2,7 @@ apiVersion: v2
 name: nginx-php-fpm
 description: A Helm chart for Kubernetes deploying nginx with php fpm
 type: application
-version: 0.1.7
+version: 0.2.0
 appVersion: "nginx-1.31.7-alpine3.24-php-8.5.12-fpm-alpine3.24"
 maintainers:
   - name: monotek

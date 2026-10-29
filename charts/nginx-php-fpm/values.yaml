@@ -59,6 +59,17 @@ nginx:
       path: /health
       port: http
 
+  # use the client IP sent by a trusted reverse proxy (e.g. the ingress controller)
+  # as $remote_addr, which nginx logs and passes to php as REMOTE_ADDR
+  realIp:
+    enabled: false
+    header: X-Forwarded-For
+    # skip trusted addresses when the header contains several IPs
+    recursive: true
+    # addresses or CIDRs of the proxies allowed to set the header, required if enabled
+    trustedIPs: []
+    #  - 10.42.0.0/16
+
   replicaCount: 1
 
   resources: {}
