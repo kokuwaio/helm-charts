@@ -9,7 +9,7 @@
 
 ## Install a chart
 
-The charts are published as OCI artifacts to the GitHub Container Registry. No `helm repo add` is needed:
+The charts are published as OCI artifacts to the GitHub Container Registry. Installing them needs Helm 3.8 or later; no `helm repo add` is needed:
 
 ```console
 helm install my-release oci://ghcr.io/kokuwaio/charts/<chart>
