@@ -9,8 +9,8 @@ on:
       - '.github/workflows/**'
 
 env:
-  helm-version: "v3.17.1"
-  kubeconform-version: "v0.6.7"
+  helm-version: "v4.3.1"
+  kubeconform-version: "v0.8.0"
 
 jobs:
   lint-chart:
@@ -63,9 +63,9 @@ jobs:
     strategy:
       matrix:
         k8s:
-          - v1.29.14
-          - v1.30.6
-          - v1.31.6
+          - v1.35.8
+          - v1.36.4
+          - v1.37.0
 
     steps:
       - name: Checkout
@@ -90,9 +90,9 @@ jobs:
     strategy:
       matrix:
         k8s:
-          - v1.29.14
-          - v1.30.6
-          - v1.31.6
+          - v1.35.8
+          - v1.36.4
+          - v1.37.0
     steps:
       - name: Checkout
         uses: actions/checkout@v7
