@@ -1,6 +1,7 @@
 /**
 * @see https://www.prisma.io/docs/guides/migrate/seed-database
 */
+import type { Prisma } from '@prisma/client';
 import { PrismaClient, Role } from '@prisma/client';
 import { genSalt, hash } from 'bcryptjs';
 
@@ -21,7 +22,7 @@ seed()
     .finally(async () => await prisma.$disconnect());
 
 async function createDefaultUser() {
-    let userList = [];
+    let userList: Prisma.UserGetPayload<undefined>[] = [];
     try {
     userList = await prisma.user.findMany();
     console.log(userList);
@@ -66,7 +67,7 @@ async function createDefaultUser() {
 }
 
 async function createDefaultProject() {
-    let projectList = [];
+    let projectList: Prisma.ProjectGetPayload<undefined>[] = [];
     try {
     projectList = await prisma.project.findMany();
     console.log(projectList);

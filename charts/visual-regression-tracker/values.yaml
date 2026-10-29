@@ -33,6 +33,10 @@ vrtConfig:
     # needs to be the same as the postgresql.customUser.name
     user: vrt
   reactAppApiUrl: "http://localhost:4200"
+  # optional base URL to load images from a static host instead of the API
+  reactAppStaticUrl: ""
+  # redirect the login page straight to the SSO provider when the API has OIDC enabled
+  reactAppOidcAutoRedirect: false
 
 vrtComponents:
   api:
