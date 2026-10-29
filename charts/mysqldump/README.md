@@ -45,8 +45,8 @@ The following tables lists the configurable parameters of the mysqldump chart an
 <!-- textlint-disable -->
 | Parameter                                     | Description                                                                     | Default                      |
 | --------------------------------------------- | ------------------------------------------------------------------------------- | ---------------------------- |
-| image.registry                                | Name of docker registry to use                                                  | quay.io                      |
-| image.repository                              | Name of image to use                                                            | monotek/gcloud-mysql         |
+| image.registry                                | Name of docker registry to use                                                  | ghcr.io                      |
+| image.repository                              | Name of image to use                                                            | kokuwaio/gcloud-mysql        |
 | image.tag                                     | Version of image to use (uses appVersion form Chart.yaml as default if not set) | ""                           |
 | image.pullPolicy                              | Pull Policy to use for image                                                    | IfNotPresent                 |
 | mysql.db                                      | MySQL db(s) to backup (optional)                                                | mysql                        |
