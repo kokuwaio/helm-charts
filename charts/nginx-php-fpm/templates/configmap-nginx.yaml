@@ -28,6 +28,10 @@ data:
         location / {
             root   /var/www/html;
             index  index.html index.htm index.php {{ if .Values.createPhpInfo }}phpinfo.php{{ end }};
+            {{- with .Values.nginx.locationSnippet }}
+
+            {{- . | trim | nindent 12 }}
+            {{- end }}
 
             location ~ \.php(/|$) {
               include fastcgi.conf;
