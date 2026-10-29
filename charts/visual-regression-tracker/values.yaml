@@ -23,14 +23,14 @@ vrtConfig:
   postgresql:
     # enable/disable postgresql chart dependency
     enabled: true
-    # needs to be the same as the postgresql.auth.password
+    # needs to be the same as the postgresql.customUser.database
     db: vrt
     # host env var is only used when vrtConfig.postgresql.enabled is false
     host: vrt-postgresql
+    # needs to be the same as the postgresql.customUser.password
     pass: "vrt-db-password"
-    # needs to be the same as the postgresql.auth.database
     port: 5432
-    # needs to be the same as the postgresql.auth.username
+    # needs to be the same as the postgresql.customUser.name
     user: vrt
   reactAppApiUrl: "http://localhost:4200"
 
@@ -234,9 +234,10 @@ serviceAccount:
 
 # dependency chart config
 postgresql:
-  auth:
+  # application user and database, owned by that user
+  customUser:
+    name: vrt
     database: vrt
-    username: vrt
     password: vrt-db-password
   fullnameOverride: vrt-postgresql
   resources: {}
