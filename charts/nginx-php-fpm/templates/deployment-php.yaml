@@ -19,9 +19,14 @@ spec:
       {{- include "nginx-php-fpm.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.php.podAnnotations }}
+      {{- if or (not .Values.php.useExistingConfigmap.enabled) .Values.php.podAnnotations }}
       annotations:
+        {{- if not .Values.php.useExistingConfigmap.enabled }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmap-php.yaml") . | sha256sum }}
+        {{- end }}
+        {{- with .Values.php.podAnnotations }}
         {{- toYaml . | nindent 8 }}
+        {{- end }}
       {{- end }}
       labels:
         component: php
