@@ -128,6 +128,7 @@ jobs:
   auto-merge:
     if: >-
       github.event.pull_request.user.login == 'dependabot[bot]' &&
+      github.actor == 'dependabot[bot]' &&
       !github.event.pull_request.draft
     needs:
       - lint-chart
@@ -139,8 +140,10 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - name: Merge Dependabot PR
+      - name: Approve and enable auto-merge
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_URL: ${{ github.event.pull_request.html_url }}
-        run: gh pr merge "$PR_URL" --squash --admin
+        run: |
+          gh pr review "$PR_URL" --approve
+          gh pr merge "$PR_URL" --auto --squash
