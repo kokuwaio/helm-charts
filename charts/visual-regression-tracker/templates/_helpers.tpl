@@ -115,3 +115,10 @@ vrt env secret name
 {{ template "visual-regression-tracker.fullname" . }}-{{ .Values.secrets.envConfig.secretName }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Escape a value for a single quoted JavaScript string
+*/}}
+{{- define "visual-regression-tracker.jsString" -}}
+{{- . | toString | replace "\\" "\\\\" | replace "'" "\\'" -}}
+{{- end -}}

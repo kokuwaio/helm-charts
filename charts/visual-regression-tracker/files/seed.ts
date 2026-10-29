@@ -31,9 +31,12 @@ async function createDefaultUser() {
     console.log(error.message);
   }
 
-  const defaultApiKey = '{{ .Values.vrtConfig.defaults.apiKey }}';
-  const defaultEmail = '{{ .Values.vrtConfig.defaults.email }}';
-  const defaultPassword = '{{ .Values.vrtConfig.defaults.pass }}';
+  const defaultApiKey =
+    '{{ include "visual-regression-tracker.jsString" .Values.vrtConfig.defaults.apiKey }}';
+  const defaultEmail =
+    '{{ include "visual-regression-tracker.jsString" .Values.vrtConfig.defaults.email }}';
+  const defaultPassword =
+    '{{ include "visual-regression-tracker.jsString" .Values.vrtConfig.defaults.pass }}';
   const salt = await genSalt(10);
 
   await prisma.user
@@ -75,7 +78,8 @@ async function createDefaultProject() {
     console.log(error.message);
   }
 
-  const defaultProject = '{{ .Values.vrtConfig.defaults.project }}';
+  const defaultProject =
+    '{{ include "visual-regression-tracker.jsString" .Values.vrtConfig.defaults.project }}';
 
   if (projectList.length === 0) {
     await prisma.project
