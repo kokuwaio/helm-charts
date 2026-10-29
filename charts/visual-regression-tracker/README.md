@@ -40,6 +40,20 @@ helm upgrade vrt oci://ghcr.io/kokuwaio/charts/visual-regression-tracker
 
 _See [`helm upgrade`](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
 
+### From 5.x to 6.0.0
+
+This updates Visual Regression Tracker to 5.9.0 (API 5.7.0, UI 5.6.0, migration 5.5.0). See the [release notes](https://github.com/Visual-Regression-Tracker/Visual-Regression-Tracker/releases/tag/5.9.0).
+
+The Bitnami PostgreSQL dependency chart has been replaced by the [CloudPirates postgres chart](https://github.com/CloudPirates-io/helm-charts/tree/main/charts/postgres), which uses the official PostgreSQL 18 image.
+The values stay under the `postgresql` key, but Bitnami specific values like `postgresql.primary.*` or `postgresql.image.repository` no longer apply. See the chart's values for the available options.
+
+The existing database is not migrated automatically. To keep your data:
+
+1. Dump the database: `kubectl exec vrt-postgresql-0 -- pg_dump -U vrt vrt > vrt.sql`
+2. Delete the old PostgreSQL StatefulSet and its PVC: `kubectl delete statefulset vrt-postgresql` and `kubectl delete pvc data-vrt-postgresql-0`
+3. Upgrade the chart.
+4. Restore the dump: `kubectl exec -i vrt-postgresql-0 -- psql -U vrt vrt < vrt.sql`
+
 ### From 4.0.x to 5.0.0
 
 Auth proxy was removed as it does nto work as expected.
