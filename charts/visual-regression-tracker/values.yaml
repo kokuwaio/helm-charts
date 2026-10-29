@@ -23,14 +23,14 @@ vrtConfig:
   postgresql:
     # enable/disable postgresql chart dependency
     enabled: true
-    # needs to be the same as the postgresql.auth.password
+    # needs to be the same as the postgresql.customUser.database
     db: vrt
     # host env var is only used when vrtConfig.postgresql.enabled is false
     host: vrt-postgresql
+    # needs to be the same as the postgresql.customUser.password
     pass: "vrt-db-password"
-    # needs to be the same as the postgresql.auth.database
     port: 5432
-    # needs to be the same as the postgresql.auth.username
+    # needs to be the same as the postgresql.customUser.name
     user: vrt
   reactAppApiUrl: "http://localhost:4200"
 
@@ -39,7 +39,7 @@ vrtComponents:
     image:
       repository: visualregressiontracker/api
       pullPolicy: IfNotPresent
-      tag: "5.0.11"
+      tag: "5.7.0"
 
     # Additional environment variables for the API container
     extraEnv: []
@@ -89,7 +89,7 @@ vrtComponents:
     image:
       repository: visualregressiontracker/migration
       pullPolicy: IfNotPresent
-      tag: "5.0.1"
+      tag: "5.5.0"
 
     imagePullSecrets: []
 
@@ -116,7 +116,7 @@ vrtComponents:
     image:
       repository: visualregressiontracker/ui
       pullPolicy: IfNotPresent
-      tag: "5.0.4"
+      tag: "5.6.0"
 
     ingress:
       enabled: false
@@ -234,11 +234,10 @@ serviceAccount:
 
 # dependency chart config
 postgresql:
-  image:
-    repository: bitnamilegacy/postgresql
-  auth:
+  # application user and database, owned by that user
+  customUser:
+    name: vrt
     database: vrt
-    username: vrt
     password: vrt-db-password
   fullnameOverride: vrt-postgresql
   resources: {}

@@ -40,6 +40,23 @@ helm upgrade vrt oci://ghcr.io/kokuwaio/charts/visual-regression-tracker
 
 _See [`helm upgrade`](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
 
+### From 5.x to 6.0.0
+
+This updates Visual Regression Tracker to 5.9.0 (API 5.7.0, UI 5.6.0, migration 5.5.0). See the [release notes](https://github.com/Visual-Regression-Tracker/Visual-Regression-Tracker/releases/tag/5.9.0).
+
+The Bitnami PostgreSQL dependency chart has been replaced by the [CloudPirates postgres chart](https://github.com/CloudPirates-io/helm-charts/tree/main/charts/postgres), which uses the official PostgreSQL 18 image.
+The values stay under the `postgresql` key. Remove Bitnami specific values like `postgresql.primary.*` and `postgresql.image.*` from your values: the new chart also reads `postgresql.image.*` and would run the Bitnami image with incompatible data paths.
+The VRT database user is now configured via `postgresql.customUser.name`, `postgresql.customUser.database` and `postgresql.customUser.password` instead of `postgresql.auth.*`, which now configures the PostgreSQL superuser. See the chart's values for the available options.
+
+The existing database is not migrated automatically. To keep your data (release name `vrt` in the examples):
+
+1. Stop VRT: `kubectl scale statefulset vrt-visual-regression-tracker --replicas=0`
+2. Dump the database: `kubectl exec vrt-postgresql-0 -- sh -c 'PGPASSWORD="$POSTGRES_PASSWORD" pg_dump -U vrt vrt' > vrt.sql`
+3. Delete the old PostgreSQL StatefulSet, its PVC and its Secret: `kubectl delete statefulset vrt-postgresql`, `kubectl delete pvc data-vrt-postgresql-0` and `kubectl delete secret vrt-postgresql`
+4. Upgrade the chart with VRT stopped, so its migrations don't run against the empty database: `helm upgrade vrt oci://ghcr.io/kokuwaio/charts/visual-regression-tracker --reuse-values --set replicaCount=0`
+5. Restore the dump: `kubectl exec -i vrt-postgresql-0 -- sh -c 'PGPASSWORD="$CUSTOM_PASSWORD" psql -v ON_ERROR_STOP=1 -U vrt vrt' < vrt.sql`
+6. Start VRT again: `helm upgrade vrt oci://ghcr.io/kokuwaio/charts/visual-regression-tracker --reuse-values --set replicaCount=1`
+
 ### From 4.0.x to 5.0.0
 
 Auth proxy was removed as it does nto work as expected.
