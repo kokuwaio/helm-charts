@@ -42,7 +42,6 @@ jobs:
           CR_GENERATE_RELEASE_NOTES: true
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
-          skip_existing: true
           oci_registry_url: oci://ghcr.io/${{ github.repository_owner }}/charts
           oci_username: ${{ github.actor }}
           oci_password: ${{ secrets.GITHUB_TOKEN }}

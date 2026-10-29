@@ -13,10 +13,10 @@ curl --silent --show-error --fail --location --output /tmp/kubeconform.tar.gz ht
 sudo tar -C /usr/local/bin -xf /tmp/kubeconform.tar.gz kubeconform
 
 # validate charts
-for CHART_DIR in ${CHART_DIRS};do
-  echo "helm dependency build..."
-  helm dependency build "${CHART_DIR}"
+for CHART_DIR in ${CHART_DIRS}; do
+	echo "helm dependency build..."
+	helm dependency build "${CHART_DIR}"
 
-  echo "kubeconform(ing) ${CHART_DIR##charts/} chart..."
-  helm template "${CHART_DIR}" | kubeconform --strict --verbose --kubernetes-version "${KUBERNETES_VERSION#v}"
+	echo "kubeconform(ing) ${CHART_DIR##charts/} chart..."
+	helm template "${CHART_DIR}" | kubeconform --strict --verbose --kubernetes-version "${KUBERNETES_VERSION#v}"
 done
