@@ -1,0 +1,9 @@
+nginx:
+  locationSnippet: |
+    location ~ /(config\.php|composer\.(json|lock)|cache|files|includes|store|vendor) {
+        deny all;
+    }
+
+    location ~ /\. {
+        deny all;
+    }

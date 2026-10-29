@@ -45,6 +45,13 @@ nginx:
 
   livenessProbe: {}
 
+  # extra nginx config inside "location /", before the php handler, so its
+  # regex locations take precedence over it, e.g. to deny internal paths
+  locationSnippet: ""
+  #  location ~ /(config\.php|cache|vendor) {
+  #      deny all;
+  #  }
+
   nodeSelector: {}
 
   podAnnotations: {}
