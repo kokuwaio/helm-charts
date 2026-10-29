@@ -2,7 +2,7 @@
 
 [Helm](https://helm.sh/) charts for [Kokuwa](https://kokuwa.io) project maintained charts which can be installed on [Kubernetes](https://kubernetes.io/)
 
-## Repo Info
+## Repository info
 
 [![Releases downloads](https://img.shields.io/github/downloads/kokuwaio/helm-charts/total.svg)](https://github.com/kokuwaio/helm-charts/releases)
 [![Release Charts](https://github.com/kokuwaio/helm-charts/workflows/Release%20Charts/badge.svg)](https://github.com/kokuwaio/helm-charts/commits/main)
@@ -26,10 +26,13 @@ The Helm repository at `https://kokuwaio.github.io/helm-charts` is no longer upd
 ## Sources
 
 The charts sources can be found here:
+
 * [https://github.com/kokuwaio/helm-charts](https://github.com/kokuwaio/helm-charts)
 
 The OCI chart packages can be found here:
+
 * [https://github.com/orgs/kokuwaio/packages?repo_name=helm-charts](https://github.com/orgs/kokuwaio/packages?repo_name=helm-charts)
 
 Helm Releases can be found here:
+
 * [https://github.com/kokuwaio/helm-charts/releases](https://github.com/kokuwaio/helm-charts/releases)
