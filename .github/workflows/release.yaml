@@ -42,6 +42,8 @@ jobs:
           CR_GENERATE_RELEASE_NOTES: true
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
+          # publish to the OCI registry only, don't update the gh-pages index
+          skip_upload: true
           oci_registry_url: oci://ghcr.io/${{ github.repository_owner }}/charts
           oci_username: ${{ github.actor }}
           oci_password: ${{ secrets.GITHUB_TOKEN }}

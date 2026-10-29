@@ -4,19 +4,10 @@ Visual Regression Tracker is a backend and frontend application for tracking dif
 
 If you want to run this chart with more than 1 replica, get sure you can use a [ReadWriteMany PVC](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes), as the pods needs to share the imageUploads volume.
 
-## Add Helm Repository
-
-```console
-helm repo add kokuwa https://kokuwaio.github.io/helm-charts
-helm repo update
-```
-
-_See [`helm repo`](https://helm.sh/docs/helm/helm_repo/) for command documentation._
-
 ## Install Chart
 
 ```console
-helm install vrt kokuwa/visual-regression-tracker
+helm install vrt oci://ghcr.io/kokuwaio/charts/visual-regression-tracker
 ```
 
 _See [configuration](#configuration) below._
@@ -28,7 +19,7 @@ _See [`helm install`](https://helm.sh/docs/helm/helm_install/) for command docum
 See [Customizing the Chart Before Installing](https://helm.sh/docs/intro/using_helm/#customizing-the-chart-before-installing). To see all configurable options with detailed comments, visit the chart's [values.yaml](./values.yaml), or run these configuration commands:
 
 ```console
-helm show values kokuwa/visual-regression-tracker
+helm show values oci://ghcr.io/kokuwaio/charts/visual-regression-tracker
 ```
 
 ## Uninstall Chart
@@ -44,7 +35,7 @@ _See [`helm uninstall`](https://helm.sh/docs/helm/helm_uninstall/) for command d
 ## Upgrading the Helm Chart
 
 ```console
-helm upgrade vrt kokuwa/visual-regression-tracker
+helm upgrade vrt oci://ghcr.io/kokuwaio/charts/visual-regression-tracker
 ```
 
 _See [`helm upgrade`](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
