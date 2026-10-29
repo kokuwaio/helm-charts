@@ -1,5 +1,3 @@
-chart-repos:
-  - bitnami=https://charts.bitnami.com/bitnami
 check-version-increment: true
 debug: true
 helm-extra-args: --timeout 600s
