@@ -1,6 +1,5 @@
 chart-repos:
   - bitnami=https://charts.bitnami.com/bitnami
-  - kokuwa=https://kokuwaio.github.io/helm-charts
 check-version-increment: true
 debug: true
 helm-extra-args: --timeout 600s

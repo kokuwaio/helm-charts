@@ -5,8 +5,7 @@ mysqldump is a tool for creating backups of MySQL databases in the form of a .sq
 ## TLDR
 
 ```console
-helm repo add kokuwa https://kokuwaio.github.io/helm-charts
-helm install kokuwa/mysqldump --set mysql.host=mysql;mysql.username=root,mysql.password=password
+helm install my-release oci://ghcr.io/kokuwaio/charts/mysqldump --set mysql.host=mysql,mysql.username=root,mysql.password=password
 ```
 
 ## Introduction
@@ -23,7 +22,7 @@ This chart helps set up a cronjob or one time job to backup a MySQL database wit
 To install the chart with the release name `my-release`:
 
 ```console
-helm install kokuwa/mysqldump --set mysql.host=mysql,mysql.username=root,mysql.password=password
+helm install my-release oci://ghcr.io/kokuwaio/charts/mysqldump --set mysql.host=mysql,mysql.username=root,mysql.password=password
 ```
 
 This command will create a cronjob to run a job once a day to backup the databases found on the host `mysql`
@@ -118,11 +117,11 @@ The following tables lists the configurable parameters of the mysqldump chart an
 By enabling the flag `upload.googlestoragebucket.usingGCPController` and having a GCP Service Account Controller deployed in your cluster, it is possible to autogenerate and inject the service account used for the storage bucket access. For more information see <https://github.com/kiwigrid/helm-charts/tree/master/charts/gcp-serviceaccount-controller>
 
 ```console
-helm install kokuwa/mysqldump --name my-release --set persistentVolumeClaim=name-of-existing-pvc
+helm install my-release oci://ghcr.io/kokuwaio/charts/mysqldump --set persistentVolumeClaim=name-of-existing-pvc
 ```
 
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```console
-helm install kokuwa/mysqldump --name my-release -f values.yaml
+helm install my-release oci://ghcr.io/kokuwaio/charts/mysqldump -f values.yaml
 ```
