@@ -10,7 +10,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "nginx-php-fpm.fullname" . }}
+    name: {{ include "nginx-php-fpm.fullname" . }}-php
   minReplicas: {{ .Values.php.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.php.autoscaling.maxReplicas }}
   metrics:
