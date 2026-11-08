@@ -57,7 +57,7 @@ spec:
     envFrom:
     - configMapRef:
         name: "{{ template "mysqldump.fullname" . }}"
-{{- if not .Values.mysql.existingSecret }}
+{{- if or (not .Values.mysql.existingSecret) (and .Values.upload.openstack.enabled (not .Values.upload.openstack.existingSecret)) }}
     - secretRef:
         name: "{{ template "mysqldump.fullname" . }}"
 {{- end }}
