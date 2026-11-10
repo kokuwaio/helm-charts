@@ -185,12 +185,18 @@ spec:
             defaultMode: 0777
         - name: env-config
           secret:
-            secretName: {{ include "visual-regression-tracker.fullname" . }}-env-config
+            secretName: {{ include "visual-regression-tracker.envSecretName" . }}
+            items:
+              - key: {{ .Values.secrets.envConfig.secretKey }}
+                path: env-config.js
         - name: tmp
           {{- toYaml .Values.vrtComponents.ui.tmpDirVolume | nindent 10 }}
         - name: vrt
           secret:
             secretName: {{ template "visual-regression-tracker.vrtSecretName" . }}
+            items:
+              - key: {{ .Values.secrets.defaults.secretKey }}
+                path: seed.ts
     {{- if and .Values.persistence.enabled .Values.persistence.existingClaim }}
         - name: {{ template "visual-regression-tracker.fullname" . }}
           persistentVolumeClaim:
