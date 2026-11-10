@@ -11,7 +11,7 @@ data:
     {{- .Values.php.config | nindent 4}}
   www.conf: |
     [www]
-    listen = 0.0.0.0:9000
+    listen = 0.0.0.0:{{ .Values.php.service.port }}
     pm = dynamic
     pm.max_children = {{ .Values.php.fpmConfig.pmMaxChildren }}
     pm.start_servers = {{ .Values.php.fpmConfig.pmStartServers }}
