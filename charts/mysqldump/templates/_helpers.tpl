@@ -54,7 +54,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "mysqldump.serviceAccountName" -}}
-{{ include "mysqldump.fullname" . }}
+{{- default (include "mysqldump.fullname" .) .Values.upload.googlestoragebucket.serviceAccountName }}
 {{- end }}
 
 {{/*
