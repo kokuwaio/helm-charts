@@ -12,7 +12,7 @@ data:
   www.conf: |
     [www]
     listen = 0.0.0.0:{{ .Values.php.service.port }}
-    pm = dynamic
+    pm = {{ .Values.php.fpmConfig.pm }}
     pm.max_children = {{ .Values.php.fpmConfig.pmMaxChildren }}
     pm.start_servers = {{ .Values.php.fpmConfig.pmStartServers }}
     pm.min_spare_servers = {{ .Values.php.fpmConfig.pmMinSpareServers }}
