@@ -13,6 +13,7 @@ data:
     #
     
     set -e{{- if .Values.debug }}x{{ end }}
+    set -o pipefail
 
     {{- if .Values.mysql.host }}
 
