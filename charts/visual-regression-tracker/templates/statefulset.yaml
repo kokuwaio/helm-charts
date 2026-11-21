@@ -77,7 +77,7 @@ spec:
             {{- end }}
             {{- if or .Values.vrtConfig.elasticsearch.host }}
             - name: ELASTIC_URL
-              value: "{{ .Values.vrtConfig.elasticsearch.schema }}://{{ if .Values.vrtConfig.elasticsearch.user }}{{ .Values.vrtConfig.elasticsearch.user }}{{ end }}{{- if or .Values.vrtConfig.elasticsearch.pass .Values.secrets.elasticsearch.useExisting }}:$(ELASTICSEARCH_PASSWORD)@{{ end }}{{ .Values.vrtConfig.elasticsearch.host }}:{{ .Values.vrtConfig.elasticsearch.port }}"
+              value: "{{ .Values.vrtConfig.elasticsearch.schema }}://{{ .Values.vrtConfig.elasticsearch.user }}{{- if or .Values.vrtConfig.elasticsearch.pass .Values.secrets.elasticsearch.useExisting }}:$(ELASTICSEARCH_PASSWORD)@{{ else if .Values.vrtConfig.elasticsearch.user }}@{{ end }}{{ .Values.vrtConfig.elasticsearch.host }}:{{ .Values.vrtConfig.elasticsearch.port }}"
             {{- end }}
             - name: JWT_LIFE_TIME
               value: "{{ .Values.vrtConfig.jwt.lifeTime }}"
