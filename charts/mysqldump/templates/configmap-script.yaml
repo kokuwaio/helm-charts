@@ -12,8 +12,7 @@ data:
     # mysql backup script
     #
     
-    set -e{{- if .Values.debug }}x{{ end }}
-    set -o pipefail
+    set -e{{- if .Values.debug }}x{{ end }} -o pipefail
 
     {{- if .Values.mysql.host }}
 
